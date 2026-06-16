@@ -5344,6 +5344,7 @@ aside.refs #part-photos-todo{padding:0 14px 40px}
       <button class="del" onclick="this.parentElement.remove();persistNotes(this.closest('.scene'))" title="удалить">✕</button>
     </div>`;
   }
+  window.noteHTML = noteHTML;
 
   function escapeHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
   function grabSceneSelection(scene){
@@ -5376,7 +5377,7 @@ aside.refs #part-photos-todo{padding:0 14px 40px}
     scene.querySelectorAll('.note-card').forEach(c => {
       notes.push({
         t: c.dataset.t,
-        html: c.querySelector('.text').innerHTML
+        html: (c.querySelector('.text')||{innerHTML:''}).innerHTML
       });
     });
     localStorage.setItem('kolibri-notes-'+scene.id, JSON.stringify(notes));
@@ -5624,6 +5625,7 @@ aside.refs #part-photos-todo{padding:0 14px 40px}
   (function(){var m=lm();Object.keys(m).forEach(function(sid){var sc=document.getElementById(sid);if(!sc)return;m[sid].forEach(function(k){var n=document.querySelector('[data-refkey="'+(window.CSS&&CSS.escape?CSS.escape(k):k)+'"]');if(n){addX(n);zone(sc).appendChild(n);}});});})();
   document.getElementById('refs-toggle').onclick=function(){app.classList.add('rc');};
   document.getElementById('refs-show').onclick=function(){app.classList.remove('rc');};
+  window.__kdnd={addX:addX,toPool:toPool,pool:pool,zone:zone};
 })();
 </script>
 <script>
@@ -5672,5 +5674,20 @@ aside.refs #part-photos-todo{padding:0 14px 40px}
   },true);
 })();
 </script>
+<script>
+/* Мост для realtime-синхрона (sync.js): применяет состояние из localStorage к DOM. */
+(function(){
+  function isActive(el){var a=document.activeElement;return !!(a&&el&&(el===a||el.contains(a)));}
+  function applyEdit(id,skip){var sc=document.getElementById(id);if(!sc)return;var b=sc.querySelector(':scope > .body');if(!b)return;if(skip&&isActive(b))return;var v=localStorage.getItem('kolibri-edit-'+id);if(v!=null&&b.innerHTML!==v)b.innerHTML=v;}
+  function applyEid(eid,skip){var el=document.querySelector('[data-eid="'+eid+'"]');if(!el)return;if(skip&&isActive(el))return;var v=localStorage.getItem('kolibri-edit2-'+eid);if(v!=null&&el.innerHTML!==v)el.innerHTML=v;}
+  function applyNotes(id,skip){var sc=document.getElementById(id);if(!sc)return;if(skip){var aE=document.activeElement;var nc0=sc.querySelector(':scope > .scene-notes');if(nc0&&aE&&nc0.contains(aE))return;}var cont=sc.querySelector(':scope > .scene-notes');var saved=localStorage.getItem('kolibri-notes-'+id);var notes=[];try{notes=JSON.parse(saved||'[]');}catch(e){}if(cont)cont.innerHTML='';if(!notes.length){if(cont)cont.remove();return;}if(!cont){cont=document.createElement('div');cont.className='scene-notes';var bar=sc.querySelector('.add-note-bar');if(bar)sc.insertBefore(cont,bar);else sc.appendChild(cont);}notes.forEach(function(n){if(window.noteHTML)cont.insertAdjacentHTML('beforeend',window.noteHTML(n.t,n.html));});}
+  function applyRefs(){var map={};try{map=JSON.parse(localStorage.getItem('kolibri-scene-refs-v1')||'{}');}catch(e){}
+    document.querySelectorAll('main.reader .scene > .scene-refs > [data-refkey]').forEach(function(n){var x=n.querySelector(':scope > .ref-detach');if(x)x.remove();var pool=n.tagName==='IMG'?document.getElementById('pool-photos'):document.getElementById('pool-videos');if(pool)pool.appendChild(n);});
+    Object.keys(map).forEach(function(sid){var sc=document.getElementById(sid);if(!sc)return;var z=sc.querySelector(':scope > .scene-refs');if(!z){z=document.createElement('div');z.className='scene-refs';sc.appendChild(z);}map[sid].forEach(function(k){var n=document.querySelector('[data-refkey="'+(window.CSS&&CSS.escape?CSS.escape(k):k)+'"]');if(n){z.appendChild(n);if(window.__kdnd&&window.__kdnd.addX)window.__kdnd.addX(n);}});});}
+  window.kolibriApplyState=function(){document.querySelectorAll('.scene').forEach(function(sc){applyEdit(sc.id,false);applyNotes(sc.id);});document.querySelectorAll('[data-eid]').forEach(function(el){applyEid(el.dataset.eid,false);});applyRefs();};
+  window.kolibriApplyKey=function(key,skip){if(key.indexOf('kolibri-edit2-')===0)applyEid(key.slice(14),skip);else if(key.indexOf('kolibri-edit-')===0)applyEdit(key.slice(13),skip);else if(key.indexOf('kolibri-notes-')===0)applyNotes(key.slice(14),skip);else if(key==='kolibri-scene-refs-v1')applyRefs();};
+})();
+</script>
+<script src="sync.js"></script>
 </body>
 </html>
