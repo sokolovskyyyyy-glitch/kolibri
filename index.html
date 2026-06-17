@@ -325,10 +325,32 @@ aside.refs #part-photos-todo{padding:0 14px 40px}
 @media(max-width:1100px){.app{grid-template-columns:var(--navw,210px) 1fr!important}aside.refs,#refs-show{display:none!important}}
 </style>
 <style>
-/* подсветка правок пользователя */
+/* подсветка правок по автору: Евгений — синий (по умолчанию), Режиссёр — красный */
 .ed{color:#1b4f9c;background:rgba(27,79,156,.09);border-radius:2px;box-shadow:inset 0 -1px 0 rgba(27,79,156,.35);padding:0 .5px}
+.ed.ed-dir{color:#E5163A;background:rgba(229,22,58,.10);box-shadow:inset 0 -1px 0 rgba(229,22,58,.5)}
 .note-card .quote{font-style:italic;opacity:.72}
 .note-card .who{user-select:none}
+/* бейдж автора в заметке */
+.note-card .by{font-weight:700;margin-left:8px;letter-spacing:.06em;font-size:10px;text-transform:uppercase}
+.by-evg{color:#1b4f9c}
+.by-dir{color:#E5163A}
+/* окно выбора автора */
+#author-gate{position:fixed;inset:0;z-index:99990;background:rgba(15,15,20,.92);display:flex;align-items:center;justify-content:center}
+#author-gate .ag-box{background:#16161C;border:1px solid #333;border-radius:10px;padding:34px 40px;text-align:center;font-family:'Manrope',sans-serif;color:#E8E2D6;max-width:440px}
+#author-gate .ag-h{font-size:26px;font-weight:800;margin-bottom:8px}
+#author-gate .ag-sub{font-size:13px;opacity:.7;margin-bottom:22px;line-height:1.5}
+#author-gate .ag-btns{display:flex;gap:14px;justify-content:center}
+#author-gate .ag-b{flex:1;padding:16px;border-radius:8px;border:2px solid;background:transparent;cursor:pointer;font-size:17px;font-weight:700;font-family:inherit;line-height:1.4}
+#author-gate .ag-b small{font-weight:500;opacity:.7;font-size:11px}
+#author-gate .ag-evg{color:#6fa3e0;border-color:#1b4f9c}
+#author-gate .ag-evg:hover{background:#1b4f9c;color:#fff}
+#author-gate .ag-dir{color:#ef6b85;border-color:#E5163A}
+#author-gate .ag-dir:hover{background:#E5163A;color:#fff}
+/* кнопка смены автора */
+#author-switch{position:fixed;left:8px;bottom:8px;z-index:50;font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:.06em;padding:4px 9px;border-radius:3px;border:1px solid currentColor;background:rgba(0,0,0,.25);cursor:pointer;opacity:.55}
+#author-switch:hover{opacity:1}
+#author-switch.is-evg{color:#1b4f9c}
+#author-switch.is-dir{color:#E5163A}
 </style>
 </head>
 <body class="v5">
@@ -349,6 +371,34 @@ aside.refs #part-photos-todo{padding:0 14px 40px}
 })();
 </script>
 
+<script>
+/* Идентификация автора правок. Ключ site-author НЕ синкается (не начинается с kolibri-). */
+window.AUTHORS={evg:{name:'Евгений',cls:'by-evg'},dir:{name:'Режиссёр',cls:'by-dir'}};
+window.KAUTHOR=localStorage.getItem('site-author')||'';
+(function(){
+  function syncSwitch(){
+    var b=document.getElementById('author-switch');if(!b)return;
+    var a=window.AUTHORS[window.KAUTHOR];
+    b.className=window.KAUTHOR==='dir'?'is-dir':'is-evg';
+    b.textContent='✎ '+(a?a.name:'Евгений')+' · сменить';
+  }
+  window.__pickAuthor=function(v){localStorage.setItem('site-author',v);window.KAUTHOR=v;var o=document.getElementById('author-gate');if(o)o.remove();ensureSwitch();syncSwitch();};
+  function ensureSwitch(){
+    if(document.getElementById('author-switch')||!window.KAUTHOR)return;
+    var b=document.createElement('button');b.id='author-switch';
+    b.onclick=function(){showGate();};
+    document.body.appendChild(b);syncSwitch();
+  }
+  function showGate(){
+    if(document.getElementById('author-gate'))return;
+    var o=document.createElement('div');o.id='author-gate';
+    o.innerHTML='<div class="ag-box"><div class="ag-h">Кто ты?</div><div class="ag-sub">Твои правки и заметки будут помечены твоим цветом, чтобы было видно, где чья рука.</div><div class="ag-btns"><button class="ag-b ag-evg" onclick="__pickAuthor(\'evg\')">Евгений<br><small>синий</small></button><button class="ag-b ag-dir" onclick="__pickAuthor(\'dir\')">Режиссёр<br><small>красный</small></button></div></div>';
+    document.body.appendChild(o);
+  }
+  function boot(){ if(window.KAUTHOR){ensureSwitch();}else{showGate();} }
+  if(document.body)boot();else document.addEventListener('DOMContentLoaded',boot);
+})();
+</script>
 
 <div class="app">
 
@@ -5350,12 +5400,14 @@ aside.refs #part-photos-todo{padding:0 14px 40px}
     {k:'past',     ico:'📜', label:'Пласт прошлого'},
   ];
 
-  function noteHTML(type, text, when=''){
+  function noteHTML(type, text, when='', author=''){
     const t = NOTE_TYPES.find(x => x.k === type) || NOTE_TYPES[1];
-    return `<div class="note-card" data-t="${t.k}">
+    const a = (window.AUTHORS||{})[author];
+    const badge = a ? `<span class="by ${a.cls}">● ${a.name}</span>` : '';
+    return `<div class="note-card" data-t="${t.k}"${author?` data-a="${author}"`:''}>
       <span class="ico">${t.ico}</span>
       <div class="body-note">
-        <div class="who" contenteditable="false">${t.label}${when?`<span class="when">${when}</span>`:''}</div>
+        <div class="who" contenteditable="false">${t.label}${badge}${when?`<span class="when">${when}</span>`:''}</div>
         <div class="text" contenteditable="true">${text}</div>
       </div>
       <button class="del" onclick="this.parentElement.remove();persistNotes(this.closest('.scene'))" title="удалить">✕</button>
@@ -5382,7 +5434,7 @@ aside.refs #part-photos-todo{padding:0 14px 40px}
       else scene.appendChild(container);
     }
     const pre = quote ? '<span class="quote" contenteditable="false">«'+escapeHtml(quote)+'»</span>&nbsp;' : '';
-    container.insertAdjacentHTML('beforeend', noteHTML(type, pre));
+    container.insertAdjacentHTML('beforeend', noteHTML(type, pre, '', window.KAUTHOR||'evg'));
     const last = container.lastElementChild.querySelector('.text');
     last.focus();
     try{ const r=document.createRange(); r.selectNodeContents(last); r.collapse(false); const s=window.getSelection(); s.removeAllRanges(); s.addRange(r); }catch(e){}
@@ -5394,6 +5446,7 @@ aside.refs #part-photos-todo{padding:0 14px 40px}
     scene.querySelectorAll('.note-card').forEach(c => {
       notes.push({
         t: c.dataset.t,
+        a: c.dataset.a || '',
         html: (c.querySelector('.text')||{innerHTML:''}).innerHTML
       });
     });
@@ -5417,7 +5470,7 @@ aside.refs #part-photos-todo{padding:0 14px 40px}
           else scene.appendChild(container);
         }
         notes.forEach(n => {
-          container.insertAdjacentHTML('beforeend', noteHTML(n.t, n.html));
+          container.insertAdjacentHTML('beforeend', noteHTML(n.t, n.html, '', n.a||''));
         });
       } catch(e){}
     });
@@ -5661,16 +5714,17 @@ aside.refs #part-photos-todo{padding:0 14px 40px}
     var host=e.target&&e.target.closest&&e.target.closest('[contenteditable="true"]');
     if(!host||host.closest('.note-card')) return;
     var it=e.inputType;
+    var AC=(window.KAUTHOR==='dir')?' ed-dir':'';
     if(it==='insertText'&&e.data!=null){
       e.preventDefault(); BUSY=true;
       try{
         if(inEd()) document.execCommand('insertText',false,e.data);
-        else document.execCommand('insertHTML',false,'<span class="ed">'+esc(e.data)+'</span>');
+        else document.execCommand('insertHTML',false,'<span class="ed'+AC+'">'+esc(e.data)+'</span>');
       }finally{BUSY=false;}
     } else if((it==='insertFromPaste'||it==='insertReplacementText')&&e.dataTransfer){
       var txt=e.dataTransfer.getData('text/plain');
       if(txt){ e.preventDefault(); BUSY=true;
-        try{ document.execCommand('insertHTML',false,'<span class="ed">'+esc(txt).replace(/\n/g,'<br>')+'</span>'); }
+        try{ document.execCommand('insertHTML',false,'<span class="ed'+AC+'">'+esc(txt).replace(/\n/g,'<br>')+'</span>'); }
         finally{BUSY=false;}
       }
     }
@@ -5682,7 +5736,8 @@ aside.refs #part-photos-todo{padding:0 14px 40px}
     var spans=host.querySelectorAll('.ed + .ed'), changed=false;
     spans.forEach(function(sp){
       var prev=sp.previousSibling;
-      if(prev&&prev.classList&&prev.classList.contains('ed')){
+      if(prev&&prev.classList&&prev.classList.contains('ed')
+         && prev.classList.contains('ed-dir')===sp.classList.contains('ed-dir')){
         prev.appendChild(document.createTextNode(sp.textContent)); sp.remove(); changed=true;
       }
     });
@@ -5697,7 +5752,7 @@ aside.refs #part-photos-todo{padding:0 14px 40px}
   function isActive(el){var a=document.activeElement;return !!(a&&el&&(el===a||el.contains(a)));}
   function applyEdit(id,skip){var sc=document.getElementById(id);if(!sc)return;var b=sc.querySelector(':scope > .body');if(!b)return;if(skip&&isActive(b))return;var v=localStorage.getItem('kolibri-edit-'+id);if(v!=null&&b.innerHTML!==v)b.innerHTML=v;}
   function applyEid(eid,skip){var el=document.querySelector('[data-eid="'+eid+'"]');if(!el)return;if(skip&&isActive(el))return;var v=localStorage.getItem('kolibri-edit2-'+eid);if(v!=null&&el.innerHTML!==v)el.innerHTML=v;}
-  function applyNotes(id,skip){var sc=document.getElementById(id);if(!sc)return;if(skip){var aE=document.activeElement;var nc0=sc.querySelector(':scope > .scene-notes');if(nc0&&aE&&nc0.contains(aE))return;}var cont=sc.querySelector(':scope > .scene-notes');var saved=localStorage.getItem('kolibri-notes-'+id);var notes=[];try{notes=JSON.parse(saved||'[]');}catch(e){}if(cont)cont.innerHTML='';if(!notes.length){if(cont)cont.remove();return;}if(!cont){cont=document.createElement('div');cont.className='scene-notes';var bar=sc.querySelector('.add-note-bar');if(bar)sc.insertBefore(cont,bar);else sc.appendChild(cont);}notes.forEach(function(n){if(window.noteHTML)cont.insertAdjacentHTML('beforeend',window.noteHTML(n.t,n.html));});}
+  function applyNotes(id,skip){var sc=document.getElementById(id);if(!sc)return;if(skip){var aE=document.activeElement;var nc0=sc.querySelector(':scope > .scene-notes');if(nc0&&aE&&nc0.contains(aE))return;}var cont=sc.querySelector(':scope > .scene-notes');var saved=localStorage.getItem('kolibri-notes-'+id);var notes=[];try{notes=JSON.parse(saved||'[]');}catch(e){}if(cont)cont.innerHTML='';if(!notes.length){if(cont)cont.remove();return;}if(!cont){cont=document.createElement('div');cont.className='scene-notes';var bar=sc.querySelector('.add-note-bar');if(bar)sc.insertBefore(cont,bar);else sc.appendChild(cont);}notes.forEach(function(n){if(window.noteHTML)cont.insertAdjacentHTML('beforeend',window.noteHTML(n.t,n.html,'',n.a||''));});}
   function applyRefs(){var map={};try{map=JSON.parse(localStorage.getItem('kolibri-scene-refs-v1')||'{}');}catch(e){}
     document.querySelectorAll('main.reader .scene > .scene-refs > [data-refkey]').forEach(function(n){var x=n.querySelector(':scope > .ref-detach');if(x)x.remove();var pool=n.tagName==='IMG'?document.getElementById('pool-photos'):document.getElementById('pool-videos');if(pool)pool.appendChild(n);});
     Object.keys(map).forEach(function(sid){var sc=document.getElementById(sid);if(!sc)return;var z=sc.querySelector(':scope > .scene-refs');if(!z){z=document.createElement('div');z.className='scene-refs';sc.appendChild(z);}map[sid].forEach(function(k){var n=document.querySelector('[data-refkey="'+(window.CSS&&CSS.escape?CSS.escape(k):k)+'"]');if(n){z.appendChild(n);if(window.__kdnd&&window.__kdnd.addX)window.__kdnd.addX(n);}});});}
