@@ -334,18 +334,24 @@ aside.refs #part-photos-todo{padding:0 14px 40px}
 .note-card .by{font-weight:700;margin-left:8px;letter-spacing:.06em;font-size:10px;text-transform:uppercase}
 .by-evg{color:#1b4f9c}
 .by-dir{color:#E5163A}
+/* оглавление: секции и старт эпизодника */
+.nav #nav-list a.nav-sec{font-weight:700;margin-top:12px;opacity:.92}
+.nav #nav-list a.nav-start{display:block;background:#B23A2E;color:#fff;border-radius:5px;padding:8px 10px;margin:12px 0;font-weight:800;letter-spacing:.02em;box-shadow:0 2px 9px rgba(178,58,46,.45);text-transform:uppercase;font-size:11px;line-height:1.3}
+.nav #nav-list a.nav-start:hover{background:#C9442F}
+.nav #nav-list a.nav-start .num{color:#fff}
 /* окно выбора автора */
 #author-gate{position:fixed;inset:0;z-index:99990;background:rgba(15,15,20,.92);display:flex;align-items:center;justify-content:center}
 #author-gate .ag-box{background:#16161C;border:1px solid #333;border-radius:10px;padding:34px 40px;text-align:center;font-family:'Manrope',sans-serif;color:#E8E2D6;max-width:440px}
 #author-gate .ag-h{font-size:26px;font-weight:800;margin-bottom:8px}
 #author-gate .ag-sub{font-size:13px;opacity:.7;margin-bottom:22px;line-height:1.5}
-#author-gate .ag-btns{display:flex;gap:14px;justify-content:center}
-#author-gate .ag-b{flex:1;padding:16px;border-radius:8px;border:2px solid;background:transparent;cursor:pointer;font-size:17px;font-weight:700;font-family:inherit;line-height:1.4}
-#author-gate .ag-b small{font-weight:500;opacity:.7;font-size:11px}
-#author-gate .ag-evg{color:#6fa3e0;border-color:#1b4f9c}
-#author-gate .ag-evg:hover{background:#1b4f9c;color:#fff}
-#author-gate .ag-dir{color:#ef6b85;border-color:#E5163A}
-#author-gate .ag-dir:hover{background:#E5163A;color:#fff}
+#author-gate .ag-btns{display:flex;gap:18px;justify-content:center;margin-top:4px}
+#author-gate .ag-b{flex:1;max-width:200px;padding:20px 18px;border-radius:14px;border:none;cursor:pointer;font-size:19px;font-weight:800;font-family:inherit;color:#fff;letter-spacing:.02em;display:flex;align-items:center;justify-content:center;gap:10px;transition:transform .12s,box-shadow .12s}
+#author-gate .ag-b .ag-dot{width:11px;height:11px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 0 0 4px rgba(255,255,255,.18)}
+#author-gate .ag-b:hover{transform:translateY(-3px)}
+#author-gate .ag-evg{background:linear-gradient(160deg,#2f6fd6,#163e86);box-shadow:0 8px 22px rgba(27,79,156,.45)}
+#author-gate .ag-evg:hover{box-shadow:0 12px 30px rgba(27,79,156,.6)}
+#author-gate .ag-dir{background:linear-gradient(160deg,#f23a59,#c4102f);box-shadow:0 8px 22px rgba(229,22,58,.45)}
+#author-gate .ag-dir:hover{box-shadow:0 12px 30px rgba(229,22,58,.6)}
 /* кнопка смены автора */
 #author-switch{position:fixed;left:8px;bottom:8px;z-index:50;font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:.06em;padding:4px 9px;border-radius:3px;border:1px solid currentColor;background:rgba(0,0,0,.25);cursor:pointer;opacity:.55}
 #author-switch:hover{opacity:1}
@@ -373,7 +379,7 @@ aside.refs #part-photos-todo{padding:0 14px 40px}
 
 <script>
 /* Идентификация автора правок. Ключ site-author НЕ синкается (не начинается с kolibri-). */
-window.AUTHORS={evg:{name:'Евгений',cls:'by-evg'},dir:{name:'Режиссёр',cls:'by-dir'}};
+window.AUTHORS={evg:{name:'Сценарист',cls:'by-evg'},dir:{name:'Режиссёр',cls:'by-dir'}};
 window.KAUTHOR=localStorage.getItem('site-author')||'';
 (function(){
   function syncSwitch(){
@@ -392,7 +398,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
   function showGate(){
     if(document.getElementById('author-gate'))return;
     var o=document.createElement('div');o.id='author-gate';
-    o.innerHTML='<div class="ag-box"><div class="ag-h">Кто ты?</div><div class="ag-sub">Твои правки и заметки будут помечены твоим цветом, чтобы было видно, где чья рука.</div><div class="ag-btns"><button class="ag-b ag-evg" onclick="__pickAuthor(\'evg\')">Евгений<br><small>синий</small></button><button class="ag-b ag-dir" onclick="__pickAuthor(\'dir\')">Режиссёр<br><small>красный</small></button></div></div>';
+    o.innerHTML='<div class="ag-box"><div class="ag-h">Кто ты?</div><div class="ag-sub">Твои правки и заметки будут помечены твоим цветом, чтобы было видно, где чья рука.</div><div class="ag-btns"><button class="ag-b ag-evg" onclick="__pickAuthor(\'evg\')"><span class="ag-dot"></span>Сценарист</button><button class="ag-b ag-dir" onclick="__pickAuthor(\'dir\')"><span class="ag-dot"></span>Режиссёр</button></div></div>';
     document.body.appendChild(o);
   }
   function boot(){ if(window.KAUTHOR){ensureSwitch();}else{showGate();} }
@@ -5196,17 +5202,6 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
         
 
         <div class="ref-card">
-          <div class="ref-title">📖 В.Г. Зебальд — «Естественная история разрушения» и «Аустерлиц»</div>
-          <div class="ref-body ce" contenteditable="true" data-eid="e19">
-            Метод Зебальда: автофикшн как оптика для судеб поколений. Личная рефлексия, вплетённая
-            в историю — не иллюстрация, а единственный способ говорить о разрыве и памяти честно.
-            Фотографии внутри текста не как иллюстрации, а как документальные улики. Голос нарратора
-            не знает ответов — он идёт по следу. Прямая рифма с нашей структурой: Дима ищет прапрадеда
-            через собственную травму.
-          </div>
-        </div>
-
-        <div class="ref-card">
           <div class="ref-title">🎬 YouTube-референсы режиссёра</div>
           <div class="ref-body ce" contenteditable="true" data-eid="e20" style="margin-bottom:12px">Видеоряд, собранный режиссёром — контекст, настроение, образы.</div>
           <div class="media-embed" data-src="https://youtu.be/ZI0dbx2qiHg" data-label="Референс 1"></div>
@@ -5256,6 +5251,17 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
           </div>
         </div>
       </div>
+<div class="ref-card">
+          <div class="ref-title">📖 В.Г. Зебальд — «Естественная история разрушения» и «Аустерлиц»</div>
+          <div class="ref-body ce" contenteditable="true" data-eid="e19">
+            Метод Зебальда: автофикшн как оптика для судеб поколений. Личная рефлексия, вплетённая
+            в историю — не иллюстрация, а единственный способ говорить о разрыве и памяти честно.
+            Фотографии внутри текста не как иллюстрации, а как документальные улики. Голос нарратора
+            не знает ответов — он идёт по следу. Прямая рифма с нашей структурой: Дима ищет прапрадеда
+            через собственную травму.
+          </div>
+        </div>
+
       <!-- ФОТО РАЗОБРАТЬ -->
       <section class="scene scene-section" id="part-photos-todo">
 <h2 class="slug" style="border:none"><span class="num">📷</span> ФОТО — РАЗОБРАТЬ</h2>
@@ -5293,6 +5299,8 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
     const a = document.createElement('a');
     a.href = '#'+s.id;
     a.innerHTML = slug.replace(/^(\d+)\s/, '<span class="num">$1</span>');
+    if(s.classList.contains('scene-section')) a.classList.add('nav-sec');
+    if(s.id==='part-detail') a.classList.add('nav-start');
     navList.appendChild(a);
   });
 
