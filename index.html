@@ -388,6 +388,30 @@ body.mode-outline #nav-list-outline{display:block}
 </script>
 
 <script>
+/* Санитайзер HTML из облака — защита от stored XSS (чужой пишет в общий бэкенд → код в браузере режиссёра).
+   Инертный парсинг через <template> (скрипты не исполняются, ресурсы не грузятся при парсинге),
+   срезаем опасные теги, on*-обработчики, srcdoc и javascript:/data:text/html в href/src. */
+window.kSanitize=function(html){
+  if(html==null) return html;
+  try{
+    var tpl=document.createElement('template'); tpl.innerHTML=String(html);
+    var BAD={SCRIPT:1,OBJECT:1,EMBED:1,LINK:1,STYLE:1,META:1,SVG:1,MATH:1,FORM:1,BASE:1};
+    var els=tpl.content.querySelectorAll('*');
+    for(var i=els.length-1;i>=0;i--){
+      var el=els[i];
+      if(BAD[(el.tagName||'').toUpperCase()]){ el.remove(); continue; }
+      for(var j=el.attributes.length-1;j>=0;j--){
+        var nm=el.attributes[j].name, vl=el.attributes[j].value, ln=nm.toLowerCase();
+        if(ln.indexOf('on')===0){ el.removeAttribute(nm); continue; }
+        if(ln==='srcdoc'){ el.removeAttribute(nm); continue; }
+        if((ln==='href'||ln==='src'||ln==='xlink:href') && /^\s*(javascript:|data:text\/html|vbscript:)/i.test(vl)){ el.removeAttribute(nm); }
+      }
+    }
+    return tpl.innerHTML;
+  }catch(e){ return String(html).replace(/<\s*script/gi,'&lt;script'); }
+};
+</script>
+<script>
 /* Идентификация автора правок. Ключ site-author НЕ синкается (не начинается с kolibri-). */
 window.AUTHORS={evg:{name:'Сценарист',cls:'by-evg'},dir:{name:'Режиссёр',cls:'by-dir'}};
 window.KAUTHOR=localStorage.getItem('site-author')||'';
@@ -5320,7 +5344,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
     document.querySelectorAll('.scene .body').forEach(b => {
       const id = b.closest('.scene').id;
       const saved = localStorage.getItem('kolibri-edit-'+id);
-      if(saved) b.innerHTML = saved;
+      if(saved) b.innerHTML = window.kSanitize(saved);
     });
   }
   document.querySelectorAll('.scene .body').forEach(b => {
@@ -5379,20 +5403,11 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
     document.getElementById('lightbox').classList.add('show');
   }
 
-  // ===== Keyboard: cmd+s, cmd+shift+t =====
+  // ===== Keyboard: cmd+s (снимок). Битый cmd+shift+t (тема залочена на V5) удалён. =====
   document.addEventListener('keydown', e => {
     if((e.metaKey||e.ctrlKey) && e.key === 's'){
       e.preventDefault();
       saveSnapshot();
-    }
-    if((e.metaKey||e.ctrlKey) && e.shiftKey && (e.key === 't' || e.key === 'T')){
-      e.preventDefault();
-      const themes = ['v1','v2','v3','v4','v4l','v5'];
-      const cur = themes.indexOf(document.body.className.match(/v\w+/)[0]);
-      const next = themes[(cur+1) % themes.length];
-      document.getElementById('theme').value = next;
-      setTheme(next);
-      flashSaved('тема: ' + next);
     }
   });
 
@@ -5413,11 +5428,12 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
 
   function noteHTML(type, text, when='', author=''){
     const t = NOTE_TYPES.find(x => x.k === type) || NOTE_TYPES[1];
+    const safeText = window.kSanitize ? window.kSanitize(text) : text;
     return `<div class="note-card" data-t="${t.k}"${author?` data-a="${author}"`:''}>
       <span class="ico">${t.ico}</span>
       <div class="body-note">
         <div class="who" contenteditable="false">${t.label}${when?`<span class="when">${when}</span>`:''}</div>
-        <div class="text" contenteditable="true">${text}</div>
+        <div class="text" contenteditable="true">${safeText}</div>
       </div>
       <button class="del" onclick="this.parentElement.remove();persistNotes(this.closest('.scene'))" title="удалить">✕</button>
     </div>`;
@@ -5683,7 +5699,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
   function flash(){ if(!st)return; st.textContent='\u0441\u043e\u0445\u0440\u0430\u043d\u0435\u043d\u043e'; st.classList.add('show','saved'); clearTimeout(window.__f); window.__f=setTimeout(function(){st.classList.remove('show');},1100); }
   document.querySelectorAll('[data-eid]').forEach(function(el){
     var key='kolibri-edit2-'+el.dataset.eid, sv=localStorage.getItem(key);
-    if(sv!==null) el.innerHTML=sv;
+    if(sv!==null) el.innerHTML=window.kSanitize(sv);
     el.addEventListener('input',function(){localStorage.setItem(key,el.innerHTML);flash();});
   });
   if(!app||!reader||!bar) return;
@@ -5760,8 +5776,8 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
 /* Мост для realtime-синхрона (sync.js): применяет состояние из localStorage к DOM. */
 (function(){
   function isActive(el){var a=document.activeElement;return !!(a&&el&&(el===a||el.contains(a)));}
-  function applyEdit(id,skip){var sc=document.getElementById(id);if(!sc)return;var b=sc.querySelector(':scope > .body');if(!b)return;if(skip&&isActive(b))return;var v=localStorage.getItem('kolibri-edit-'+id);if(v!=null&&b.innerHTML!==v)b.innerHTML=v;}
-  function applyEid(eid,skip){var el=document.querySelector('[data-eid="'+eid+'"]');if(!el)return;if(skip&&isActive(el))return;var v=localStorage.getItem('kolibri-edit2-'+eid);if(v!=null&&el.innerHTML!==v)el.innerHTML=v;}
+  function applyEdit(id,skip){var sc=document.getElementById(id);if(!sc)return;var b=sc.querySelector(':scope > .body');if(!b)return;if(skip&&isActive(b))return;var v=localStorage.getItem('kolibri-edit-'+id);if(v!=null){v=window.kSanitize(v);if(b.innerHTML!==v)b.innerHTML=v;}}
+  function applyEid(eid,skip){var el=document.querySelector('[data-eid="'+eid+'"]');if(!el)return;if(skip&&isActive(el))return;var v=localStorage.getItem('kolibri-edit2-'+eid);if(v!=null){v=window.kSanitize(v);if(el.innerHTML!==v)el.innerHTML=v;}}
   function applyNotes(id,skip){var sc=document.getElementById(id);if(!sc)return;if(skip){var aE=document.activeElement;var nc0=sc.querySelector(':scope > .scene-notes');if(nc0&&aE&&nc0.contains(aE))return;}var cont=sc.querySelector(':scope > .scene-notes');var saved=localStorage.getItem('kolibri-notes-'+id);var notes=[];try{notes=JSON.parse(saved||'[]');}catch(e){}if(cont)cont.innerHTML='';if(!notes.length){if(cont)cont.remove();return;}if(!cont){cont=document.createElement('div');cont.className='scene-notes';var bar=sc.querySelector('.add-note-bar');if(bar)sc.insertBefore(cont,bar);else sc.appendChild(cont);}notes.forEach(function(n){if(window.noteHTML)cont.insertAdjacentHTML('beforeend',window.noteHTML(n.t,n.html,'',n.a||''));});}
   function applyRefs(){var map={};try{map=JSON.parse(localStorage.getItem('kolibri-scene-refs-v1')||'{}');}catch(e){}
     document.querySelectorAll('main.reader .scene > .scene-refs > [data-refkey]').forEach(function(n){var x=n.querySelector(':scope > .ref-detach');if(x)x.remove();var pool=n.tagName==='IMG'?document.getElementById('pool-photos'):document.getElementById('pool-videos');if(pool)pool.appendChild(n);});
