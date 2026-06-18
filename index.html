@@ -339,6 +339,16 @@ aside.refs #part-photos-todo{padding:0 14px 40px}
 .nav #nav-list a.nav-start{display:block;background:#B23A2E;color:#fff;border-radius:5px;padding:8px 10px;margin:12px 0;font-weight:800;letter-spacing:.02em;box-shadow:0 2px 9px rgba(178,58,46,.45);text-transform:uppercase;font-size:11px;line-height:1.3}
 .nav #nav-list a.nav-start:hover{background:#C9442F}
 .nav #nav-list a.nav-start .num{color:#fff}
+/* переключатель Детальный / Краткий */
+.mode-toggle{display:flex;gap:5px;margin-left:14px}
+.mode-toggle .mt{font-family:'Courier Prime',monospace;font-size:11px;font-weight:700;letter-spacing:.03em;padding:5px 11px;border-radius:5px;border:1px solid #B23A2E;background:transparent;color:#B23A2E;cursor:pointer;white-space:nowrap}
+.mode-toggle .mt.active{background:#B23A2E;color:#fff}
+#outline-pane{display:none}
+body.mode-outline #scenes > :not(#outline-pane){display:none}
+body.mode-outline #outline-pane{display:block}
+#nav-list-outline{display:none}
+body.mode-outline #nav-list{display:none}
+body.mode-outline #nav-list-outline{display:block}
 /* окно выбора автора */
 #author-gate{position:fixed;inset:0;z-index:99990;background:rgba(15,15,20,.92);display:flex;align-items:center;justify-content:center}
 #author-gate .ag-box{background:#16161C;border:1px solid #333;border-radius:10px;padding:34px 40px;text-align:center;font-family:'Manrope',sans-serif;color:#E8E2D6;max-width:440px}
@@ -410,6 +420,10 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
 
   <header class="topbar">
     <div class="brand">КОЛИБРИ<span class="accent">.</span></div>
+    <div class="mode-toggle">
+      <button class="mt active" data-mode="detail" onclick="setMode('detail')">📖 Детальный</button>
+      <button class="mt" data-mode="outline" onclick="setMode('outline')">📋 Краткий</button>
+    </div>
     <input class="search" type="search" placeholder="поиск по тексту…" oninput="searchScenes(this.value)">
     <div class="spacer"></div>
     <button onclick="exportHTML()">📥 Экспорт</button>
@@ -420,6 +434,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
   <aside class="nav">
     <h4>Сцены</h4>
     <div id="nav-list"></div>
+    <div id="nav-list-outline"></div>
   </aside>
 
   <main class="reader">
@@ -3968,12 +3983,13 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
 <p>КОНЕЦ</p>
         </div>
       </section>
+      <div id="outline-pane">
       <section class="scene scene-section" id="part-outline">
         <h2 class="slug" style="border:none"><span class="num">★</span> КРАТКИЙ ПОЭПИЗОДНИК ЦЕЛИКОМ</h2>
         <p class="tease">Краткая версия как референс. Источник: «колибри, аутлайнер.docx». Сюда возвращаемся при расширении сцен.</p>
       </section>
       <section class="scene" id="s192">
-        <h2 class="slug"><span class="num">192</span> Заявочные кадры Мадагаскара.</h2>
+        <h2 class="slug"><span class="num">1</span> Заявочные кадры Мадагаскара.</h2>
         <div class="body" contenteditable="true">
 <p>Берег. Лица местных жителей. ЖАЛЬБЕР. Он вспоминает русских моряков, которые сто двадцать лет назад остановились здесь, на Мадагаскаре, последнем в жизни многих из тех моряков клочке мирной земли. Дальше их ждало Цусимское сражение.</p>
         </div>
@@ -3982,130 +3998,130 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
         <h2 class="slug" style="border:none">⟁ Санкт-Петербург</h2>
       </section>
       <section class="scene" id="s194">
-        <h2 class="slug"><span class="num">194</span> ДИМА едет на велосипеде по городу. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">2</span> ДИМА едет на велосипеде по городу. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Он только вернулся из антарктической экспедиции.</p>
         </div>
       </section>
       <section class="scene" id="s195">
-        <h2 class="slug"><span class="num">195</span> Дима сидит в кофейне. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">3</span> Дима сидит в кофейне. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Напротив: Ева - девушка, с которой у Димы были отношения. Он писал ей из полярной экспедиции письма, отправлял радиограммы. Она отвечала ему. Но теперь что-то изменилось: они сидят молча, совершенно чужие друг другу. Ева возвращает Диме его письма. Извиняется и уходит. Дима листает письма. (Отныне они будут включены в повествование)</p>
         </div>
       </section>
       <section class="scene" id="s196">
-        <h2 class="slug"><span class="num">196</span> Дима сидит на берегу Невы. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">4</span> Дима сидит на берегу Невы. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>У самой «Авроры». Глядит в воду, потом на антарктическое фото пингвина.</p>
         </div>
       </section>
       <section class="scene" id="s197">
-        <h2 class="slug"><span class="num">197</span> Дима стирает свои полярные вещи. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">5</span> Дима стирает свои полярные вещи. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>На чердаке раскладывает памятные арктические артефакт по полочкам. Нашивка, штамп станции «Мирный», фотографии, собственные радиограммы. Дима «химичит» с фотографиями, обрабатывает, клеит на картон, разговаривая при этом со своей голосовой помощницей. Ей он рассказывает о своих чувствах, своем раздражении к этому городу, к этому дому.</p>
         </div>
       </section>
       <section class="scene" id="s198">
-        <h2 class="slug"><span class="num">198</span> На кухне перед телевизором сидит ДЕД Димы. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">6</span> На кухне перед телевизором сидит ДЕД Димы. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Смотрит какое-то ток-шоу. Попивает вино. Дима хочет с ним поговорить, рассказать об Антарктике и своем внутреннем льде. Но Дед не настроен. Он вообще к Диме настроен сухо и холодно. Дед потомственный военный - он в целом не способен говорить о чувствах, о том, что действительно беспокоит.</p>
         </div>
       </section>
       <section class="scene" id="s199">
-        <h2 class="slug"><span class="num">199</span> В соседней комнате Дима листает семейный фотоальбом. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">7</span> В соседней комнате Дима листает семейный фотоальбом. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Мужчины на фотографиях сплошь в военной форме. Здесь есть и Дед на фоне советской казармы. На другой фотографии середины 90х мужчина в камуфляже на фоне гор. Дима поглаживает это фото. На нескольких карточках начала ХХ века запечатлен военный, лицо которого закрашено.</p>
         </div>
       </section>
       <section class="scene" id="s200">
-        <h2 class="slug"><span class="num">200</span> Снова Дима катится на велосипеде по городу. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">8</span> Снова Дима катится на велосипеде по городу. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
         </div>
       </section>
       <section class="scene" id="s201">
-        <h2 class="slug"><span class="num">201</span> Дима приезжает на Ленфильм, здесь он работает. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">9</span> Дима приезжает на Ленфильм, здесь он работает. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Курилка у павильона. Кинобуфет. Карта на доске - как часть декорации. Дима здоровается с коллегами. Диму расспрашивают об Антарктиде. Дима отвечает неохотно. Зато парни рассказывают о срочной экспедиции на Мадагаскар. Какая-то бутылка с русским посланием нашлась. Ехать нужно сегодня вечером. Поедет Леша, приятель Димы. Он единственный не занят, единственный готов сорваться. В Диминых глазах вдруг что-то проблескивает.</p>
         </div>
       </section>
       <section class="scene" id="s202">
-        <h2 class="slug"><span class="num">202</span> Дима идет по Ленфильму. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">10</span> Дима идет по Ленфильму. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Здесь одновременно снимают кино о войне и о каких-то тропиках. Дима идет сквозь декорации: пулеметы, девушек с винтовками и пальмы.</p>
         </div>
       </section>
       <section class="scene" id="s203">
-        <h2 class="slug"><span class="num">203</span> Заходит в отдел, выдающий съемочное оборудование. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">11</span> Заходит в отдел, выдающий съемочное оборудование. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Возвращает пару приборов, дрон Дима утопил во льдах. Здесь Дима снова слышит о Мадагаскаре: работник отдела готовит технику для Леши.</p>
         </div>
       </section>
       <section class="scene" id="s204">
-        <h2 class="slug"><span class="num">204</span> В коридорах Дима встречает самого Лешу. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">12</span> В коридорах Дима встречает самого Лешу. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Тот светится от счастья - он мечтал об Африканской экспедиции. Леша обещает расспросить Диму об Антарктике потом, сейчас нужно срочно собираться в командировку.</p>
         </div>
       </section>
       <section class="scene" id="s205">
-        <h2 class="slug"><span class="num">205</span> Сквозь людную приемную директора Дима проскакивает сразу к нему в кабинет. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">13</span> Сквозь людную приемную директора Дима проскакивает сразу к нему в кабинет. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
         </div>
       </section>
       <section class="scene" id="s206">
-        <h2 class="slug"><span class="num">206</span> ДИРЕКТОР заканчивает телефонный разговор. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">14</span> ДИРЕКТОР заканчивает телефонный разговор. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Дима сразу заявляет ему, что готов сам ехать на Мадагаскар. Директор видит Диму впервые после его экспедиции. Директор говорит, что это исключено: Диме нужно отдохнуть, поработать на студии, монтировать Антарктиду.К тому же Дима еще прошлый фильм с Камчатки до ума не довел. Дима говорит, что Антарктиду он смонтировал, пока возвращался на «Федорове» домой. Почти смонтировал. Просит директора,  умоляет. Но поедет Леша. Леша и может, и Африку любит. А Диме пора уже закрывать свои рабочие долги.</p>
         </div>
       </section>
       <section class="scene" id="s207">
-        <h2 class="slug"><span class="num">207</span> Дима выходит из кабинета. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">15</span> Дима выходит из кабинета. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Приемная директора Ленфильма. Тут людно, суетно. Секретарь ОЛЯ, молодая девушка, висит на телефоне, печатает, отвечает на вопросы. Дима подходит к ней. По его взгляду она понимает, что вопрос серьезный. Дима говорит ей, что должен поехать на Мадагаскар вместо Леши. Оля говорит, что все решено, едет Леша. Дима говорит, что не может здесь находиться, что Дома ему плохо. Оля рассказывает, что на Мадагаскаре военное положение. Нужно было подавать имя документалиста в пограничную службу и в посольство. Они вышлют вызывные документы. Они оформляют все на Лешу. Дима пытается задобрить ее арктическим сувениром. Оля только закатывает глаза. Дима говорит, что сам тогда уедет, все равно здесь он находиться не может. «Дима, у тебя разнарядка работать на студии. Как ты себе это представляешь? Тебя уволят». Вдруг приемная пустеет, Оля и Дима остаются одни. Дима вываливает Оле все, как есть: что любовь кончилась, что Дед за человека не считает, что смысла в этой жизни дома, в своей работе он не видит. Говорит он так упаднически, что Оля набирает пограничную службу. Она находу врет, придумывает, что у Леши проблемы с законом или со здоровьем.  Придется заменить. На Олю ругаются в трубке, но соглашаются. Оля называет Димино имя. Дима благодарно обняв Олю уходит, а Оля заходит к Директору, чтобы наврать и ему.</p>
         </div>
       </section>
       <section class="scene" id="s208">
-        <h2 class="slug"><span class="num">208</span> Из принтера вылезают документ за документом, на русском, английском и малагасийском. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">16</span> Из принтера вылезают документ за документом, на русском, английском и малагасийском. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>В них всех значится имя Дима Арктика.</p>
         </div>
       </section>
       <section class="scene" id="s209">
-        <h2 class="slug"><span class="num">209</span> Директор недовольно подписывает документы с именем Димы. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">17</span> Директор недовольно подписывает документы с именем Димы. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
         </div>
       </section>
       <section class="scene" id="s210">
-        <h2 class="slug"><span class="num">210</span> Дима с документом пришел за техникой. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">18</span> Дима с документом пришел за техникой. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>«А Леша? Он же мечтал о Мадагаскаре?». Дима опускает глаза. Работник выдает Диме всякие съемочные гаджеты. Диме приходит сообщение: «вылет сегодня в 22 часа». Дима смотрит на время - уже 19:20.</p>
         </div>
       </section>
       <section class="scene" id="s211">
-        <h2 class="slug"><span class="num">211</span> Дома Димы быстро собирает вещи. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">19</span> Дома Димы быстро собирает вещи. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Кладет в рюкзак свою кружку с пингвином, арктические полароиды. Попутно слушает доклад своей голосовой помощницы о бутылке с посланием. Ее отправили с Мадагаскара русские моряки, в начале ХХ века. Все они шли на кораблях эскадры Рожественского, которая стояла у берегов острова перед отправкой в Цусиму.</p>
         </div>
       </section>
       <section class="scene" id="s212">
-        <h2 class="slug"><span class="num">212</span> Загруженный вещами Дима прощается с Дедом, который снова сидит перед телевизором. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">20</span> Загруженный вещами Дима прощается с Дедом, который снова сидит перед телевизором. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Говорят они колко. Услышав о Мадагаскаре, Дед припоминает историю Диминого прапрадеда, который пропал на Мадагаскаре. Дезертировал, бросил своих товарищей, шедших в Цусиму. Дима, вероятно, решил отправиться за старым Арктикой следом. К мулаткам и ананасам. Бросить родину. Ничего другого Дед от Димы не ждал. Бабушка его таким воспитала. А Дима вдруг, бросив вещи, срывается с места - он что-то вспомнил.</p>
         </div>
       </section>
       <section class="scene" id="s213">
-        <h2 class="slug"><span class="num">213</span> Дима возвращается на свой чердак. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">21</span> Дима возвращается на свой чердак. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Лезет на заваленную вещами полку, достает маленький чемоданчик. В нем старые фотокарточки, радиограммы,  кипа рукописного текста подписанного: «В память об отце моей матери, пропавшем на острове Мадагаскаре». И маленькая печатная машинка Colibri. Дима берет чемоданчик с собой.</p>
         </div>
       </section>
       <section class="scene" id="s214">
-        <h2 class="slug"><span class="num">214</span> Хлопает квартирная дверь. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">22</span> Хлопает квартирная дверь. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Дед остается один. Злоба и ехидство на его лице сменяются грустью. Он допивает вино.</p>
         </div>
       </section>
       <section class="scene" id="s215">
-        <h2 class="slug"><span class="num">215</span> Дима подбегает, опаздывая, к таможенному контролю. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">23</span> Дима подбегает, опаздывая, к таможенному контролю. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Проходит его.</p>
         </div>
@@ -4116,7 +4132,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
         </div>
       </section>
       <section class="scene" id="s217">
-        <h2 class="slug"><span class="num">217</span> Дима идет по борту ледокола «Академик Федоров», таща с собой свои вещи и технику, ищет каюту. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">24</span> Дима идет по борту ледокола «Академик Федоров», таща с собой свои вещи и технику, ищет каюту. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Дима стоит на корме, ледокол покидает Питерский порт. Мы слышим первую радиограмму прапрадеда, в ней он описывает как на борту крейсера «Камчатка» покидал тот же питерский порт в 1904 году.</p>
         </div>
@@ -4130,54 +4146,54 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
         <h2 class="slug" style="border:none">⟁ Антананариву</h2>
       </section>
       <section class="scene" id="s220">
-        <h2 class="slug"><span class="num">220</span> Дима проходит паспортный контроль в аэропорту Антананариву. <span class="loc">Антананариву</span></h2>
+        <h2 class="slug"><span class="num">25</span> Дима проходит паспортный контроль в аэропорту Антананариву. <span class="loc">Антананариву</span></h2>
         <div class="body" contenteditable="true">
         </div>
       </section>
       <section class="scene" id="s221">
-        <h2 class="slug"><span class="num">221</span> Дима выходит из здания аэропорта. <span class="loc">Антананариву</span></h2>
+        <h2 class="slug"><span class="num">26</span> Дима выходит из здания аэропорта. <span class="loc">Антананариву</span></h2>
         <div class="body" contenteditable="true">
 <p>Жара, палящее солнце. Дима садится в такси.</p>
         </div>
       </section>
       <section class="scene" id="s222">
-        <h2 class="slug"><span class="num">222</span> Дима едет в такси по городу. <span class="loc">Антананариву</span></h2>
+        <h2 class="slug"><span class="num">27</span> Дима едет в такси по городу. <span class="loc">Антананариву</span></h2>
         <div class="body" contenteditable="true">
 <p>Город грязный, кричащий, людный. Видны следы беспокойной военной жизни. Дима начинает снимать свой фильм.</p>
         </div>
       </section>
       <section class="scene" id="s223">
-        <h2 class="slug"><span class="num">223</span> Дима в гостинице. <span class="loc">Антананариву</span></h2>
+        <h2 class="slug"><span class="num">28</span> Дима в гостинице. <span class="loc">Антананариву</span></h2>
         <div class="body" contenteditable="true">
 <p>Здесь тихо. Он располагается, умывается. Достает какие-то свои вещи. Включает телевизор: из него льются репортажи о стрельбе и беспорядках.</p>
         </div>
       </section>
       <section class="scene" id="s224">
-        <h2 class="slug"><span class="num">224</span> Дима в холле гостиницы. <span class="loc">Антананариву</span></h2>
+        <h2 class="slug"><span class="num">29</span> Дима в холле гостиницы. <span class="loc">Антананариву</span></h2>
         <div class="body" contenteditable="true">
 <p>Стоит у дверей, не может решиться выйти в шумный, набрасывающийся на него город.</p>
         </div>
       </section>
       <section class="scene" id="s225">
-        <h2 class="slug"><span class="num">225</span> Рынок. <span class="loc">Антананариву</span></h2>
+        <h2 class="slug"><span class="num">30</span> Рынок. <span class="loc">Антананариву</span></h2>
         <div class="body" contenteditable="true">
 <p>Дима бродит. Снимает. Покупает ананас. Набредает на лавку с антиквариатом. Похоже, эти вещи выкопаны из земли, куплены на черных рынках. Русского здесь ничего нет. Возле лавки топчется парень, он то ли владелец, то ли поставщик. Дима покупает себе колониальный старинный шлем. Надевает его поверх своей шляпы.</p>
         </div>
       </section>
       <section class="scene" id="s226">
-        <h2 class="slug"><span class="num">226</span> Дима гуляет по городу. <span class="loc">Антананариву</span></h2>
+        <h2 class="slug"><span class="num">31</span> Дима гуляет по городу. <span class="loc">Антананариву</span></h2>
         <div class="body" contenteditable="true">
 <p>Снимает детей, протестующих подростков. Попрошаек и проституток.</p>
         </div>
       </section>
       <section class="scene" id="s227">
-        <h2 class="slug"><span class="num">227</span> Дима едет в такси. <span class="loc">Антананариву</span></h2>
+        <h2 class="slug"><span class="num">32</span> Дима едет в такси. <span class="loc">Антананариву</span></h2>
         <div class="body" contenteditable="true">
 <p>Снимает. Вдруг, пока машина стоит в заторе, через открытое окно у Димы выхватывают сумку с документами, лежавшую у него на коленях. Дима выскакивает из такси и пускается в погоню за грабителем.</p>
         </div>
       </section>
       <section class="scene" id="s228">
-        <h2 class="slug"><span class="num">228</span> Дима долго его преследует, не выключая камеры. <span class="loc">Антананариву</span></h2>
+        <h2 class="slug"><span class="num">33</span> Дима долго его преследует, не выключая камеры. <span class="loc">Антананариву</span></h2>
         <div class="body" contenteditable="true">
 <p>Грабитель заводит его в узкие дворы, в вереницу хибар. Дима роняет свои очки с камерой, возвараащется за ними и из-за этого теряет след. Стоит, пытается отдышаться и записывает обращение прямо в камеру. С этого момента Дима будет вести этот видеодневник. Подняв мокрую от пота голову к небу, он замечает на стене здания какую-то надпись или рисунок. Через который мы попадаем во флэшбэк.</p>
         </div>
@@ -4188,31 +4204,31 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
         </div>
       </section>
       <section class="scene" id="s230">
-        <h2 class="slug"><span class="num">230</span> Посольство РФ. <span class="loc">Антананариву</span></h2>
+        <h2 class="slug"><span class="num">34</span> Посольство РФ. <span class="loc">Антананариву</span></h2>
         <div class="body" contenteditable="true">
 <p>Диму в обнимку с ананасом проводят по коридорам. Он ждет приглашения в кабинет посла.</p>
         </div>
       </section>
       <section class="scene" id="s231">
-        <h2 class="slug"><span class="num">231</span> Дима заходит в кабинет посла. <span class="loc">Антананариву</span></h2>
+        <h2 class="slug"><span class="num">35</span> Дима заходит в кабинет посла. <span class="loc">Антананариву</span></h2>
         <div class="body" contenteditable="true">
 <p>Он уже в курсе сложившейся ситуации. Он выдает Диме временные документы - новые будут готовы через тридцать дней. Посол предупреждает об опасностях столицы острова. Лучше уехать куда-то. Дима хочет ознакомиться с посланием из бутылки. Но это увы невозможно, послание уже уехало в Россию - они с Димой разминулись. Посол рассказывает, что русская эскадра стояла на острове Носи-бе. Это на другой стороне Мадагаскара. У Димы как раз есть время отправиться туда.</p>
         </div>
       </section>
       <section class="scene" id="s232">
-        <h2 class="slug"><span class="num">232</span> У выхода из посольства Диму догоняет сотрудник. <span class="loc">Антананариву</span></h2>
+        <h2 class="slug"><span class="num">36</span> У выхода из посольства Диму догоняет сотрудник. <span class="loc">Антананариву</span></h2>
         <div class="body" contenteditable="true">
 <p>Он дает ему контакт одного русского бывшего военного в городе, решалы. У того много подвязок на Носи-бе.</p>
         </div>
       </section>
       <section class="scene" id="s233">
-        <h2 class="slug"><span class="num">233</span> Дима пришел в гости к этому русскому. <span class="loc">Антананариву</span></h2>
+        <h2 class="slug"><span class="num">37</span> Дима пришел в гости к этому русскому. <span class="loc">Антананариву</span></h2>
         <div class="body" contenteditable="true">
 <p>Он усаживает его за стол, угощает водкой - но Дима не пьет. Русский много рассказывает о ситуации на острове. О том, что колониальность не закончилась. Все так и делят остров между собой, как это было в начале ХХ века. У русского местная жена. Она как раз родом с Носи-бе. Она дает Диме контакт Жальбера - русскоговорящего, «нашего» человека. Он краевед, он много знает о русской эскадре. Он сможет помочь. Дима снимает русского и его жену по их просьбе - им тоже хочется быть частью фильма. У Диму есть кейс с картами памяти. Время от времени по мере съемок Дима залезает в него, меняя карты.</p>
         </div>
       </section>
       <section class="scene" id="s234">
-        <h2 class="slug"><span class="num">234</span> Ночь, балкон гостиничного номера. <span class="loc">Антананариву</span></h2>
+        <h2 class="slug"><span class="num">38</span> Ночь, балкон гостиничного номера. <span class="loc">Антананариву</span></h2>
         <div class="body" contenteditable="true">
 <p>Слышится какая-то потасовка на улице. Дима жадно ест ананас. В печатную машинку заряжен лист. Дима печатает что-то вроде дневника, записки его размышлений. Он сомневается, печатая свои сомнения на бумаге: нужно ли отправляться на другую часть острова, неизвестно куда, неизвестно зачем. «А что если прапрадед - один их этих моряков в записке. Что если он не дезертир. Бабушка в это не верила. Но это бред. Так не бывает.»Дима листает рукопись прабабушки. Она не дописана, оборвана на полуслове.</p>
         </div>
@@ -4221,197 +4237,197 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
         <h2 class="slug" style="border:none">⟁ Мадагаскар</h2>
       </section>
       <section class="scene" id="s236">
-        <h2 class="slug"><span class="num">236</span> Дима на перекладных едет через всю страну. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">39</span> Дима на перекладных едет через всю страну. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Снимает, останавливается. Печатает.</p>
         </div>
       </section>
       <section class="scene" id="s237">
-        <h2 class="slug"><span class="num">237</span> Деревня у аллеи баобабов. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">40</span> Деревня у аллеи баобабов. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Дима выходит из автобуса. Бродит по деревне, снимает местных, солнце садится. Сквозь  рощу баобабов проехать можно будет только утром. Дима набредает на местных, играющих во дворе в футбол. Дима запускает дрон ТОРОПЫГУ в небо. Снимает сверху. Местные замечают это, с любопытством заглядывают в пульт в руках Димы. Глядят на себя самих.</p>
         </div>
       </section>
       <section class="scene" id="s238">
-        <h2 class="slug"><span class="num">238</span> В рисовом поле Дима встречает парней-подростков, они работают. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">41</span> В рисовом поле Дима встречает парней-подростков, они работают. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Дима дает им камеру, чтоб те поснимали себя и Диму. Так Дима, не знающий малагасийского языка, говорит с ними через камеру.</p>
         </div>
       </section>
       <section class="scene" id="s239">
-        <h2 class="slug"><span class="num">239</span> На окраине деревни Дима попадает на посиделки местных у костра. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">42</span> На окраине деревни Дима попадает на посиделки местных у костра. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Аллея баобабов - сакральное место, переход. А переход всегда сторожат духи. Оказывается, тут в хижине живет местная колдунья. Сейчас она будет с этими духами общаться. Дима снимает исподтишка. Колдунья делает предсказание и Диме, отрезав прядь его рыжей бороды. Диме дают выпить отвар.</p>
         </div>
       </section>
       <section class="scene" id="s240">
-        <h2 class="slug"><span class="num">240</span> Утро. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">43</span> Утро. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Дима сидит под баобабом и печатает. Мимо проезжает повозка запряженная Зебу - традиционный здесь транспорт. Дима запрыгивает в повозку. Едет.</p>
         </div>
       </section>
       <section class="scene" id="s241">
-        <h2 class="slug"><span class="num">241</span> Переправа на Носи-бе. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">44</span> Переправа на Носи-бе. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Дима смотрит сквозь пролив на остров. Запускает блинчик камушком.</p>
         </div>
       </section>
       <section class="scene" id="s242">
-        <h2 class="slug"><span class="num">242</span> Носи-бе. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">45</span> Носи-бе. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
         </div>
       </section>
       <section class="scene" id="s243">
-        <h2 class="slug"><span class="num">243</span> Дима на лодке переплавляется на Носи-бе. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">46</span> Дима на лодке переплавляется на Носи-бе. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Мы слышим радиограмму прапрадеда о приближении крейсера «Камчатка» к берегам Мадагаскара. «Сколько продлится наша стоянка - неизвестно.»</p>
         </div>
       </section>
       <section class="scene" id="s244">
-        <h2 class="slug"><span class="num">244</span> Дима едет в Тук-туке по Носи-бе. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">47</span> Дима едет в Тук-туке по Носи-бе. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Остров сильно отличается от столицы Мадагаскара. Здесь спокойно и чисто. Люди идут с работы домой. Дима снимает. Тук-тук приезжает в деревню Джаманджар.</p>
         </div>
       </section>
       <section class="scene" id="s245">
-        <h2 class="slug"><span class="num">245</span> Дима стоит у синего дома. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">48</span> Дима стоит у синего дома. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Ждет. Приходит Жальбер. Знакомятся. Жальбер хорошо говорит по-русский, он когда-то учился в Одесской мореходке. Идут по деревне. Жальбер поселит Диму к одной семье.</p>
         </div>
       </section>
       <section class="scene" id="s246">
-        <h2 class="slug"><span class="num">246</span> Двор газбаллона - дома в виде нескольких бетонных полусфер. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">49</span> Двор газбаллона - дома в виде нескольких бетонных полусфер. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Тут Дима будет жить. Их встречает ХОЗЯЙКА ГАЗБАЛЛОНА (40). Здесь живет семья: с хозяйкой живет ее мама и двое детей - девочка постарше и хромой мальчик ТАХО (14). Диму размещают в скромной комнате. Дима рассказывает о себе, что оператор, что снимает кино.</p>
         </div>
       </section>
       <section class="scene" id="s247">
-        <h2 class="slug"><span class="num">247</span> Ужинают. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">50</span> Ужинают. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Жальбер тоже остался. Разговаривают. Диме неуютно. Он, конечно,  не понимает языка. Жальбер приглашает Диму завтра в свой дом-музей.</p>
         </div>
       </section>
       <section class="scene" id="s248">
-        <h2 class="slug"><span class="num">248</span> Ночь. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">51</span> Ночь. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Дима сидит на крылечке. Тахо следит за ним из окошка.</p>
         </div>
       </section>
       <section class="scene" id="s249">
-        <h2 class="slug"><span class="num">249</span> Утро. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">52</span> Утро. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Дима просыпается. Хозяйка гремит посудой, готовит завтрак и уходит на работу. Девочка быстро ест и убегает в школу. Бабушка лежит в своей кровати, а Тахо почему-то остается дома.</p>
         </div>
       </section>
       <section class="scene" id="s250">
-        <h2 class="slug"><span class="num">250</span> Дима завтракает на оживленной улочке Джаманджара. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">53</span> Дима завтракает на оживленной улочке Джаманджара. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Мимо проезжает местный на велосипеде, Дима смотрит на велик с завистью.</p>
         </div>
       </section>
       <section class="scene" id="s251">
-        <h2 class="slug"><span class="num">251</span> Дом-музей Жальбера. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">54</span> Дом-музей Жальбера. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Он показывает различные артефакт, связанные с русской эскадрой, рассказывает подробности. Затем показывает Диме старый вахтовый портовый журнал. Находят записи от января 1905. Среди множества сходов на остров и возвращении на корабль русских моряков, которые курсировали туда-сюда, есть пять человек, которые так и не вернулись на корабль. Возможно, именно они написали ту записку. Среди пяти фамилий Дима находит свою. Это повергает его то ли в шок, то ли в восторг. Дима узнает, что эскадра стояла в бухте, теперь названной «Русской». Если и искать русский след, то там. Но для такой экспедиции нужно хорошо снарядиться, подготовиться, найти лодку. Жальбер рассказывает что-то о себе. Показывает свои советские фотокарточки.</p>
         </div>
       </section>
       <section class="scene" id="s252">
-        <h2 class="slug"><span class="num">252</span> Дима и Жальбер едут в тук-туке. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">55</span> Дима и Жальбер едут в тук-туке. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Жальбер учит Диму малагасийскому. Дима снимает все и всех. Он подмечает рубашку на Жальбере - она будто сделана из старого холщового мешка.</p>
         </div>
       </section>
       <section class="scene" id="s253">
-        <h2 class="slug"><span class="num">253</span> Кладбище. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">56</span> Кладбище. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Жальбер показывает Диме несколько крестов с русскими именами. Это моряки с крейсеров «Урал» и «Аврора». В траве Дима находит обшарпанную табличку с полу-развалившегося креста - тоже русский моряк. Жальбер и Дима вместе крепят табличку на место. Дима кладет на кресты цветы, принесенные с собой.</p>
         </div>
       </section>
       <section class="scene" id="s254">
-        <h2 class="slug"><span class="num">254</span> Рынок. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">57</span> Рынок. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Идет дождь. Дима покупает старую красивую книгу Жюля Верна на французском. Потом Жальбер торгуются за велосипед со спущенным колесом. Дима покупает его.</p>
         </div>
       </section>
       <section class="scene" id="s255">
-        <h2 class="slug"><span class="num">255</span> Жальбер приводит Диму в автомастерскую к своему другу Тото. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">58</span> Жальбер приводит Диму в автомастерскую к своему другу Тото. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Там они накачивают колесо. Жальбер просит помочь Тото с экспедицией в Русскую бухту. Тото все решит. Дима благодарит и уезжает на велосипеде.</p>
         </div>
       </section>
       <section class="scene" id="s256">
-        <h2 class="slug"><span class="num">256</span> Дима едет по улочкам Джаманджара. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">59</span> Дима едет по улочкам Джаманджара. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
         </div>
       </section>
       <section class="scene" id="s257">
-        <h2 class="slug"><span class="num">257</span> Дима приезжает домой в газбаллон. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">60</span> Дима приезжает домой в газбаллон. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Дарит Тахо Жюля Верна. Просит по книге учить его французскому. Тахо читает. Замечают, что протекает крыша. Дима берется ее латать. Дима замешивает цемент. Он насыпает горку этого цемента и  заливает в центр горки воду. Получается что-то похожее на кратер вулкана. Такие Дима видел на Камчатке. А к Тахо приходит АЙМАНТ (22), школьная учительница. Ей нужно проверять уроки, ведь Тахо учится дома. Дима и Аймант знакомятся. Дождь заканчивается. Пока Дима ремонтировал крышу, он испачкал свою рубашку. Дима споласкивает ее в тазу и вешает на веревку сушиться.</p>
         </div>
       </section>
       <section class="scene" id="s258">
-        <h2 class="slug"><span class="num">258</span> Утро. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">61</span> Утро. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Дима просыпается и видит, что вместо рубашки на веревке висит табличка с надписью «Merci sinior».</p>
         </div>
       </section>
       <section class="scene" id="s259">
-        <h2 class="slug"><span class="num">259</span> Дима срывает табличку. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">62</span> Дима срывает табличку. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Смеется. Кричит «силь ву пле».</p>
         </div>
       </section>
       <section class="scene" id="s260">
-        <h2 class="slug"><span class="num">260</span> Жальбер привел Диму на рынок. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">63</span> Жальбер привел Диму на рынок. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>В лавку швеи. Именно она шьет одежду из старых холщовых мешков. У нее висят готовые предметы одежды и мешки, из который можно выбрать. Дима роется в мешках и находит советский Import khleb. Швея снимает с Димы мерки. Вокруг Жальбера крутится девчонка – внучка Швеи. Дима снимает. Рубашка готова. Теперь Дима сливается с ландшафтом. Дима и Жальбер идут дальше по рынку. Покупают портативный акваланг - систему Хука. Затем заходят в мясной отдел, чтобы купить мачете. Он поможет бороться с джунглями. Диму с Жальбером с рынка забирает Тото на своем джипе.</p>
         </div>
       </section>
       <section class="scene" id="s261">
-        <h2 class="slug"><span class="num">261</span> Едут. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">64</span> Едут. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Болтают. Говорят о России и Мадагаскаре. Об одесских годах Жальбера и об арктических месяцах Димы. Заезжают за дочкой Тото в школу. На пороге стоит Аймант. Дима подходит к ней, дарит конфету, завалявшуюся в кармане, перебрасывается парой слов. Едут дальше, завозят дочку Тото домой.</p>
         </div>
       </section>
       <section class="scene" id="s262">
-        <h2 class="slug"><span class="num">262</span> Тото и Жальбер показывают Диме Носи-бе. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">65</span> Тото и Жальбер показывают Диме Носи-бе. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Дима водит металлоискателем по дюнам.</p>
         </div>
       </section>
       <section class="scene" id="s263">
-        <h2 class="slug"><span class="num">263</span> Приехали на океан. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">66</span> Приехали на океан. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Купаются, разговаривают, перекусывают. Слышно письмо прапрадеда об стоянке эскадры на острове. О местных. О солнце и жаре.</p>
         </div>
       </section>
       <section class="scene" id="s264">
-        <h2 class="slug"><span class="num">264</span> Газбаллон. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">67</span> Газбаллон. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Вечер. Дима и Тахо сидят на крыльце. Едят чипсы. Дима рассказывает о прошедшем дне. Тахо берет металлоискатель, ходит с ним по двору - находит только мусор. Дима зовет Тахо с собой на берег - там настоящие сокровища. Но Тахо редко куда-то ходит. Дима говорит, что Тахо дома как в тюрьме. У Димы тоже так было - в каюте ледокола. Говорят о станции «Мирный», о друзьях Димы.</p>
         </div>
       </section>
       <section class="scene" id="s265">
-        <h2 class="slug"><span class="num">265</span> Утро. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">68</span> Утро. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Жальбер привел Диму на заброшенный сахарный завод. Жальбер здесь раньше работал. Это было центром жизни, пульсом - хоть и токсичным, пусть и копейки приносящим. Но все же Жальбер тоскует. Говорят о родине - что это? Где она?</p>
         </div>
       </section>
       <section class="scene" id="s266">
-        <h2 class="slug"><span class="num">266</span> Дима едет на велосипеде по острову. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">69</span> Дима едет на велосипеде по острову. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Глазеет. Пищит металлоискателем. Снимает.</p>
         </div>
       </section>
       <section class="scene" id="s267">
-        <h2 class="slug"><span class="num">267</span> Останавливается в безлюдном месте, на берегу. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">70</span> Останавливается в безлюдном месте, на берегу. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Печатает на машинке. Вдруг Дима слышит фортепьянную мелодию, но вокруг только джунгли. Дима идет по джунглям на звук. Выходит к хижине. Заглядывает в нее.</p>
         </div>
       </section>
       <section class="scene" id="s268">
-        <h2 class="slug"><span class="num">268</span> В этом доме живет бывший французский военный ЭМАНУЭЛЬ. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">71</span> В этом доме живет бывший французский военный ЭМАНУЭЛЬ. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Это он играет на фортепиано. Он приглашает Диму в гости. Внутри дом обставлен французскими предметами и атрибутами. Эмануэль в 90-е участвовал в различных военных операциях в числе ограниченного французского контингента. Потом боролся с сомалийскими пиратами. А потом решил не возвращаться во Францию. Не захотел в цивилизацию. Для него цивилизация - это война. Дима рассказывает, что был в месте, где нет цивилизация, но осталось война. Это Шумшу - остров на Камчатке. У Димы там была экспедиция до Антарктиды.</p>
         </div>
@@ -4422,7 +4438,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
         </div>
       </section>
       <section class="scene" id="s270">
-        <h2 class="slug"><span class="num">270</span> Шумшу. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">72</span> Шумшу. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Место последней битвы Второй мировой войны. На берегу океана, на холмах разбросаны ржавые покореженный танки. Земля избофождена рвами. Археологи занимаются раскопками. Дима ездит по острову вместе с проводником - архиологом Самариным. Дима ночует у танка, закрепив на его дуло прозрачную пленку - она служит крышей.  Дима читает«Воскресение» Толстого.</p>
         </div>
@@ -4439,90 +4455,90 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
         </div>
       </section>
       <section class="scene" id="s272">
-        <h2 class="slug"><span class="num">272</span> Дом Аймант. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">73</span> Дом Аймант. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Дима пришел помочь ей со стиркой. Он берет одну корзину с бельем, она другую.</p>
         </div>
       </section>
       <section class="scene" id="s273">
-        <h2 class="slug"><span class="num">273</span> Стирают вещи под небольшим водопадом. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">74</span> Стирают вещи под небольшим водопадом. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Разговаривают. Аймант интересно, зачем Дима приехал сюда на самом деле. Дима рассказывает, что бежал от города, от семьи, от вечной войны. А получается здесь то же: след прапрадеда, военного моряка. Аймант говорит, что это не просто так. Это Димин путь. Надо найти прапрадеда. Тогда все встанет на свои места. Аймант готова Диме помочь, чем сможет. Есть у нее знакомый, который считает себя потомком русского. Аймант замечает дырку на Диминой вещи, которую он стирал. Она забирает ее, чтоб зашить.</p>
         </div>
       </section>
       <section class="scene" id="s274">
-        <h2 class="slug"><span class="num">274</span> Газбаллон. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">75</span> Газбаллон. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Дима и Тахо сидят за столом. Тахо ремонтирует свои наручные часы. Дима же что-то клеит, мастерит. И выходит с эти во двор.</p>
         </div>
       </section>
       <section class="scene" id="s275">
-        <h2 class="slug"><span class="num">275</span> С сахарного завода Дима притащил массу всякого хлама. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">76</span> С сахарного завода Дима притащил массу всякого хлама. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>И сделал из него макет станции мирный. Зовет Тахо во двор. Здесь и айсберги, и домики, и вертолет, и «Академик Федоров». Дима дает Тахо камеру, тот снимает макет станции. Дима говорит, что дом-газбаллон похож на станцию австралийцев.</p>
         </div>
       </section>
       <section class="scene" id="s276">
-        <h2 class="slug"><span class="num">276</span> Дима и Тахо заходят в дом, чтобы Дима показал полароидные снимки из Антарктики. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">77</span> Дима и Тахо заходят в дом, чтобы Дима показал полароидные снимки из Антарктики. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>В том числе станцию Австралийцев. Вешают фотографии на стену. Тут и друзья Димы: Полярный Дэн, Света, Ким. На улице сигналит машина.</p>
         </div>
       </section>
       <section class="scene" id="s277">
-        <h2 class="slug"><span class="num">277</span> Дима входит. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">78</span> Дима входит. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Это Тото приехал на какой-то другой ретро машине. Зовет Диму прокатится. По делам эскадры. Дима зовет Тахо с собой, но тот отказывается.</p>
         </div>
       </section>
       <section class="scene" id="s278">
-        <h2 class="slug"><span class="num">278</span> Едут по вечернему острову. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">79</span> Едут по вечернему острову. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
         </div>
       </section>
       <section class="scene" id="s279">
-        <h2 class="slug"><span class="num">279</span> Тото привез Диму в бар. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">80</span> Тото привез Диму в бар. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Тут танцуют и пьют. Про эскадру Тото, конечно, наврал.  Дима пить отказывается. Тото говорит обо всем подряд: и о женщинах, и о политике. А Дима глазеет и снимает, за что чуть не нарывается на взбучку от местных, но Тото все улаживает.</p>
         </div>
       </section>
       <section class="scene" id="s280">
-        <h2 class="slug"><span class="num">280</span> Утро. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">81</span> Утро. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Дима и Аймант гуляют, болтают. Катаются на велосипеде.</p>
         </div>
       </section>
       <section class="scene" id="s281">
-        <h2 class="slug"><span class="num">281</span> Тахо, Дима и Аймант читают Жюля Верна. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">82</span> Тахо, Дима и Аймант читают Жюля Верна. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Делают рекламе Диминого арктического фильма, который тот собирается показать. Тахо относит одну рекламу бабушке.</p>
         </div>
       </section>
       <section class="scene" id="s282">
-        <h2 class="slug"><span class="num">282</span> Тахо, хромая, почти бегает по деревне. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">83</span> Тахо, хромая, почти бегает по деревне. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Раздает рекламки и криком анонсирует: Премьера фильма про Антарктиду.</p>
         </div>
       </section>
       <section class="scene" id="s283">
-        <h2 class="slug"><span class="num">283</span> Дима печет блины. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">84</span> Дима печет блины. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Аймант помогает Жальберу делать селедку под шубой.</p>
         </div>
       </section>
       <section class="scene" id="s284">
-        <h2 class="slug"><span class="num">284</span> Дима и Жальбер натягивают между домами белую простынь. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">85</span> Дима и Жальбер натягивают между домами белую простынь. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Дима из телефона, лупы и подручных средств сооружает проектор. Налаживает. Проверяет. Получается не сразу.</p>
         </div>
       </section>
       <section class="scene" id="s285">
-        <h2 class="slug"><span class="num">285</span> Дима фотографирует Аймант на побережье. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">86</span> Дима фотографирует Аймант на побережье. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Тахо снимает видео. Он запускает в океан их с Димой самодельного «Федорова».</p>
         </div>
       </section>
       <section class="scene" id="s286">
-        <h2 class="slug"><span class="num">286</span> Вечер. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">87</span> Вечер. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Во двор газбаллона стягивается народ. Тут дети и взрослые. Соседи, Жальбер и Аймант. Тахо с семьей. Швея с внучкой. Паркуется Тото, сообщает, что лодка найдена. Все готово для отправки в Русскую бухту. Народ рассаживается на землю и на стулья. Дима делает вступительную речь, Жальбер переводит. Дима включает фильм: льды: пингвины и полярники. Малагасийцы завороженно смотрят. Дима сидит рядом с Аймант. (Сквозь фильм мы попадаем в Антарктический флэшбэк.)</p>
         </div>
@@ -4533,191 +4549,191 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
         </div>
       </section>
       <section class="scene" id="s288">
-        <h2 class="slug"><span class="num">288</span> Бухта, вечер. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">88</span> Бухта, вечер. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Свидание Аймант и Димы. Но Дима все кажется, что он может найти что-то в песке. Водит металлоискателем. Но Аймант наконец обращает его внимание на себя. Аймант рассказывает, что пишет стихи. А Дима ей читает Есенина. Аймант возвращает заштопанную Димину вещь. Он сильно позже заметит, что она вышила маленький узор в качестве оберега.</p>
         </div>
       </section>
       <section class="scene" id="s289">
-        <h2 class="slug"><span class="num">289</span> Рынок, утро. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">89</span> Рынок, утро. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Дима, Тото и Жальбер совершают последние покупки. Провиант, воду, спасательный жилет,  клетку с несколькими живыми курицами.</p>
         </div>
       </section>
       <section class="scene" id="s290">
-        <h2 class="slug"><span class="num">290</span> Во дворе газбаллона Дима прощается с семьей Тахо. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">90</span> Во дворе газбаллона Дима прощается с семьей Тахо. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Мальчик обнимает Диму.</p>
         </div>
       </section>
       <section class="scene" id="s291">
-        <h2 class="slug"><span class="num">291</span> На пристани Тото, Дима и Жалбер загружают лодку. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">91</span> На пристани Тото, Дима и Жалбер загружают лодку. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
         </div>
       </section>
       <section class="scene" id="s292">
-        <h2 class="slug"><span class="num">292</span> Отплывают. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">92</span> Отплывают. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>На берег прибежала Аймант, опоздала к отплытию. Дима запускает к ней Торопыгу.</p>
         </div>
       </section>
       <section class="scene" id="s293">
-        <h2 class="slug"><span class="num">293</span> Плывут. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">93</span> Плывут. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Говорят. Дима дал Тото камеру. Он азартно снимает. Придумывают план действий и поисков. Сводят всю информацию по эскадре и по прадеду Димы, которую имеют. Прадед-водолаз и четверо моряков сошли на берег для выполнения ремонтных задач. В последней радиограмме прадед пишет, что с местными пойдет искать заплату для корабля. «Если они были на берегу с местными, и люди в записке это именно та группа, то куда делись местные. Почему они их бросили?»</p>
         </div>
       </section>
       <section class="scene" id="s294">
-        <h2 class="slug"><span class="num">294</span> Русская бухта. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">94</span> Русская бухта. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
         </div>
       </section>
       <section class="scene" id="s295">
-        <h2 class="slug"><span class="num">295</span> Приплыли. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">95</span> Приплыли. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Сгружают скарб.</p>
         </div>
       </section>
       <section class="scene" id="s296">
-        <h2 class="slug"><span class="num">296</span> Тото приводит их к ВОАРЕ, подруге Тото. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">96</span> Тото приводит их к ВОАРЕ, подруге Тото. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Она живет одна, у нее можно разместиться.</p>
         </div>
       </section>
       <section class="scene" id="s297">
-        <h2 class="slug"><span class="num">297</span> Готовят ужин. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">97</span> Готовят ужин. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Слушают музыку. Танцуют. Тото приводит местного – Рано. Он будет здесь их проводником. Рано рассказывает, что тут есть одно место - с русскими буквами. Дима берет фонари, факелы.  Идут туда.</p>
         </div>
       </section>
       <section class="scene" id="s298">
-        <h2 class="slug"><span class="num">298</span> В указанном Рано месте они находят несколько камней с названиями кораблей эскадры Рожественского. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">98</span> В указанном Рано месте они находят несколько камней с названиями кораблей эскадры Рожественского. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>«Моряки хотели оставить след, что они здесь были. Перед тем как погибнуть».</p>
         </div>
       </section>
       <section class="scene" id="s299">
-        <h2 class="slug"><span class="num">299</span> Утро. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">99</span> Утро. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Побережье Русской бухты. Троица копателей вместе с Рано уже во всю машет лопатами, пищит металлоискателем. Жальбер предупреждает Диму о малярии: он все-таки не местный и сильно уязвим. Нужно прикрывать шею.</p>
         </div>
       </section>
       <section class="scene" id="s300">
-        <h2 class="slug"><span class="num">300</span> Ищут в джунглях. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">100</span> Ищут в джунглях. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Рано выводит их к большому ржавому котлу для полевой кухни. На нем табличка на французском языке. Дима расспрашивает Рано, нет ли местных, которые помнят какие-то истории о русских. Но это было так давно… Рано знает человека, который считает себя потомком русского. Обещает его привести.  Продолжая свои поиски и раскопки они натыкаются на руины французских казарм - каменные фундаменты. Роют вокруг них - находятся только осколки посуды, французских бутылок, пуговицы. Жальбер собирает в мешочек разные травки.</p>
         </div>
       </section>
       <section class="scene" id="s301">
-        <h2 class="slug"><span class="num">301</span> Жальбер, Тото и Дима сидят на берегу. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">101</span> Жальбер, Тото и Дима сидят на берегу. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Напротив - местный маг. Рядом курица со связанными лапами - дар ему. Маг что-ворожит или просто вспоминает о русских. Говорит, что они могли зайти в запретное место или нарушить табу. За это их мог похитить Ци-аумби-аумби - волшебный бык, питающийся людьми.</p>
         </div>
       </section>
       <section class="scene" id="s302">
-        <h2 class="slug"><span class="num">302</span> Дом Воары. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">102</span> Дом Воары. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Жальбер одни травки перетирает в крем. А из других заваривает чай. Приносит чашку Диме. Дима печатает на Colibri: «прапрадеда похитил «Ци-аумби-аумби». Дима смеется.</p>
         </div>
       </section>
       <section class="scene" id="s303">
-        <h2 class="slug"><span class="num">303</span> Утро. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">103</span> Утро. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Джунгли. Снова роют. Снова из находок только французские мелочи и красивый подсвечник для трех свечей. Тото и Жальбер устают все сильнее. Дима их подгоняет, раздражается, делает замечания, учит их археологии, рассказывает, как это профессионалы делали на Камчатке.</p>
         </div>
       </section>
       <section class="scene" id="s304">
-        <h2 class="slug"><span class="num">304</span> Дима оступается и проваливается в разрытую ими же ямку - они ходят кругами. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">104</span> Дима оступается и проваливается в разрытую ими же ямку - они ходят кругами. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Жальбер вдруг признается, что у него сегодня день рождения.</p>
         </div>
       </section>
       <section class="scene" id="s305">
-        <h2 class="slug"><span class="num">305</span> Празднуют на берегу. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">105</span> Празднуют на берегу. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Воссоздают День Нептуна - так традиционно отмечают прохождение экватора на корабле. Альберу 50 лет - экватор жизни. Вечеринка уходит в ночь. Собралась большая компания - Рано привел человека, считающего себя потомком русского. Но тот рассказывает, что предка звали Егор. Он уплыл в море и умер. Про пропавших русских местный ничего не знает.</p>
         </div>
       </section>
       <section class="scene" id="s306">
-        <h2 class="slug"><span class="num">306</span> Утро в доме Воары. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">106</span> Утро в доме Воары. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Все еще спят. Дима замечает на дощечке в полу какие-то цифры. Отдирает ее: на обратной стороне дощечки двуглавый орел – герб Российской Империи. Это кусок ящика, в котором перевозили резиновую обувь.</p>
         </div>
       </section>
       <section class="scene" id="s307">
-        <h2 class="slug"><span class="num">307</span> Снова идут на поиски. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">107</span> Снова идут на поиски. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Снова ничего существенного найти не удается. Дима злится. Но чего Дима хотел, сто двадцать лет прошло. Но Дима говорит, что это не так много. Все имеет следы. Присутствие тысяч русских военных на русском острове - тоже должно. И если нашлась бутылка - найдется и еще что-то. Жальбер и Тото, люди немолодые, у них своя работа и жизнь. Им надо возвращаться. Они призывают Диму вернуться, но Дима загорелся.</p>
         </div>
       </section>
       <section class="scene" id="s308">
-        <h2 class="slug"><span class="num">308</span> Тото и Жальбер грузятся на лодку. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">108</span> Тото и Жальбер грузятся на лодку. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Дима стоит на берегу, как недавно стояла Аймант.</p>
         </div>
       </section>
       <section class="scene" id="s309">
-        <h2 class="slug"><span class="num">309</span> Дима бродит по пляжу. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">109</span> Дима бродит по пляжу. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Пищит металлоискателем. Находит бутылку с ромом - не древнюю, сравнительно новую. Дима, не пивший до этого много лет, вдруг делает глоток. Потом еще и еще один.</p>
         </div>
       </section>
       <section class="scene" id="s310">
-        <h2 class="slug"><span class="num">310</span> Вечер. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">110</span> Вечер. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Пьяный Дима бесцельно шатается по пляжу.  Пинает песок и ругается себе под нос.  Сидит на песке, листает фотографии из Антарктиды, смотрит видео. Пытается прозвониться другу, Полярному Дэну - не выходит. Дима лежит, смотрит в небо и слушает записи (его голос или голос полярных товарищей). Дима засыпает.</p>
         </div>
       </section>
       <section class="scene" id="s311">
-        <h2 class="slug"><span class="num">311</span> Дима видит замедленный пьяный сон. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">111</span> Дима видит замедленный пьяный сон. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Будто он в антарктической снежной вьюге. Сумерки. Только фонарь светит словно пламя. Дима плавно проходит между двух столбов, как бы преодолевает врата, рубеж.</p>
         </div>
       </section>
       <section class="scene" id="s312">
-        <h2 class="slug"><span class="num">312</span> Дима продирает глаза. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">112</span> Дима продирает глаза. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Солнце слепит, голова болит. Дима проверяет вещи, все на месте.</p>
         </div>
       </section>
       <section class="scene" id="s313">
-        <h2 class="slug"><span class="num">313</span> В доме Воары Дима заваривает травки Жальбера - становится лучше. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">113</span> В доме Воары Дима заваривает травки Жальбера - становится лучше. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Он просится у Воары задержаться еще немного. Она не против. Только пусть Дима на ужин принесет еды. Дима берет свои камеры и идет на прогулку. Если он не может ничего найти, он будет делать то, что умеет - снимать.</p>
         </div>
       </section>
       <section class="scene" id="s314">
-        <h2 class="slug"><span class="num">314</span> Дима гуляет по бухте, снимает. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">114</span> Дима гуляет по бухте, снимает. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Приходит в рыбацкую деревню. Снимает, как народ штопает рыболовные сети. Чинит лодки. Перебирает пойманную рыбу. Дима покупает парочку рыбин на ужин. Снимает хромающего мальчика. Снимает семью Рано и мага за каким-то обрядом.</p>
         </div>
       </section>
       <section class="scene" id="s315">
-        <h2 class="slug"><span class="num">315</span> Вечером он жарит рыбу, они с Воарой молча ужинают. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">115</span> Вечером он жарит рыбу, они с Воарой молча ужинают. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Затем Дима берется отсматривать отснятый материал. Смеется над кадрами, снятыми Тото. Потом перебирает кадры сегодняшние и вдруг обнаруживает на одной фотографии парня лет двадцати с монетой на шее. Увеличивает -  это старинный русский рубль с профилем Александра III. Дима вновь загорается.</p>
         </div>
       </section>
       <section class="scene" id="s316">
-        <h2 class="slug"><span class="num">316</span> Дима прибегает в деревню, вечер. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">116</span> Дима прибегает в деревню, вечер. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Ищет этого парня. Находит. Он рыбак. Дима объясняет ему, что на шее у него - русский рубль. Что Дима тоже русский. Что здесь у него пропал прапрадед, он ищет его след. Дима просит отвести его в то место, где парень нашел этот рубль. Парень - хитрый, но с добрыми, задумчивыми глазами. За деньги парень соглашается сопроводить Диму и разрешает называть себя Рублем. Он говорит, что парни скоро пойдут рыбачить и могут их подкинуть. Пусть Дима приходит через час.</p>
         </div>
       </section>
       <section class="scene" id="s317">
-        <h2 class="slug"><span class="num">317</span> Дима прибегает к Воаре, хватает вещи. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">117</span> Дима прибегает к Воаре, хватает вещи. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Благодарит ее, хочет оставить каких-то денег, но Воара отказывается - лишь желает Диме удачи.</p>
         </div>
       </section>
       <section class="scene" id="s318">
-        <h2 class="slug"><span class="num">318</span> На деревенской пристани Дима находит Рубля и его друзей. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">118</span> На деревенской пристани Дима находит Рубля и его друзей. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Они грузятся в рыболовецкую лодку. Рубль замечает обилие камер у Димы. Рубля это интересует. Дима объясняет, что снимает кино. «О чем?» Наверное, о поисках.</p>
         </div>
       </section>
       <section class="scene" id="s319">
-        <h2 class="slug"><span class="num">319</span> Плывут. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">119</span> Плывут. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Мы слышим письмо прапрадеда об их проводниках на острове - потомках пиратов, живших здесь когда-то.  Их называют zana-malata. Говорят, на Мадагаскаре существовало независимое пиратское государство «Либерталия». Деду бы хотелось попасть в такую страну. Ребята прикалываются над Димой, выбрасывая его за борт. Рубль говорит - это проверка. В дороге они рыбачат. Ужинают, считают звезды. Рубль много спрашивает про камеры Димы, и тогда Дима дает одну камеру Рублю - пусть тоже снимает кино. Дима спрашивает Рубля - не потомок ли пирата он сам. Нет, точно нет. Так же мы слышим письмо самого Димы, где он рассуждает о киногении. Ребята-рыбаки напоминают Диме его арктических товарищей на ледоколе.</p>
         </div>
@@ -4728,130 +4744,130 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
         </div>
       </section>
       <section class="scene" id="s321">
-        <h2 class="slug"><span class="num">321</span> На рассвете причаливают к берегу, ссаживают Диму и Рубля. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">120</span> На рассвете причаливают к берегу, ссаживают Диму и Рубля. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Здесь у Рубля присмотрена хижина, в которой можно остановиться, и лодка. Рубль нашел свою монету где-то тут. Где точно, он уже не вспомнит. «Значит будем искать везде».</p>
         </div>
       </section>
       <section class="scene" id="s322">
-        <h2 class="slug"><span class="num">322</span> Располагаются в хижине. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">121</span> Располагаются в хижине. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Завтракают. Дима из деревяшки делает кинохлопушку.</p>
         </div>
       </section>
       <section class="scene" id="s323">
-        <h2 class="slug"><span class="num">323</span> Рубль хлопает хлопушкой. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">122</span> Рубль хлопает хлопушкой. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Первый дубль - первый день. Первые поиски. Находят французскую помойку со всякой мелочью - осколки чашечек и блюдец, бутылок, ключ. Рубль складывает осколки воедино. Склеивает. Дима вспоминает, что у него есть система Хука, можно поискать на океаническом дне.</p>
         </div>
       </section>
       <section class="scene" id="s324">
-        <h2 class="slug"><span class="num">324</span> Рубль достает свою лодку, натягивает штопанный парус. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">123</span> Рубль достает свою лодку, натягивает штопанный парус. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Дима угольком рисует на нем пингвина.</p>
         </div>
       </section>
       <section class="scene" id="s325">
-        <h2 class="slug"><span class="num">325</span> Плывут. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">124</span> Плывут. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Ныряют по одиночке. Под водой они находят сперва какую-то мелочь, затем портсигар и кандалы, которые Рубль выбрасывает обратно - что-то должно оставаться на дне. Дима рассказывает Рублю, что прапрадед был водолазом. Может быть он ушел на дно?… Плывут дальше. Ныряют в другом месте. Находят старую французскую пушку. Придумывают - как ее поднять. С помощью пакета и воздуха. Они опускаются на дно вдвоем и достает пушку со дна. Рассматривают - французская, но отлита в Индии. На ней текст «Saint Louis».</p>
         </div>
       </section>
       <section class="scene" id="s326">
-        <h2 class="slug"><span class="num">326</span> На берегу пушку очищают специальными средствами. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">125</span> На берегу пушку очищают специальными средствами. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Просушивают. Разговаривают об археологи. Археология - способ познания мира. Как и кино. Дима печатает на машинке.</p>
         </div>
       </section>
       <section class="scene" id="s327">
-        <h2 class="slug"><span class="num">327</span> Теперь Дима хлопает хлопушкой - дубль два. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">126</span> Теперь Дима хлопает хлопушкой - дубль два. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Идут на поиски в джунгли. Пока только осколки. Их так много, что Рубль предлагает новые не брать - но для Димы все важно. Рубль спрашивает, какая находка считается самой ценной. Ответ простой - человек.</p>
         </div>
       </section>
       <section class="scene" id="s328">
-        <h2 class="slug"><span class="num">328</span> Находят английские и французские гильзы. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">127</span> Находят английские и французские гильзы. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Наверное, здесь была перестрелка. Решают разойтись в разные стороны, чтобы поиски были плодотворнее.</p>
         </div>
       </section>
       <section class="scene" id="s329">
-        <h2 class="slug"><span class="num">329</span> Рубль идет и снимает сам себя. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">128</span> Рубль идет и снимает сам себя. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Ведет блог. Набредает на фундамент дома. Видит, что у дома был подпол. Так кажется есть что-то интересное.</p>
         </div>
       </section>
       <section class="scene" id="s330">
-        <h2 class="slug"><span class="num">330</span> У Димы никаких находок. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">129</span> У Димы никаких находок. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Он присаживается передохнуть и запускает  Торопыгу. Тот находит Рубля. Рубль отправляет через торопыгу записку Диме. Зовет его на помощь.</p>
         </div>
       </section>
       <section class="scene" id="s331">
-        <h2 class="slug"><span class="num">331</span> Дима и Рубль откапывают старый французский пороховой бак. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">130</span> Дима и Рубль откапывают старый французский пороховой бак. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>В нем вещи начала ХХ века, принадлежавшие человеку, который занимался театром: Шекспировский текст, грим, элементы костюмов, маски, парики, фотографии, несколько писем, маленький портновский набор, ножницы, немного кофе, бутылка вина, старинная кожаная сумка с выцветшим веселым Роджером.</p>
         </div>
       </section>
       <section class="scene" id="s332">
-        <h2 class="slug"><span class="num">332</span> Ужин на песчаной косе. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">131</span> Ужин на песчаной косе. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Рубль читает найденное колониальное письмо. О переезде француза и его семьи на остров, о местной прислуге, о русских кораблях, пришедших в бухту. Автор письма сравнивает это пришествие с другим - с казаками в Париже в 1814 году. Дима приготовил ужин - они словно играют в игру, в которой Рубль господин, а Дима прислуга. Ужинают.</p>
         </div>
       </section>
       <section class="scene" id="s333">
-        <h2 class="slug"><span class="num">333</span> Ночь. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">132</span> Ночь. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Веселятся у костра. Надели на себе найденное театральное обмундирование - дурачатся. Рубль замечает татуировку с пингвином на Диминой руке. Дима говорит, что пингвин - единственное существо на планете, не видевшее войны. Рубль рассказывает, что на самом деле он не местный, его родители из Руанды. На Мадагаскар они бежали от геноцида. Дима и Рубль говорят о войне и мире. А еще Дима, кажется, понимает о чем он на самом деле снимает кино.</p>
         </div>
       </section>
       <section class="scene" id="s334">
-        <h2 class="slug"><span class="num">334</span> Утро. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">133</span> Утро. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Дима бродит по берегу, карманы его брюк насквозь мокрые и набиты ракушками. Рубль снимает Диму. Дима рассказывает: в детстве он с отцом пару раз ходил на рыбалку. Пока отец ловил рыбу, Дима бродил по берегу в поисках ракушек, но находил в основном патроны и гильзы.  В середине 90х с войны миновало только 50 лет, земля долго хранит в себе память. «Но лучше, конечно, собирать ракушки».</p>
         </div>
       </section>
       <section class="scene" id="s335">
-        <h2 class="slug"><span class="num">335</span> Дима печатает, у него кончается бумага. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">134</span> Дима печатает, у него кончается бумага. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Решает сделать ее самостоятельно.</p>
         </div>
       </section>
       <section class="scene" id="s336">
-        <h2 class="slug"><span class="num">336</span> Собирают в джунглях листья и траву. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">135</span> Собирают в джунглях листья и траву. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
         </div>
       </section>
       <section class="scene" id="s337">
-        <h2 class="slug"><span class="num">337</span> Изготовляют самодельную бумагу. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">136</span> Изготовляют самодельную бумагу. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
         </div>
       </section>
       <section class="scene" id="s338">
-        <h2 class="slug"><span class="num">338</span> Дима и Рубль плывут по тропической реке на желтой надувной Диминой лодке. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">137</span> Дима и Рубль плывут по тропической реке на желтой надувной Диминой лодке. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
         </div>
       </section>
       <section class="scene" id="s339">
-        <h2 class="slug"><span class="num">339</span> Бродя по джунглям, они натыкаются на ананасовую плантацию. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">138</span> Бродя по джунглям, они натыкаются на ананасовую плантацию. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Дима набивает ими мешки. Дима объясняет Рублю - в детство Димы, в 90е, это был главный деликатес.</p>
         </div>
       </section>
       <section class="scene" id="s340">
-        <h2 class="slug"><span class="num">340</span> Снова плывут по реке. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">139</span> Снова плывут по реке. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Дима ест ананас. Говорят о мечтах. Рубль снимает Димино интервью. Им встречаются речные крокодилы. Говорят о сакральности крокодилов для малагасийцев.</p>
         </div>
       </section>
       <section class="scene" id="s341">
-        <h2 class="slug"><span class="num">341</span> Идут по джунглям по чьему-то следу - кто-то роет землю так же, как они. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">140</span> Идут по джунглям по чьему-то следу - кто-то роет землю так же, как они. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Находят груду костей, недавно выкопанных из-под земли. Находят жетон - кажется, кости принадлежали французу.  Решают похоронить его нормально. Идут дальше. Выходят к океану. Находят лодку, прикованную в земле. В ней припрятаны древний костяной меч, ракушка,  изрезанная узорами, обложенная камнями, автомат и несколько пакетов с наркотиками. Это тайник контрабандистов. Рубль яростно высыпает наркотики в песок. Контрабандисты на моторной лодке возвращаются. Рубль и Дима прячутся. Контрабандисты причаливают чуть в стороне и Дима следит за ними через бинокль. Он замечает у них большой черепаший панцирь сплошь исписанный, изрисованный сюжетными рисунками: пиратские корабли, киты и черепа; и старый спасательный круг с надписью «Аврора». Решают заполучить эти вещи. Дожидаются, когда контрабандисты засыпают и выкрадывают панцирь, а круг достать не могут, потому что на нем уснул один из контрабандистов.</p>
         </div>
       </section>
       <section class="scene" id="s342">
-        <h2 class="slug"><span class="num">342</span> Утро. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">141</span> Утро. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Дима и Рубль лежат на пляже. Изучают и делят добытые «сокровища». Рубль говорит о Либерталии. Хорошо бы найти такую страну. Не обязательно стану, хотя бы маленький уголочек земли. Антарктида отчасти похожа на такое место, но все-таки не совсем. Рубль рассказывает Диме пиратскую сказку. Дима засыпает.</p>
         </div>
@@ -4862,13 +4878,13 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
         </div>
       </section>
       <section class="scene" id="s344">
-        <h2 class="slug"><span class="num">344</span> Продолжают поиски. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">142</span> Продолжают поиски. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>В рифах находят буй, прибившийся из Антарктики. Дима в восторге. Вновь пытается позвонить Полярному Дэну - не берет. Дима снимает себя с буем и Рубля. Когда они возвращаются к берегу, Дима поскальзывается и ранит ногу о рифы. Рубль осматривает рану - серьезная.</p>
         </div>
       </section>
       <section class="scene" id="s345">
-        <h2 class="slug"><span class="num">345</span> Рубль тащит Диму по джунглям. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">143</span> Рубль тащит Диму по джунглям. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Делают привалы. Диме становится все хуже. Рубль зашивает Диме рану. Чтобы Дима смог вынести боль, Рубль просит представить себе, что он во льдах. В своей Антарктике.</p>
         </div>
@@ -4879,76 +4895,76 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
         </div>
       </section>
       <section class="scene" id="s347">
-        <h2 class="slug"><span class="num">347</span> Дима просыпается в новом месте. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">144</span> Дима просыпается в новом месте. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Это хижина в деревне-судоверфь. Рана затянулась, но нога еще болит.</p>
         </div>
       </section>
       <section class="scene" id="s348">
-        <h2 class="slug"><span class="num">348</span> Дима бродит по деревне, ищет Рубля. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">145</span> Дима бродит по деревне, ищет Рубля. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>В деревне все идет своим чередом. Взрослые и старики строят долбленые лодки, дети играют. Местные гостеприимно встречают Диму. Рубль рассказывает, что привел сюда Диму лечиться, восстанавливаться. Дима решает наконец заплатить Рублю деньги, как обещал. Но они остались в той хижине. Значит потом как-то.</p>
         </div>
       </section>
       <section class="scene" id="s349">
-        <h2 class="slug"><span class="num">349</span> Дима и Рубль в большой хижине обедают вместе с другими местными. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">146</span> Дима и Рубль в большой хижине обедают вместе с другими местными. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Это почти коммуна. Пожилая малагасийка всем по очереди разливает из общего чана суп. Рубль замечает на половнике русские буквы. Это половник с крейсера «Камчатка». Пытается узнать, где нашли его. Кажется, его кто-то притащил с другого острова. С пиратской стороны. Дима возвращает половник женщине - ей же надо чем-то разливать суп.</p>
         </div>
       </section>
       <section class="scene" id="s350">
-        <h2 class="slug"><span class="num">350</span> Дима сидит на берегу, печатает письмо Аймант. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">147</span> Дима сидит на берегу, печатает письмо Аймант. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Мы слышим его. Дима рассказывает, что Рубль привез его в рай. Здесь так спокойно, так хорошо. Жаль только айлант нет рядом.</p>
         </div>
       </section>
       <section class="scene" id="s351">
-        <h2 class="slug"><span class="num">351</span> Вечером в хижине Рубль мажет Диме рану мазью. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">148</span> Вечером в хижине Рубль мажет Диме рану мазью. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Приходит местная молодая девушка и читает над раной какой-то наговор. Рубль и Дима ложатся спать. Рубль спрашивает: верит ли Дима в то, что все люди равны. Дима верит и Рубля подбадривает. «В мыслях и мечтах все равны».</p>
         </div>
       </section>
       <section class="scene" id="s352">
-        <h2 class="slug"><span class="num">352</span> Дима просыпается. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">149</span> Дима просыпается. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Рубля в хижине нет и вещей его тоже.</p>
         </div>
       </section>
       <section class="scene" id="s353">
-        <h2 class="slug"><span class="num">353</span> Дима, хромая, ковыляет вдоль берега. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">150</span> Дима, хромая, ковыляет вдоль берега. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Видит свою желтую лодку, далеко, почти на горизонте. А в ней - человеческая фигура. Вдруг у Димы звонит телефон. Это Полярный Дэн. Он позвонил узнать, почему Дима не поздравляет его с днем рождения. Дима сидит на песке и долго разговаривает с другом, который сейчас на станции «мирный».</p>
         </div>
       </section>
       <section class="scene" id="s354">
-        <h2 class="slug"><span class="num">354</span> Вернувшись в хижину, Дима замечает, что кроме лодки Рубль прихватил еще пару Диминых вещей, в том числе и камеру, зато о <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">151</span> Вернувшись в хижину, Дима замечает, что кроме лодки Рубль прихватил еще пару Диминых вещей, в том числе и камеру, зато о <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
         </div>
       </section>
       <section class="scene" id="s355">
-        <h2 class="slug"><span class="num">355</span> Дима завтракает вместе со всеми. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">152</span> Дима завтракает вместе со всеми. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Местный рассказывает ему, что  уплыть отсюда Дима может только на лодке, которую сделает сам. Его научат. Как раз нога заживет за это время. Здесь есть традиция: человек сажает дерево, взращивает его, потом его сын, потом его внук продолжают растить это дерево. И только может быть к праправнуку дерево вырастет, окрепнет, и из него можно будет сделать долбленую лодку. Но поскольку Дима не местный, ему выберут дерево. Дима рассуждает от том, что если бы его прапрадед посадил здесь дерево, оно бы как раз было готово превратиться в лодку.</p>
         </div>
       </section>
       <section class="scene" id="s356">
-        <h2 class="slug"><span class="num">356</span> Дима с местными изготавливает лодку. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">153</span> Дима с местными изготавливает лодку. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Проходит весь ритуал. Когда все готово, он вырезает ножичком на носу лодки маленького пингвина.</p>
         </div>
       </section>
       <section class="scene" id="s357">
-        <h2 class="slug"><span class="num">357</span> Параллельно, Дима лечит ногу, участвует в местных обрядах. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">154</span> Параллельно, Дима лечит ногу, участвует в местных обрядах. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
         </div>
       </section>
       <section class="scene" id="s358">
-        <h2 class="slug"><span class="num">358</span> Женщины шьют парус для Диминой лодки. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">155</span> Женщины шьют парус для Диминой лодки. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
         </div>
       </section>
       <section class="scene" id="s359">
-        <h2 class="slug"><span class="num">359</span> Когда все готово, лодку спускают на воду. <span class="loc">Мадагаскар</span></h2>
+        <h2 class="slug"><span class="num">156</span> Когда все готово, лодку спускают на воду. <span class="loc">Мадагаскар</span></h2>
         <div class="body" contenteditable="true">
 <p>Мастер, помогавший Диме, как бы благословляет лодку. Женщина-повариха отдает Диме половник с «Камчатки». Дима грузит свои вещи и покидает деревню. Уплывая, машет всем рукой.</p>
         </div>
@@ -4957,19 +4973,19 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
         <h2 class="slug" style="border:none">⟁ Носи-бе</h2>
       </section>
       <section class="scene" id="s361">
-        <h2 class="slug"><span class="num">361</span> Дима вернулся на Носи-бе. <span class="loc">Носи-бе</span></h2>
+        <h2 class="slug"><span class="num">157</span> Дима вернулся на Носи-бе. <span class="loc">Носи-бе</span></h2>
         <div class="body" contenteditable="true">
 <p>Ставит свою новую лодку в гараж. Тото и Жальбер с ним. Болтают. Дима рассказывает о приключениях. Тото и Жальбер никогда не слышали об этой деревне. Странно.</p>
         </div>
       </section>
       <section class="scene" id="s362">
-        <h2 class="slug"><span class="num">362</span> Дима находит Рубля. <span class="loc">Носи-бе</span></h2>
+        <h2 class="slug"><span class="num">158</span> Дима находит Рубля. <span class="loc">Носи-бе</span></h2>
         <div class="body" contenteditable="true">
 <p>Рубль хочет вернуть ему камеру, но Дима забирает только карту памяти и кладет в свой кейс. Камеру оставляет Рублю - пусть снимает.</p>
         </div>
       </section>
       <section class="scene" id="s363">
-        <h2 class="slug"><span class="num">363</span> Дима заходит к Аймант. <span class="loc">Носи-бе</span></h2>
+        <h2 class="slug"><span class="num">159</span> Дима заходит к Аймант. <span class="loc">Носи-бе</span></h2>
         <div class="body" contenteditable="true">
 <p>Но дома ее не застает. Он оставляет ей свой печатную машинку.</p>
         </div>
@@ -4978,106 +4994,106 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
         <h2 class="slug" style="border:none">⟁ Санкт-Петербург</h2>
       </section>
       <section class="scene" id="s365">
-        <h2 class="slug"><span class="num">365</span> Дима вернулся в Санкт-Петербург. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">160</span> Дима вернулся в Санкт-Петербург. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Май, праздник победы. Димы снимает толпу, идущую по Невскому проспекту, идущую против Димы.</p>
         </div>
       </section>
       <section class="scene" id="s366">
-        <h2 class="slug"><span class="num">366</span> Теперь Дима одержим Мадагаскаром. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">161</span> Теперь Дима одержим Мадагаскаром. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Он приходит в военно-морской музей. Отдает некоторые свои находки, привезенный с Мадагаскара. В том числе и монету Рубля. Впервые Дима видит записку моряков. Из нее становится ясно, что Дима искал не там. Шел по ложному следу. Моряки проследовали на Носи-Бараха - древнее пристанище пиратов. Так же в записке оказывается рисунок: веселый Роджер с каплями слез. Точно такой знак мы видели на панцире, найденном контрабандистами.</p>
         </div>
       </section>
       <section class="scene" id="s367">
-        <h2 class="slug"><span class="num">367</span> Дома Дима сверяется с калькой снятой с панциря. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">162</span> Дома Дима сверяется с калькой снятой с панциря. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Залезает в свою книгу, купленную в Кейптауне. Книгу о пиратах, находит этот знак. Читает про пирата Уильяма Кидда. Он как раз похоронен на пиратском кладбище на Носи-Бараха. Дима хочет вернуться на остров и начать поиски заново.</p>
         </div>
       </section>
       <section class="scene" id="s368">
-        <h2 class="slug"><span class="num">368</span> Дима посещает крейсер «Аврора». <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">163</span> Дима посещает крейсер «Аврора». <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Смотрит, изучает, даже находит что-то любопытное, что-то, что касается его прапрадеда.</p>
         </div>
       </section>
       <section class="scene" id="s369">
-        <h2 class="slug"><span class="num">369</span> Дима отсматривает снятые кадры в пустом кинозале Ленфильма: и новые Мадагаскарские, и Антарктические, и Камчатские. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">164</span> Дима отсматривает снятые кадры в пустом кинозале Ленфильма: и новые Мадагаскарские, и Антарктические, и Камчатские. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
         </div>
       </section>
       <section class="scene" id="s370">
-        <h2 class="slug"><span class="num">370</span> На Ленфильме Диму отчитывают. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">165</span> На Ленфильме Диму отчитывают. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>За самоволку, за утерю документов. Но кадры, которые он привез, очень хороши. Особенно начальству нравятся кадры, снятые Рублем. Дима просит отправить его вновь, чтобы доснять. Но Директор отказывает. Тогда Дима берет отпуск за свой счет.</p>
         </div>
       </section>
       <section class="scene" id="s371">
-        <h2 class="slug"><span class="num">371</span> В отделе техники Дима сдает то, что брал. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">166</span> В отделе техники Дима сдает то, что брал. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Просит пустую карту памяти. Ему ее выдают.</p>
         </div>
       </section>
       <section class="scene" id="s372">
-        <h2 class="slug"><span class="num">372</span> Дима решает продать свои раритетные кинокамеры, чтобы найти деньги на поездку. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">167</span> Дима решает продать свои раритетные кинокамеры, чтобы найти деньги на поездку. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
         </div>
       </section>
       <section class="scene" id="s373">
-        <h2 class="slug"><span class="num">373</span> С дедом у Димы выдается хороший разговор, светлый и грустный. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">168</span> С дедом у Димы выдается хороший разговор, светлый и грустный. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Они вместе едут на могилу к отцу. Отец Димы погиб на незнамо какой войне. Дима говорит, что очень скучает по отцу. Дед, вдруг расчувствовавшись, признается, что тоже. Дед как будто предчувствует расставание навсегда.</p>
         </div>
       </section>
       <section class="scene" id="s374">
-        <h2 class="slug"><span class="num">374</span> На своем чердаке Дима намечает новый план действий. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">169</span> На своем чердаке Дима намечает новый план действий. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Отправляет радиограмму на «Академика Федорова», звонит Самарину.</p>
         </div>
       </section>
       <section class="scene" id="s375">
-        <h2 class="slug"><span class="num">375</span> И покидает Санкт-Петербург. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">170</span> И покидает Санкт-Петербург. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
         </div>
       </section>
       <section class="scene" id="s376">
-        <h2 class="slug"><span class="num">376</span> Дима приходит домой к Жальберу. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">171</span> Дима приходит домой к Жальберу. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Дима привез ему в подарок конфеты «мишка на севере». Чайовничают. В коллекцию Жальбера Дима привез копию письма моряков. Жальбер вешает его на видное место. Дима рассказывает о своем новом плане. Жальбер его не поддерживает - это достаточно опасно.</p>
         </div>
       </section>
       <section class="scene" id="s377">
-        <h2 class="slug"><span class="num">377</span> Дима приходит в газбаллон. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">172</span> Дима приходит в газбаллон. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Тахо обнимает Диму, он его ждал. Дима дарит ему наручные часы с айсбергом на циферблате.</p>
         </div>
       </section>
       <section class="scene" id="s378">
-        <h2 class="slug"><span class="num">378</span> Гуляя, Дима видит пингвина, нарисованного на стене какого-то дома. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">173</span> Гуляя, Дима видит пингвина, нарисованного на стене какого-то дома. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Затем замечает афишу фильма. Режиссер - Рубль. Дима навещает Рубля. Тот за время Диминого отсутствия переехал в Джаманджар, снимал много интервью и бытовой жизни местных и смонтировал это. Рубль зовет Диму на показ. Дима обещает прийти.</p>
         </div>
       </section>
       <section class="scene" id="s379">
-        <h2 class="slug"><span class="num">379</span> Дима наконец приходит к Аймант. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">174</span> Дима наконец приходит к Аймант. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Он снова ее не застает. Только Colibri на столе, с листом внутри. Дима читает, это стихи Аймана о любви, воде, расстоянии. Дима похищает листик. (Можно придумать линию, как Аймант ищет какой-то артефакт для Димы, который может реально продвинуть его поиски. И тогда в этот момент она может его передать ему)</p>
         </div>
       </section>
       <section class="scene" id="s380">
-        <h2 class="slug"><span class="num">380</span> В Русской бухте Дима, Рубль и Жальебер устанавливают памятник Русской эскадре. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">175</span> В Русской бухте Дима, Рубль и Жальебер устанавливают памятник Русской эскадре. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Те камни с названиями кораблей, которые они нашли здесь в прошлый раз, дополняются информационной табличкой. Дима грузится на свою надувную желтую лодку, загрузившись провиантом, и уплывает по новому маршруту - на Носи-Бараха.</p>
         </div>
       </section>
       <section class="scene" id="s381">
-        <h2 class="slug"><span class="num">381</span> Дима приплывает на черепаший остров. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">176</span> Дима приплывает на черепаший остров. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Здесь живут вековые черепахи, предоставленные сами себе. Дима снимает их, подкармливает, пищит металлоискателем - в надежде что-то найти. Рассуждает, что какая-нибудь из черепах могла вполне видеть его прапрадеда.  Дима ночует на острове.</p>
         </div>
       </section>
       <section class="scene" id="s382">
-        <h2 class="slug"><span class="num">382</span> Дима плывет. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">177</span> Дима плывет. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Причаливает к новому острову. Это и есть Носи-Бараха - старый пиратский остров. Теперь здесь только пиратское кладбище. Дима осматривает покосившиеся, разрушенные надгробия, достает из рюкзака страницы с текстом.</p>
         </div>
@@ -5088,7 +5104,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
         </div>
       </section>
       <section class="scene" id="s384">
-        <h2 class="slug"><span class="num">384</span> Академик Федоров. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">178</span> Академик Федоров. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Мы видим, как Дима читает книгу о пиратах, листает, заклеивает корешок красной изолентой.</p>
         </div>
@@ -5104,7 +5120,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
         </div>
       </section>
       <section class="scene" id="s387">
-        <h2 class="slug"><span class="num">387</span> Мы видим, как Дима делает ксерокопии избранных страниц этой книги, собирает их в стопку. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">179</span> Мы видим, как Дима делает ксерокопии избранных страниц этой книги, собирает их в стопку. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
         </div>
       </section>
@@ -5114,19 +5130,19 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
         </div>
       </section>
       <section class="scene" id="s389">
-        <h2 class="slug"><span class="num">389</span> Именно эти страницы Дима и читает. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">180</span> Именно эти страницы Дима и читает. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Имена некоторых пиратов находятся. А вот и могила Уильяма Кидда. А на ней: тот самый веселый Роджер со слезинками - точно такой, как в письме моряков. Дима делает фото отчет. Дима собирает в воде камушки. Несет их на кладбище и согласно местной традиции, украшает камушками могилы. Найти Диме ничего не удается. Но карта показывает, что дальше есть еще островок.</p>
         </div>
       </section>
       <section class="scene" id="s390">
-        <h2 class="slug"><span class="num">390</span> Дима плывет сквозь туманную дымку и нарывается на риф - у лодки пробоина. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">181</span> Дима плывет сквозь туманную дымку и нарывается на риф - у лодки пробоина. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Дима кое-как выбирается на берег островка.</p>
         </div>
       </section>
       <section class="scene" id="s391">
-        <h2 class="slug"><span class="num">391</span> Это тотемный остров. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">182</span> Это тотемный остров. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Дима ужинает и засыпает. А  просыпается уже с жаром. Однако он усердно продолжает раскопки, этот остров - последняя точка на карте. Дима роет землю, но ему становится все хуже. Кажется, это малярия. Дима уже почти бездумно бродит кругами. Вдруг Дима замечает резные маски в стволах деревьев - одну, другую. Идет по их следу. Оказываясь в густых джунглях. Когда Диме становится совсем плохо, он достает свою аптечку и ставит себе капельницу. Дима засыпает.</p>
         </div>
@@ -5137,7 +5153,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
         </div>
       </section>
       <section class="scene" id="s393">
-        <h2 class="slug"><span class="num">393</span> Вихрь перепутанных флэшбэков: Питер, Камчатка, Антарктида, Мадагаскар, Париж. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">183</span> Вихрь перепутанных флэшбэков: Питер, Камчатка, Антарктида, Мадагаскар, Париж. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Дед, Прапрадед, Аймант и Полярный Дэн. Жальбер и ленфильмовские, Рубль, Тахо, пингвины. Все кружится калейдоскопом. И застывает в айсберге - неподвижном, синем льде. Вдруг лед с громким хрустом раскалывается. Дима просыпается.</p>
         </div>
@@ -5148,7 +5164,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
         </div>
       </section>
       <section class="scene" id="s395">
-        <h2 class="slug"><span class="num">395</span> Диме чуть лучше. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">184</span> Диме чуть лучше. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Он осматривается. Распогодилось. Собирает вещи. Пытается отодрать с дерева маску - не может. Вдруг замечает на камне рукотворный знак – перечеркнутый круг. В нем Дима узнает иллюминатор водолазного шлема. Разгребая камни, он находит жестяную коробочку из-под французского печенья. А в ней: предсмертные записки моряков, сошедших с прапрадедом с «Камчатки». Дима их читает. Письма же самого прапрадеда  здесь нет. Вместо него – открытка с Львом Толстым и цитатой: «Смерти нет, а есть любовь и память сердца». На горизонте появляется парус с пингвином. Это Рубль припыл за Димой. А Дима открывает свой кейс для карт памяти, в нем осталось место только для одной карты. Он вынимает ее из камеры.</p>
         </div>
@@ -5159,7 +5175,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
         </div>
       </section>
       <section class="scene" id="s397">
-        <h2 class="slug"><span class="num">397</span> Дима в доме Аймант. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">185</span> Дима в доме Аймант. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Солнце играет в зеркалах. Белые Димины руки допечатывают последний лист рукописи. Руки вынимают лист из Colibri. Мы слышим конец рукописи. Дима заклеивает конверт разными марками.</p>
         </div>
@@ -5168,11 +5184,12 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
         <h2 class="slug" style="border:none">⟁ Санкт-Петербург</h2>
       </section>
       <section class="scene" id="s399">
-        <h2 class="slug"><span class="num">399</span> Этот конверт с рукописью кто-то несет подмышкой. <span class="loc">Санкт-Петербург</span></h2>
+        <h2 class="slug"><span class="num">186</span> Этот конверт с рукописью кто-то несет подмышкой. <span class="loc">Санкт-Петербург</span></h2>
         <div class="body" contenteditable="true">
 <p>Этот кто-то останавливается на Троицком мосту. По Неве идет лед. На льдине стоит пингвин. Кто-то опирается ладонями на ограду моста. Это руки темнокожего человека.</p>
         </div>
       </section>
+      </div>
 
     </div>
   </main>
@@ -5274,15 +5291,21 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
 
   // ===== Nav build =====
   const navList = document.getElementById('nav-list');
+  const navOutline = document.getElementById('nav-list-outline');
   document.querySelectorAll('.scene').forEach((s,i) => {
     const slug = s.querySelector('.slug').textContent.trim();
     const a = document.createElement('a');
     a.href = '#'+s.id;
     a.innerHTML = slug.replace(/^(\d+)\s/, '<span class="num">$1</span>');
     if(s.classList.contains('scene-section')) a.classList.add('nav-sec');
-    if(s.id==='part-detail') a.classList.add('nav-start');
-    navList.appendChild(a);
+    if(s.id==='part-detail'||s.id==='part-outline') a.classList.add('nav-start');
+    (s.closest('#outline-pane')?navOutline:navList).appendChild(a);
   });
+  window.setMode=function(mode){
+    document.body.classList.toggle('mode-outline', mode==='outline');
+    document.querySelectorAll('.mode-toggle .mt').forEach(function(b){b.classList.toggle('active', b.dataset.mode===mode);});
+    window.scrollTo(0,0);
+  };
 
   // ===== Autosave (localStorage per-scene) =====
   const status = document.getElementById('status');
