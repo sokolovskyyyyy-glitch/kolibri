@@ -5447,7 +5447,8 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
     const last = container.lastElementChild.querySelector('.text');
     last.focus();
     try{ const r=document.createRange(); r.selectNodeContents(last); r.collapse(false); const s=window.getSelection(); s.removeAllRanges(); s.addRange(r); }catch(e){}
-    persistNotes(scene);
+    // пустую заметку НЕ сохраняем сразу — сохранится при первом наборе (input). Цитату — сохраняем (там уже есть контент).
+    if(quote) persistNotes(scene);
   }
 
   function persistNotes(scene){
