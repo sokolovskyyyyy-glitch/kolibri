@@ -5410,12 +5410,10 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
 
   function noteHTML(type, text, when='', author=''){
     const t = NOTE_TYPES.find(x => x.k === type) || NOTE_TYPES[1];
-    const a = (window.AUTHORS||{})[author];
-    const badge = a ? `<span class="by ${a.cls}">● ${a.name}</span>` : '';
     return `<div class="note-card" data-t="${t.k}"${author?` data-a="${author}"`:''}>
       <span class="ico">${t.ico}</span>
       <div class="body-note">
-        <div class="who" contenteditable="false">${t.label}${badge}${when?`<span class="when">${when}</span>`:''}</div>
+        <div class="who" contenteditable="false">${t.label}${when?`<span class="when">${when}</span>`:''}</div>
         <div class="text" contenteditable="true">${text}</div>
       </div>
       <button class="del" onclick="this.parentElement.remove();persistNotes(this.closest('.scene'))" title="удалить">✕</button>
