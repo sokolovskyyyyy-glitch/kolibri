@@ -328,6 +328,12 @@ aside.notes-panel{background:#DDCFB0;border-left:1px solid #A89A78;color:#3A4658
 .notes-head button{background:none;border:none;color:inherit;cursor:pointer;font-size:15px;line-height:1}
 #notes-list{padding:12px 14px}
 #notes-list .scene{margin:0 0 12px;max-width:none;padding:0}
+.note-grip{cursor:grab;color:#B23A2E;font-family:monospace;font-size:10px;letter-spacing:.05em;padding:3px 0 5px;user-select:none}
+.note-grip:active{cursor:grabbing}
+section[id^="note-"].dragging{opacity:.45}
+.scene.note-drop-hover{outline:2px dashed #B23A2E;outline-offset:-3px;background:rgba(178,58,46,.07)}
+.note-detach{display:inline-block;margin:0 0 6px;background:#B23A2E;color:#fff;border:none;border-radius:4px;padding:2px 8px;font-size:10px;cursor:pointer;font-family:monospace}
+#scenes section[id^="note-"]{border-left:3px solid #B23A2E;background:rgba(178,58,46,.04);padding:8px 10px;border-radius:0 6px 6px 0;margin:8px 0}
 #notes-toggle.active{background:#B23A2E;color:#fff}
 #refs-show{display:none;position:fixed;right:0;top:74px;z-index:30;writing-mode:vertical-rl;background:#B23A2E;color:#fff;border:none;padding:14px 7px;cursor:pointer;font-family:'Courier Prime',monospace;letter-spacing:.12em;border-radius:6px 0 0 6px;font-size:12px}
 .app.rc #refs-show{display:block}
@@ -7691,12 +7697,57 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
 </script>
 <script>
 (function(){
-  var app=document.querySelector('.app'), list=document.getElementById('notes-list');
-  if(list){ document.querySelectorAll('#scenes [id^="note-"]').forEach(function(el){ if(el.tagName==='SECTION') list.appendChild(el); }); }
+  var app=document.querySelector('.app'), list=document.getElementById('notes-list'), reader=document.querySelector('main.reader');
+  var KEY='kolibri-note-attach-v1';
+  function grip(note){
+    if(note.querySelector(':scope > .note-grip')) return;
+    var g=document.createElement('div'); g.className='note-grip'; g.draggable=true; g.title='тяни на сцену'; g.textContent='⠿ тащить к сцене';
+    note.insertBefore(g, note.firstChild);
+  }
+  // перенос всех заметок в панель + грип
+  if(list){ document.querySelectorAll('#scenes [id^="note-"]').forEach(function(el){ if(el.tagName==='SECTION'){ grip(el); list.appendChild(el); } }); }
+  // тоглы панели
   var nt=document.getElementById('notes-toggle'), nx=document.getElementById('notes-collapse');
-  function sync(){ if(nt) nt.classList.toggle('active', !app.classList.contains('nc')); }
-  if(nt) nt.onclick=function(){ app.classList.toggle('nc'); sync(); };
-  if(nx) nx.onclick=function(){ app.classList.add('nc'); sync(); };
+  function syncBtn(){ if(nt) nt.classList.toggle('active', !app.classList.contains('nc')); }
+  if(nt) nt.onclick=function(){ app.classList.toggle('nc'); syncBtn(); };
+  if(nx) nx.onclick=function(){ app.classList.add('nc'); syncBtn(); };
+  // persist
+  function read(){ try{return JSON.parse(localStorage.getItem(KEY)||'{}');}catch(e){return {};} }
+  function write(m){ localStorage.setItem(KEY, JSON.stringify(m)); }
+  function detachBtn(note){
+    if(note.querySelector(':scope > .note-detach')) return;
+    var b=document.createElement('button'); b.className='note-detach'; b.textContent='✕ открепить';
+    b.onclick=function(e){ e.stopPropagation(); detach(note); };
+    var g=note.querySelector(':scope > .note-grip'); note.insertBefore(b, g?g.nextSibling:note.firstChild);
+  }
+  function place(note, scene){ grip(note); detachBtn(note); scene.appendChild(note); }
+  function attach(note, scene){
+    place(note, scene);
+    var m=read(); Object.keys(m).forEach(function(sid){ m[sid]=(m[sid]||[]).filter(function(x){return x!==note.id;}); if(!m[sid].length) delete m[sid]; });
+    (m[scene.id]=m[scene.id]||[]).push(note.id); write(m);
+  }
+  function detach(note){
+    var x=note.querySelector(':scope > .note-detach'); if(x)x.remove();
+    list.appendChild(note);
+    var m=read(); Object.keys(m).forEach(function(sid){ m[sid]=(m[sid]||[]).filter(function(y){return y!==note.id;}); if(!m[sid].length) delete m[sid]; }); write(m);
+  }
+  window.applyNoteAttach=function(){
+    var m=read();
+    document.querySelectorAll('#scenes section[id^="note-"]').forEach(function(n){ var x=n.querySelector(':scope > .note-detach'); if(x)x.remove(); list.appendChild(n); });
+    Object.keys(m).forEach(function(sid){ var sc=document.getElementById(sid); if(!sc)return; m[sid].forEach(function(nid){ var n=document.getElementById(nid); if(n) place(n, sc); }); });
+  };
+  // DND (за грип)
+  var dragNote=null;
+  document.addEventListener('dragstart', function(e){ var g=e.target&&e.target.closest&&e.target.closest('.note-grip'); if(!g)return; var n=g.closest('section[id^="note-"]'); if(!n)return; dragNote=n; e.dataTransfer.effectAllowed='move'; try{e.dataTransfer.setData('text/plain','NOTE:'+n.id);}catch(_){}; n.classList.add('dragging'); });
+  document.addEventListener('dragend', function(){ if(dragNote){dragNote.classList.remove('dragging'); dragNote=null;} document.querySelectorAll('.scene.note-drop-hover').forEach(function(s){s.classList.remove('note-drop-hover');}); });
+  reader.addEventListener('dragover', function(e){ if(!dragNote)return; var s=e.target.closest('#scenes section.scene'); if(!s||/^note-/.test(s.id))return; e.preventDefault(); e.dataTransfer.dropEffect='move'; document.querySelectorAll('.scene.note-drop-hover').forEach(function(x){if(x!==s)x.classList.remove('note-drop-hover');}); s.classList.add('note-drop-hover'); });
+  reader.addEventListener('drop', function(e){ if(!dragNote)return; var s=e.target.closest('#scenes section.scene'); if(!s||/^note-/.test(s.id))return; e.preventDefault(); s.classList.remove('note-drop-hover'); attach(dragNote, s); });
+  list.addEventListener('dragover', function(e){ if(dragNote) e.preventDefault(); });
+  list.addEventListener('drop', function(e){ if(dragNote){ e.preventDefault(); detach(dragNote); } });
+  // интеграция с realtime-синком
+  var _st=window.kolibriApplyState; window.kolibriApplyState=function(){ if(_st)_st(); window.applyNoteAttach(); };
+  var _ky=window.kolibriApplyKey; window.kolibriApplyKey=function(k,skip){ if(_ky)_ky(k,skip); if(k===KEY) window.applyNoteAttach(); };
+  window.applyNoteAttach();
 })();
 </script>
 <script src="sync.js?v=2"></script>
