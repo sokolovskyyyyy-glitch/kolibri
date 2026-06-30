@@ -346,6 +346,18 @@ aside.refs #part-photos-todo{padding:0 14px 40px}
 #outline-pane{display:none}
 body.mode-outline #scenes > :not(#outline-pane){display:none}
 body.mode-outline #outline-pane{display:block}
+#alt-pane{display:none}
+body.mode-alt #scenes > :not(#alt-pane){display:none}
+body.mode-alt #alt-pane{display:block}
+body.mode-alt #nav-list,body.mode-alt #nav-list-outline{display:none}
+.alt-ep .slug{font-size:14px}
+#alt-pane{max-width:900px}
+.ready-scene{border-left:4px solid #E5163A;background:rgba(229,22,58,.05);padding-left:14px;border-radius:0 8px 8px 0}
+.ready-scene .rs-tag{display:inline-block;font-family:monospace;font-size:10px;font-weight:700;color:#fff;background:#E5163A;padding:2px 8px;border-radius:4px;letter-spacing:.05em;margin:4px 0 2px}
+.note-extra{border-left:3px solid #6b5cff;background:rgba(107,92,255,.05);padding-left:12px;border-radius:0 6px 6px 0}
+.note-extra .ne-tag{font-family:monospace;font-size:9px;font-weight:700;color:#6b5cff;border:1px solid #6b5cff;padding:1px 6px;border-radius:4px;margin-left:6px;vertical-align:middle}
+.insert-note{border-left:3px dashed #888;padding-left:12px}
+.search-hidden{display:none!important}
 #nav-list-outline{display:none}
 body.mode-outline #nav-list{display:none}
 body.mode-outline #nav-list-outline{display:block}
@@ -447,6 +459,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
     <div class="mode-toggle">
       <button class="mt active" data-mode="detail" onclick="setMode('detail')">📖 Детальный</button>
       <button class="mt" data-mode="outline" onclick="setMode('outline')">📋 Краткий</button>
+      <button class="mt" data-mode="alt" onclick="setMode('alt')">📑 Альтернативный</button>
     </div>
     <input class="search" type="search" placeholder="поиск по тексту…" oninput="searchScenes(this.value)">
     <div class="spacer"></div>
@@ -624,7 +637,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
         <div class="concept-block ce" contenteditable="true" data-eid="e30">
           <span class="cb-label">🎬 12.40.07.ogg · 237 сек</span>
           <strong>Два предложения к поэпизоднику (совместно с Олей из «Кита»).</strong>
-Первое: <strong>триггер войны для Димы</strong> — отец погиб, выполняя «интернациональный долг» (Афган/нулевые, намеренно размыто). Дед давит на эту мозоль. Любая военная командировка (Шумшу, Мадагаскар) бьёт по тому же. Диме пророчили судьбу военного — он выламывается.
+Первое: <strong>триггер войны для Димы</strong> — отец погиб, выполняя «интернациональный долг» <em>(основное — Чечня / «расстрелян у Грозного», ~1993; вариант на проработку — Таджикистан / Пяндж; пока строим сценарий — намеренно размыто)</em>. Дед давит на эту мозоль. Любая военная командировка (Шумшу, Мадагаскар) бьёт по тому же. Диме пророчили судьбу военного — он выламывается.
 <br><br>
 Второе: <strong>сцена ракушек на косе с Рублём</strong> (личная история режиссёра, 1994–97). Дима набивает карманы ракушками, приходит мокрым. Рубль снимает: «Ты как ребёнок». Дима протягивает ладонь с ракушками (отсылка к «Тонкой красной линии»): в детстве собирал патроны — хочет, чтобы его дети собирали ракушки. Музыка под это.
 <br><br>
@@ -2153,6 +2166,402 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
 </section>
 </section>
 
+      <section class="scene note-extra" id="note-cine">
+        <h3 class="slug"><span class="num">📝</span> Киноязык: два языка съёмки (экспедиция / Петербург) <span class="ne-tag">из заметок автора</span></h3>
+        <div class="body" contenteditable="true">
+<p style="margin:0 0 5px">Режиссёрская установка. Киноязык фильма «Колибри»</p>
+<p style="font-weight:700;margin:12px 0 4px;font-size:14px;color:#E5163A">Два разных языка повествования</p>
+<p style="margin:0 0 5px">В фильме принципиально существуют два разных способа съёмки, и это должно быть заложено уже на уровне сценария.</p>
+<p style="font-weight:700;margin:10px 0 3px;font-size:13px">I. Экспедиция — кино глазами главного героя</p>
+<p style="margin:0 0 5px">Во всех путешествиях, экспедициях и полевых исследованиях Дима является не просто героем фильма — он профессиональный кинооператор, который сознательно снимает окружающий мир.</p>
+<p style="margin:0 0 5px">Это не условность и не стилистический приём. Это часть его профессии, характера и образа жизни.</p>
+<p style="margin:0 0 5px">Зритель должен очень быстро принять правило фильма: Дима постоянно существует вместе с камерой.</p>
+<p style="margin:0 0 5px">Поэтому в диалогах и действиях регулярно появляются естественные для него реплики:</p>
+<p style="margin:0 0 3px;padding-left:10px">• «Можно я вас сниму?»</p>
+<p style="margin:0 0 3px;padding-left:10px">• «Подождите, сейчас поставлю штатив.»</p>
+<p style="margin:0 0 3px;padding-left:10px">• «Где моя камера?»</p>
+<p style="margin:0 0 3px;padding-left:10px">• «Надо поменять объектив.»</p>
+<p style="margin:0 0 3px;padding-left:10px">• «Сейчас переставлю кадр.»</p>
+<p style="margin:0 0 3px;padding-left:10px">• «Подержите, пожалуйста, камеру минуту.»</p>
+<p style="margin:0 0 3px;padding-left:10px">• «Можете снять меня отсюда?»</p>
+<p style="margin:0 0 3px;padding-left:10px">• «А теперь снимите сами себя.»</p>
+<p style="margin:0 0 3px;padding-left:10px">• «Спасибо. Как вас зовут? Обязательно укажу вас в титрах.»</p>
+<p style="margin:0 0 5px">Эти фразы не должны выглядеть специально написанными. Они являются естественной частью его речи.</p>
+<p style="margin:0 0 5px">Благодаря этому зритель принимает любую точку съёмки как мотивированную.</p>
+<p style="margin:0 0 5px">Если камера лежит на земле — значит, герой её туда поставил.</p>
+<p style="margin:0 0 5px">Если камера стоит на штативе — он сам её установил.</p>
+<p style="margin:0 0 5px">Если герой выходит из кадра — он сознательно запустил запись.</p>
+<p style="margin:0 0 5px">Если изображение становится подвижным — он снимает с рук.</p>
+<p style="margin:0 0 5px">Если появляется необычный ракурс — значит, он нашёл способ его получить.</p>
+<p style="margin:0 0 5px">Если камера оказывается в руках местного жителя — значит, герой попросил помочь.</p>
+<p style="margin:0 0 5px">Таким образом зритель всегда понимает происхождение кадра.</p>
+<p style="margin:0 0 5px">Это становится внутренним правилом фильма.</p>
+<p style="margin:0 0 5px">---</p>
+<p style="font-weight:700;margin:12px 0 4px;font-size:14px;color:#E5163A">Отсутствие невидимого оператора</p>
+<p style="margin:0 0 5px">Во время экспедиций не существует ощущения, что рядом находится профессиональная киногруппа.</p>
+<p style="margin:0 0 5px">Герой путешествует один.</p>
+<p style="margin:0 0 5px">Он не может иметь полноценную следящую камеру.</p>
+<p style="margin:0 0 5px">Он не может быть постоянно снят со стороны.</p>
+<p style="margin:0 0 5px">Поэтому каждый подобный кадр обязан иметь объяснение внутри истории.</p>
+<p style="margin:0 0 5px">Возможные источники таких кадров:</p>
+<p style="margin:0 0 3px;padding-left:10px">• установленный заранее штатив;</p>
+<p style="margin:0 0 3px;padding-left:10px">• оставленная на земле камера;</p>
+<p style="margin:0 0 3px;padding-left:10px">• самодельное крепление (body rig);</p>
+<p style="margin:0 0 3px;padding-left:10px">• дрон;</p>
+<p style="margin:0 0 3px;padding-left:10px">• камера в руках случайного человека;</p>
+<p style="margin:0 0 3px;padding-left:10px">• камера, переданная местному жителю;</p>
+<p style="margin:0 0 3px;padding-left:10px">• камера в руках нового знакомого;</p>
+<p style="margin:0 0 3px;padding-left:10px">• любые найденные способы съёмки, которые соответствуют реальности.</p>
+<p style="margin:0 0 5px">Особенно важно использовать местных жителей.</p>
+<p style="margin:0 0 5px">Дима легко вступает в контакт с людьми, доверяет им камеру и превращает их в соавторов фильма.</p>
+<p style="margin:0 0 5px">Он может попросить:</p>
+<p style="margin:4px 0;padding-left:10px;border-left:2px solid #888;font-style:italic">«Снимайте как хотите.»</p>
+<p style="margin:0 0 5px">или</p>
+<p style="margin:4px 0;padding-left:10px;border-left:2px solid #888;font-style:italic">«Не бойтесь. Просто держите вот так.»</p>
+<p style="margin:0 0 5px">или</p>
+<p style="margin:4px 0;padding-left:10px;border-left:2px solid #888;font-style:italic">«А теперь снимите меня, будто мы просто идём.»</p>
+<p style="margin:0 0 5px">После этого он обязательно знакомится с человеком и узнаёт его имя.</p>
+<p style="margin:0 0 5px">Это подчёркивает уважение к людям и позволяет затем указать их в финальных титрах как участников съёмок.</p>
+<p style="margin:0 0 5px">Так рождается ощущение, что фильм создаётся всем миром.</p>
+<p style="margin:0 0 5px">---</p>
+<p style="font-weight:700;margin:12px 0 4px;font-size:14px;color:#E5163A">Камера — ещё один персонаж</p>
+<p style="margin:0 0 5px">Камера никогда не воспринимается как безличный технический инструмент.</p>
+<p style="margin:0 0 5px">Она становится постоянным спутником героя.</p>
+<p style="margin:0 0 5px">Она участвует в общении.</p>
+<p style="margin:0 0 5px">Она помогает знакомиться.</p>
+<p style="margin:0 0 5px">Она становится поводом для разговора.</p>
+<p style="margin:0 0 5px">Через неё герой открывает людей.</p>
+<p style="margin:0 0 5px">Иногда именно камера позволяет ему войти в чужую жизнь.</p>
+<p style="margin:0 0 5px">Поэтому она должна постоянно присутствовать в действиях героя.</p>
+<p style="margin:0 0 5px">---</p>
+<p style="font-weight:700;margin:12px 0 4px;font-size:14px;color:#E5163A">Петербург — другой кинематограф</p>
+<p style="margin:0 0 5px">Как только действие возвращается в Санкт-Петербург, язык фильма полностью меняется.</p>
+<p style="margin:0 0 5px">Исчезает ощущение найденной камеры.</p>
+<p style="margin:0 0 5px">Исчезает документальная импровизация.</p>
+<p style="margin:0 0 5px">Появляется полноценный художественный кинематограф.</p>
+<p style="margin:0 0 5px">Кадры становятся спокойнее.</p>
+<p style="margin:0 0 5px">Композиция — точнее.</p>
+<p style="margin:0 0 5px">Монтаж — размереннее.</p>
+<p style="margin:0 0 5px">Работа камеры становится привычной для полнометражного художественного кино.</p>
+<p style="margin:0 0 5px">Зритель чувствует, что дома герой находится в привычном пространстве, где мир устойчив и предсказуем.</p>
+<p style="margin:0 0 5px">---</p>
+<p style="font-weight:700;margin:12px 0 4px;font-size:14px;color:#E5163A">Главный принцип</p>
+<p style="margin:0 0 5px">Экспедиция снимается так, будто фильм действительно создаёт один человек, который всё время путешествует с собственной камерой.</p>
+<p style="margin:0 0 5px">Петербург снимается как классическое художественное кино.</p>
+<p style="margin:0 0 5px">Контраст этих двух киноязыков становится одной из главных особенностей фильма «Колибри» и подчёркивает различие между жизнью героя в пути и жизнью дома.</p>
+        </div>
+      </section>
+      <section class="scene note-extra" id="note-axis">
+        <h3 class="slug"><span class="num">📝</span> Драматургическая ось: отец — война — дезертир — прощение <span class="ne-tag">из заметок автора</span></h3>
+        <div class="body" contenteditable="true">
+<p style="font-weight:700;margin:12px 0 4px;font-size:14px;color:#E5163A">ДРАМАТУРГИЧЕСКАЯ ОСЬ ДИМЫ: ОТЕЦ — ВОЙНА — ДЕЗЕРТИР — ПРОЩЕНИЕ</p>
+<p style="font-weight:700;margin:10px 0 3px;font-size:13px">I. РЕБЁНОК НА БЕРЕГУ НЕВЫ</p>
+<p style="margin:0 0 5px">Дима не помнит отца как цельного человека.</p>
+<p style="margin:0 0 5px">У него нет большой отцовской фигуры. Есть обрывки.</p>
+<p style="margin:0 0 5px">Шаверма в бумаге. Холодная рука отца. Река. Ракушки. Патроны в песке. Ржавая винтовка, поднятая из воды. Воинское захоронение, через которое они проходили к берегу. Детское ощущение, что война — это не учебник, а что-то лежащее под ногами.</p>
+<p style="margin:0 0 5px">Для другого ребёнка игрушки — машинки, солдатики, конструктор.</p>
+<p style="margin:0 0 5px">Для Димы игрушки — гильзы, патроны, ржавая винтовка, песок с берега Невы.</p>
+<p style="margin:0 0 5px">И это важно: он не выбирал войну как интерес. Война сама стала его первым языком памяти.</p>
+<p style="margin:0 0 5px">Отец рано исчезает. Не просто умирает — исчезает из объяснимого мира. Чечня, служба, слухи, молчание взрослых, недоговорённость. Для ребёнка это выглядит как предательство без виновного.</p>
+<p style="margin:0 0 5px">Отец не бросил его сознательно, но ребёнок всё равно чувствует себя оставленным.</p>
+<p style="margin:0 0 5px">Отсюда главная рана Димы:</p>
+<p style="margin:0 0 5px">«Почему ты ушёл, когда я ещё не успел стать твоим сыном?»</p>
+<p style="margin:0 0 5px">---</p>
+<p style="font-weight:700;margin:10px 0 3px;font-size:13px">II. ДЕД. МОРЕ. ДИСЦИПЛИНА ВМЕСТО НЕЖНОСТИ</p>
+<p style="margin:0 0 5px">После отца Диму воспитывает дед — морской офицер.</p>
+<p style="margin:0 0 5px">Он даёт ему не ласку, а форму мира.</p>
+<p style="margin:0 0 5px">Порядок. Карты. Флот. Историю. Семейную линию. Понятие чести. Понятие службы. Понятие, что мужчина должен выдерживать.</p>
+<p style="margin:0 0 5px">Но дед не может заменить отца.</p>
+<p style="margin:0 0 5px">Он может научить держать спину.</p>
+<p style="margin:0 0 5px">Но не может вернуть тот детский вопрос, который остался без ответа.</p>
+<p style="margin:0 0 5px">Внутри Димы возникает конфликт:</p>
+<p style="margin:0 0 5px">с одной стороны — морская семья, офицеры, долг, память, портреты, альбомы;</p>
+<p style="margin:0 0 5px">с другой — маленький мальчик с берега Невы, который ковыряется в патронах и ждёт, что отец снова выйдет из-за деревьев.</p>
+<p style="margin:0 0 5px">Поэтому Дима становится оператором.</p>
+<p style="margin:0 0 5px">Камера для него — не профессия, а способ смотреть на то, к чему он боится прикоснуться руками.</p>
+<p style="margin:0 0 5px">Он снимает войну, раскопки, экспедиции, лица стариков, металл, кости, письма, потому что пытается собрать рассыпавшегося отца из фрагментов истории.</p>
+<p style="margin:0 0 5px">---</p>
+<p style="font-weight:700;margin:10px 0 3px;font-size:13px">III. ШУМШУ. САМАРИН КАК ОТЕЦ-ПРОВОДНИК</p>
+<p style="margin:0 0 5px">На Шумшу Дима попадает не просто в экспедицию.</p>
+<p style="margin:0 0 5px">Он попадает в собственное детство, только увеличенное до масштаба острова.</p>
+<p style="margin:0 0 5px">Берег Невы превращается в Шумшу.</p>
+<p style="margin:0 0 5px">Патроны в песке — в японские гильзы.</p>
+<p style="margin:0 0 5px">Ржавая винтовка — в танки.</p>
+<p style="margin:0 0 5px">Детские раскопки — в настоящие останки солдат.</p>
+<p style="margin:0 0 5px">И там появляется Самарин.</p>
+<p style="margin:0 0 5px">Самарин — не отец, но он даёт Диме то, чего отец не успел дать: спокойный мужской разговор о смерти.</p>
+<p style="margin:0 0 5px">Не героический.</p>
+<p style="margin:0 0 5px">Не пафосный.</p>
+<p style="margin:0 0 5px">А тихий.</p>
+<p style="margin:0 0 5px">Через вещи.</p>
+<p style="margin:0 0 5px">Через землю.</p>
+<p style="margin:0 0 5px">Через найденный меч.</p>
+<p style="margin:0 0 5px">Через японского офицера.</p>
+<p style="margin:0 0 5px">Через вопрос: что такое честь, если человек мёртв? Что такое позор, если человек выжил?</p>
+<p style="margin:0 0 5px">Дима задаёт Самарину наивный вопрос про харакири не потому, что интересуется Японией.</p>
+<p style="margin:0 0 5px">Он спрашивает:</p>
+<p style="margin:0 0 5px">«Когда мужчина не выдерживает — он трус или человек?»</p>
+<p style="margin:0 0 5px">Но пока сам этого не понимает.</p>
+<p style="margin:0 0 5px">Самарин отвечает не лекцией, а почти отцовской фразой:</p>
+<p style="margin:0 0 5px">«Мы находим вещи. А решения людей — редко.»</p>
+<p style="margin:0 0 5px">Это становится семенем всей дальнейшей истории.</p>
+<p style="margin:0 0 5px">Дима начинает понимать: по найденным предметам нельзя до конца судить о человеке. Ни о японце. Ни о прапрадеде. Ни об отце.</p>
+<p style="margin:0 0 5px">---</p>
+<p style="font-weight:700;margin:10px 0 3px;font-size:13px">IV. МАДАГАСКАР. РУБЛЬ. ПРАПРАДЕД КАК ЗЕРКАЛО ОТЦА</p>
+<p style="margin:0 0 5px">На Мадагаскаре Дима вроде бы ищет прапрадеда-дезертира.</p>
+<p style="margin:0 0 5px">Но глубинно он ищет ответ на другой вопрос:</p>
+<p style="margin:0 0 5px">«Можно ли простить человека, который ушёл?»</p>
+<p style="margin:0 0 5px">Прапрадед ушёл из военной истории семьи.</p>
+<p style="margin:0 0 5px">Отец ушёл из жизни Димы.</p>
+<p style="margin:0 0 5px">Для сознания ребёнка эти два ухода тайно рифмуются.</p>
+<p style="margin:0 0 5px">Один — дезертир.</p>
+<p style="margin:0 0 5px">Другой — погибший.</p>
+<p style="margin:0 0 5px">Но боль у Димы одна:</p>
+<p style="margin:0 0 5px">оба не вернулись.</p>
+<p style="margin:0 0 5px">И вот здесь Рубль становится вторым проводником.</p>
+<p style="margin:0 0 5px">Самарин учил Диму смотреть в землю.</p>
+<p style="margin:0 0 5px">Рубль учит его смотреть в живого человека.</p>
+<p style="margin:0 0 5px">С Самариным Дима говорит о смерти через историю.</p>
+<p style="margin:0 0 5px">С Рублём — через себя.</p>
+<p style="margin:0 0 5px">И когда Рубль спрашивает: «Ты сам когда-нибудь думал уйти?» — вся линия сходится.</p>
+<p style="margin:0 0 5px">Прапрадед.</p>
+<p style="margin:0 0 5px">Отец.</p>
+<p style="margin:0 0 5px">Японский меч.</p>
+<p style="margin:0 0 5px">Харакири.</p>
+<p style="margin:0 0 5px">Ледокол.</p>
+<p style="margin:0 0 5px">Одиночество.</p>
+<p style="margin:0 0 5px">Дима понимает: уйти можно по-разному.</p>
+<p style="margin:0 0 5px">Можно уйти с войны.</p>
+<p style="margin:0 0 5px">Можно уйти из семьи.</p>
+<p style="margin:0 0 5px">Можно уйти из жизни.</p>
+<p style="margin:0 0 5px">Можно уйти внутрь себя так глубоко, что тебя уже никто не найдёт.</p>
+<p style="margin:0 0 5px">И его путь — не доказать, что прапрадед был героем.</p>
+<p style="margin:0 0 5px">Его путь — перестать делить людей на героев и трусов.</p>
+<p style="margin:0 0 5px">Понять, что иногда человек не выдерживает.</p>
+<p style="margin:0 0 5px">Иногда человек спасается.</p>
+<p style="margin:0 0 5px">Иногда человек исчезает не потому, что не любит, а потому что сам сломан.</p>
+<p style="margin:0 0 5px">И тогда Дима впервые может сказать отцу внутренне:</p>
+<p style="margin:0 0 5px">«Ты не додал мне жизни. Но я больше не буду жить только внутри твоего отсутствия.»</p>
+<p style="margin:0 0 5px">Финал этой линии не в том, что он узнаёт правду о прапрадеде.</p>
+<p style="margin:0 0 5px">Финал в том, что он перестаёт судить.</p>
+<p style="margin:0 0 5px">Прапрадеда.</p>
+<p style="margin:0 0 5px">Отца.</p>
+<p style="margin:0 0 5px">Себя.</p>
+<p style="margin:0 0 5px">Он принимает, что его род — не только линия военных, долга и чести.</p>
+<p style="margin:0 0 5px">Это ещё и линия людей, которые боялись, уходили, выживали, молчали, ломались, но всё равно оставляли после себя след.</p>
+<p style="margin:0 0 5px">И Дима выбирает не смерть, не позор, не героизм.</p>
+<p style="margin:0 0 5px">Он выбирает продолжение.</p>
+<p style="margin:0 0 5px">Камеру.</p>
+<p style="margin:0 0 5px">Дорогу.</p>
+<p style="margin:0 0 5px">Рубля.</p>
+<p style="margin:0 0 5px">Жизнь.</p>
+        </div>
+      </section>
+      <section class="scene note-extra" id="note-guides">
+        <h3 class="slug"><span class="num">📝</span> Три проводника: Самарин · Жальбер · Рубль <span class="ne-tag">из заметок автора</span></h3>
+        <div class="body" contenteditable="true">
+<p style="opacity:.7;font-style:italic;margin:0 0 6px">Реплики Жальбера (баобаб / «отец как лодка, волны ещё долго приходят к берегу») — использовать как диалог в его сценах: сахарный завод (сц.58), дом Жальбера (сц.76).</p><p style="font-weight:700;margin:12px 0 4px;font-size:14px;color:#E5163A">Самарин — Жальбер — Рубль</p>
+<p style="margin:0 0 5px">Дима всю жизнь ищет отца.</p>
+<p style="margin:0 0 5px">Но фильм не должен говорить это напрямую.</p>
+<p style="margin:0 0 5px">Зритель должен почувствовать это через мужчин, которых он встречает в пути.</p>
+<p style="font-weight:700;margin:10px 0 3px;font-size:13px">САМАРИН</p>
+<p style="margin:0 0 5px">Шумшу.</p>
+<p style="margin:0 0 5px">Туман.</p>
+<p style="margin:0 0 5px">Танки.</p>
+<p style="margin:0 0 5px">Кости.</p>
+<p style="margin:0 0 5px">Японский меч.</p>
+<p style="margin:0 0 5px">Самарин говорит о смерти спокойно.</p>
+<p style="margin:0 0 5px">Не как историк.</p>
+<p style="margin:0 0 5px">Не как военный.</p>
+<p style="margin:0 0 5px">Как человек, который слишком долго живёт рядом с мёртвыми.</p>
+<p style="margin:0 0 5px">Он знает цену памяти.</p>
+<p style="margin:0 0 5px">Но он не идеализирует её.</p>
+<p style="margin:0 0 5px">Когда Дима спрашивает про Икеду и харакири, Самарин отвечает не про японцев.</p>
+<p style="margin:0 0 5px">Он отвечает про людей.</p>
+<p style="margin:0 0 5px">Он говорит:</p>
+<p style="margin:0 0 5px">«Мы находим вещи. А решения людей почти никогда не находим.»</p>
+<p style="margin:0 0 5px">Это очень важная мысль.</p>
+<p style="margin:0 0 5px">Потому что Дима привык судить отсутствующих.</p>
+<p style="margin:0 0 5px">Прапрадеда.</p>
+<p style="margin:0 0 5px">Отца.</p>
+<p style="margin:0 0 5px">Японского офицера.</p>
+<p style="margin:0 0 5px">Самарин впервые показывает ему, что человек всегда сложнее своей легенды.</p>
+<p style="margin:0 0 5px">После встречи с Самариным Дима начинает сомневаться в собственном праве судить.</p>
+<p style="margin:0 0 5px">Но ответа пока не получает.</p>
+<p style="margin:0 0 5px">---</p>
+<p style="font-weight:700;margin:10px 0 3px;font-size:13px">ЖАЛЬБЕР</p>
+<p style="margin:0 0 5px">Мадагаскар.</p>
+<p style="margin:0 0 5px">Жара.</p>
+<p style="margin:0 0 5px">Море.</p>
+<p style="margin:0 0 5px">Дети.</p>
+<p style="margin:0 0 5px">Рынок.</p>
+<p style="margin:0 0 5px">Старые деревья.</p>
+<p style="margin:0 0 5px">Жальбер совсем другой.</p>
+<p style="margin:0 0 5px">Он не живёт среди смерти.</p>
+<p style="margin:0 0 5px">Он живёт среди жизни.</p>
+<p style="margin:0 0 5px">Он старше.</p>
+<p style="margin:0 0 5px">Спокойнее.</p>
+<p style="margin:0 0 5px">Он примерно того возраста, каким мог бы быть отец Димы.</p>
+<p style="margin:0 0 5px">Он учился в СССР.</p>
+<p style="margin:0 0 5px">Говорит на ломаном русском.</p>
+<p style="margin:0 0 5px">Иногда смешно путает слова.</p>
+<p style="margin:0 0 5px">Но иногда неожиданно говорит вещи,</p>
+<p style="margin:0 0 5px">которые попадают точно в сердце.</p>
+<p style="margin:0 0 5px">Жальбер не рассказывает истории про войну.</p>
+<p style="margin:0 0 5px">Он рассказывает истории про деревья.</p>
+<p style="margin:0 0 5px">Про океан.</p>
+<p style="margin:0 0 5px">Про рыбаков.</p>
+<p style="margin:0 0 5px">Про предков.</p>
+<p style="margin:0 0 5px">Например:</p>
+<p style="margin:0 0 5px">«Когда циклон ломает баобаб,</p>
+<p style="margin:0 0 5px">он падает не сразу.</p>
+<p style="margin:0 0 5px">Иногда дерево стоит ещё много лет.</p>
+<p style="margin:0 0 5px">Снаружи живое.</p>
+<p style="margin:0 0 5px">А внутри уже пустое.</p>
+<p style="margin:0 0 5px">Но знаешь что?</p>
+<p style="margin:0 0 5px">Даже пустой баобаб даёт тень.»</p>
+<p style="margin:0 0 5px">Или:</p>
+<p style="margin:0 0 5px">«У нас говорят,</p>
+<p style="margin:0 0 5px">что отец похож на большую лодку.</p>
+<p style="margin:0 0 5px">Даже когда лодка ушла за горизонт,</p>
+<p style="margin:0 0 5px">волны от неё ещё долго приходят к берегу.»</p>
+<p style="margin:0 0 5px">Дима сначала не понимает.</p>
+<p style="margin:0 0 5px">Потом понимает,</p>
+<p style="margin:0 0 5px">что Жальбер говорит про него самого.</p>
+<p style="margin:0 0 5px">Про его отца.</p>
+<p style="margin:0 0 5px">Про людей вообще.</p>
+<p style="margin:0 0 5px">Жальбер становится тем человеком,</p>
+<p style="margin:0 0 5px">который помогает Диме перестать искать виноватых.</p>
+<p style="margin:0 0 5px">Он объясняет,</p>
+<p style="margin:0 0 5px">что человек может уйти,</p>
+<p style="margin:0 0 5px">но не исчезнуть.</p>
+<p style="margin:0 0 5px">---</p>
+<p style="font-weight:700;margin:10px 0 3px;font-size:13px">РУБЛЬ</p>
+<p style="margin:0 0 5px">Рубль не учит.</p>
+<p style="margin:0 0 5px">Не наставляет.</p>
+<p style="margin:0 0 5px">Не объясняет.</p>
+<p style="margin:0 0 5px">Он младше Димы.</p>
+<p style="margin:0 0 5px">Он не отец.</p>
+<p style="margin:0 0 5px">Он брат.</p>
+<p style="margin:0 0 5px">Они говорят про девушек.</p>
+<p style="margin:0 0 5px">Про еду.</p>
+<p style="margin:0 0 5px">Про рыбалку.</p>
+<p style="margin:0 0 5px">Про смешные вещи.</p>
+<p style="margin:0 0 5px">Про жизнь.</p>
+<p style="margin:0 0 5px">Именно поэтому рядом с ним Дима впервые начинает жить настоящим.</p>
+<p style="margin:0 0 5px">Не прошлым.</p>
+<p style="margin:0 0 5px">Не памятью.</p>
+<p style="margin:0 0 5px">Не поиском.</p>
+<p style="margin:0 0 5px">А сегодняшним днём.</p>
+<p style="margin:0 0 5px">Когда позже возникает разговор про ледокол и одиночество,</p>
+<p style="margin:0 0 5px">Рубль не даёт мудрого ответа.</p>
+<p style="margin:0 0 5px">Он просто слушает.</p>
+<p style="margin:0 0 5px">Как младший брат слушает старшего.</p>
+<p style="margin:0 0 5px">И этого оказывается достаточно.</p>
+<p style="margin:0 0 5px">---</p>
+<p style="font-weight:700;margin:10px 0 3px;font-size:13px">ОБЩИЙ СМЫСЛ</p>
+<p style="margin:0 0 5px">В фильме Дима проходит через трёх мужчин.</p>
+<p style="margin:0 0 5px">Самарин учит его:</p>
+<p style="margin:0 0 5px">не суди мёртвых.</p>
+<p style="margin:0 0 5px">Жальбер учит его:</p>
+<p style="margin:0 0 5px">не обижайся на ушедших.</p>
+<p style="margin:0 0 5px">Рубль учит его:</p>
+<p style="margin:0 0 5px">не забывай жить среди живых.</p>
+<p style="margin:0 0 5px">И только пройдя через всех троих,</p>
+<p style="margin:0 0 5px">Дима оказывается готов встретиться с историей своего прапрадеда.</p>
+<p style="margin:0 0 5px">Потому что к тому моменту он уже ищет не виновника.</p>
+<p style="margin:0 0 5px">И не героя.</p>
+<p style="margin:0 0 5px">Он ищет человека.</p>
+<p style="margin:0 0 5px">Точно так же, как всю жизнь искал своего отца.</p>
+<p style="margin:0 0 5px">(Потому что линия с ледоколом на самом деле не про суицид. Она про соблазн исчезнуть. Про желание стать ещё одним человеком, который растворился в белом горизонте.</p>
+<p style="margin:0 0 5px">И, честно говоря, мне кажется, что именно здесь «Колибри» становится не фильмом про экспедицию на Мадагаскар, а фильмом про наследование мужской памяти в России — от русско-японской войны через Великую Отечественную, через Чечню, через Шумшу и до сегодняшнего дня. Но рассказанным не через генералов и сражения, а через одного тихого оператора, который всё время пытается понять людей, ушедших раньше него.</p>
+        </div>
+      </section>
+      <section class="scene note-extra" id="note-camera">
+        <h3 class="slug"><span class="num">📝</span> Камера как персонаж: банк реплик (распределить по фильму) <span class="ne-tag">из заметок автора</span></h3>
+        <div class="body" contenteditable="true">
+<p style="margin:0 0 5px">НАДО ВОТ ТАКОЙ ДИАЛОГ ДОБАВИТЬ:</p>
+<p style="margin:0 0 5px">Дима (ставит камеру на штатив, проверяет кадр):</p>
+<p style="margin:0 0 3px;padding-left:10px">• Всё… теперь она сама снимает.</p>
+<p style="margin:0 0 5px">(отходит на несколько шагов)</p>
+<p style="margin:0 0 3px;padding-left:10px">• Хотя, если честно, я никогда не знаю, снимает ли она до сих пор.</p>
+<p style="margin:0 0 5px">Самарин:</p>
+<p style="margin:0 0 3px;padding-left:10px">• В смысле?</p>
+<p style="margin:0 0 5px">Дима:</p>
+<p style="margin:0 0 3px;padding-left:10px">• Может, аккумулятор уже сел. Может, карта памяти закончилась. Может, запись остановилась минуту назад… А может, наоборот, сейчас снимается самый важный кадр.</p>
+<p style="margin:0 0 5px">(улыбается)</p>
+<p style="margin:0 0 3px;padding-left:10px">• И в этом, наверное, всё кино.</p>
+<p style="margin:0 0 5px">Пауза.</p>
+<p style="margin:0 0 3px;padding-left:10px">• Ты никогда не знаешь, что останется записанным.</p>
+<p style="margin:0 0 5px">Ещё одна пауза.</p>
+<p style="margin:0 0 3px;padding-left:10px">• Да и жизнь, если подумать, устроена примерно так же.</p>
+<p style="margin:0 0 5px">==========</p>
+<p style="margin:0 0 5px">Если распределить подобные реплики по всему фильму, они сначала будут восприниматься как обычный профессиональный жаргон оператора, а к финалу сложатся для зрителя в одну общую мысль: кино и жизнь подчиняются одному правилу — невозможно заранее знать, какой момент окажется самым важным. Это позволит донести идею без прямого морализаторства.</p>
+<p style="margin:0 0 5px">Возможные типы реплик</p>
+<p style="margin:0 0 5px">1. Люди сопротивляются камере</p>
+<p style="margin:0 0 3px;padding-left:10px">• Ты опять снимаешь?</p>
+<p style="margin:0 0 3px;padding-left:10px">• Убери камеру.</p>
+<p style="margin:0 0 3px;padding-left:10px">• Зачем ты всё это снимаешь?</p>
+<p style="margin:0 0 3px;padding-left:10px">• Это тоже попадёт в твой фильм?</p>
+<p style="margin:0 0 3px;padding-left:10px">• Ты можешь хотя бы сейчас не снимать?</p>
+<p style="margin:0 0 3px;padding-left:10px">• Ты это потом сотрёшь?</p>
+<p style="margin:0 0 3px;padding-left:10px">• Не снимай меня так близко.</p>
+<p style="margin:0 0 3px;padding-left:10px">• А звук тоже пишется?</p>
+<p style="margin:0 0 3px;padding-left:10px">• Подожди, я не готов.</p>
+<p style="margin:0 0 3px;padding-left:10px">• Ты всегда с камерой разговариваешь?</p>
+<p style="margin:0 0 5px">2. Люди начинают привыкать</p>
+<p style="margin:0 0 3px;padding-left:10px">• Ладно, снимай, только недолго.</p>
+<p style="margin:0 0 3px;padding-left:10px">• А куда мне смотреть? В объектив?</p>
+<p style="margin:0 0 3px;padding-left:10px">• Я плохо выгляжу?</p>
+<p style="margin:0 0 3px;padding-left:10px">• Дай посмотреть, что получилось.</p>
+<p style="margin:0 0 3px;padding-left:10px">• А можно я сам себя сниму?</p>
+<p style="margin:0 0 3px;padding-left:10px">• Покажи, где нажимать.</p>
+<p style="margin:0 0 3px;padding-left:10px">• Я могу подержать, только не уронить бы.</p>
+<p style="margin:0 0 3px;padding-left:10px">• А если я скажу что-то лишнее, ты вырежешь?</p>
+<p style="margin:0 0 5px">3. Дима объясняет правила своего кино</p>
+<p style="margin:0 0 3px;padding-left:10px">• Я снимаю не только то, что красиво. Я снимаю то, что происходит.</p>
+<p style="margin:0 0 3px;padding-left:10px">• Иногда лучший кадр начинается тогда, когда человек думает, что съёмка закончилась.</p>
+<p style="margin:0 0 3px;padding-left:10px">• Не играйте. Просто делайте, что делали.</p>
+<p style="margin:0 0 3px;padding-left:10px">• Камера не мешает жизни. Она только показывает, как мы к ней относимся.</p>
+<p style="margin:0 0 3px;padding-left:10px">• Я не всегда знаю, что именно снимаю. Иногда понимаю только потом.</p>
+<p style="margin:0 0 3px;padding-left:10px">• Если я буду всё контролировать, я ничего настоящего не сниму.</p>
+<p style="margin:0 0 3px;padding-left:10px">• Здесь нет группы. Есть я, камера и люди, которые соглашаются мне помочь.</p>
+<p style="margin:0 0 5px">4. Камера как источник конфликта</p>
+<p style="margin:0 0 3px;padding-left:10px">• Ты снимаешь, а помогать кто будет?</p>
+<p style="margin:0 0 3px;padding-left:10px">• Дима, сейчас не время для кино.</p>
+<p style="margin:0 0 3px;padding-left:10px">• Ты приехал снимать или жить?</p>
+<p style="margin:0 0 3px;padding-left:10px">• Ты за камерой прячешься.</p>
+<p style="margin:0 0 3px;padding-left:10px">• Ты всё превращаешь в кадр.</p>
+<p style="margin:0 0 3px;padding-left:10px">• А без камеры ты можешь просто поговорить?</p>
+<p style="margin:0 0 3px;padding-left:10px">• Ты снимаешь людей, но сам от них закрываешься.</p>
+<p style="margin:0 0 5px">5. Камера как просьба о помощи</p>
+<p style="margin:0 0 3px;padding-left:10px">• Подержи, пожалуйста. Только вот так, не закрывай микрофон.</p>
+<p style="margin:0 0 3px;padding-left:10px">• Сними меня отсюда. Я сейчас зайду в кадр.</p>
+<p style="margin:0 0 3px;padding-left:10px">• Если я выйду за край, просто веди за мной.</p>
+<p style="margin:0 0 3px;padding-left:10px">• Не бойся, если будет криво — это даже лучше.</p>
+<p style="margin:0 0 3px;padding-left:10px">• Можешь снять себя? Просто расскажи, как ты это видишь.</p>
+<p style="margin:0 0 3px;padding-left:10px">• Как тебя зовут? Я потом укажу тебя в титрах.</p>
+<p style="margin:0 0 3px;padding-left:10px">• Теперь ты тоже оператор этого фильма.</p>
+<p style="margin:0 0 5px">6. Камера как метафора жизни</p>
+<p style="margin:0 0 3px;padding-left:10px">• Я поставил камеру на штатив, и она нас снимает. Наверное.</p>
+<p style="margin:0 0 3px;padding-left:10px">• Я не знаю, пишет она ещё или уже остановилась.</p>
+<p style="margin:0 0 3px;padding-left:10px">• Может, сел аккумулятор. Может, закончилась карта. А может, прямо сейчас снимается самый важный момент.</p>
+<p style="margin:0 0 3px;padding-left:10px">• В этом и есть кино. Ты никогда не знаешь, что останется.</p>
+<p style="margin:0 0 3px;padding-left:10px">• Жизнь примерно такая же. Запись может оборваться в любой момент.</p>
+<p style="margin:0 0 3px;padding-left:10px">• Поэтому я стараюсь не выключать слишком рано.</p>
+<p style="margin:0 0 5px">Как это работает драматургически</p>
+<p style="margin:0 0 5px">Сначала камера воспринимается как странность Димы.</p>
+<p style="margin:0 0 5px">Потом — как его профессия.</p>
+<p style="margin:0 0 5px">Потом — как способ знакомиться с людьми.</p>
+<p style="margin:0 0 5px">Потом — как причина конфликтов.</p>
+<p style="margin:0 0 5px">Потом — как способ признаться в одиночестве.</p>
+<p style="margin:0 0 5px">И только ближе к финалу зритель понимает: камера для Димы — это не техника, а способ не исчезнуть, не потерять память, сохранить людей и доказать, что всё это действительно было.</p>
+<p style="margin:0 0 5px">Главное правило</p>
+<p style="margin:0 0 5px">В экспедиции камера должна постоянно быть видимой частью мира фильма.</p>
+<p style="margin:0 0 5px">Люди должны замечать её, спорить с ней, брать её в руки, смеяться над ней, злиться на неё, забывать о ней.</p>
+<p style="margin:0 0 5px">Тогда зритель поверит</p>
+        </div>
+      </section>
       <section class="scene scene-section" id="part-detail">
         <h2 class="slug" style="border:none"><span class="num">★</span> ДЕТАЛЬНЫЙ ПОЭПИЗОДНИК</h2>
         <p class="tease">Расширенная версия. Источник: «колибри поэпизодник.docx».</p>
@@ -2168,6 +2577,23 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
         <h2 class="slug"><span class="num">2</span> НАТ. САНКТ-ПЕТЕРБУРГ. ДЕНЬ</h2>
         <div class="body" contenteditable="true">
 <p>Совсем не тропический, а летний питерский - дождь поливает улицы. ДИМА в желтой каске мчит на велосипеде по набережным и мостам. Едет по улице Мира. Педали вращаются, Димины кеды мокнут. Одет он спортивно, оброс бородой, щеки и нос сгорели на солнце, красные и облезают. В светлых Диминых глазах отражается не Нева, нет. Воды Невы темнее, мутнее Диминых глаз. В них отражаются Антарктический льды.</p>
+        </div>
+      </section>
+      <section class="scene insert-note" id="ins-vo-lenfilm">
+        <div class="rs-tag" style="background:#6b5cff">✍️ ВСТАВКА к сцене 2 · закадровый голос</div>
+        <h3 class="slug"><span class="num">✍️</span> Войсовер Димы (велосипед к Ленфильму)</h3>
+        <div class="body" contenteditable="true">
+<p style="margin:0 0 5px">Меня зовут Дима.</p>
+<p style="margin:0 0 5px">Я оператор документального отдела Ленфильма.</p>
+<p style="margin:0 0 5px">Когда нужно снять что-нибудь далеко и быстро, обычно отправляют меня.</p>
+<p style="margin:0 0 5px">Везти целую съёмочную группу дорого.</p>
+<p style="margin:0 0 5px">А мне много не нужно.</p>
+<p style="margin:0 0 5px">Камера. Штатив. Билет.</p>
+<p style="margin:0 0 5px">Я привык работать один.</p>
+<p style="margin:0 0 5px">Так проще всем.</p>
+<p style="margin:0 0 5px">Южная Африка. Северная Африка. Южная Америка. Антарктида.</p>
+<p style="margin:0 0 5px">Иногда я возвращаюсь домой только затем, чтобы собрать вещи и снова уехать.</p>
+<p style="margin:0 0 5px">Наверное, поэтому меня и отправляют.</p>
         </div>
       </section>
       <section class="scene" id="s3">
@@ -2756,6 +3182,87 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
 <p>КОНЕЦ ФЛЭШБЭКА</p>
         </div>
       </section>
+      <section class="scene ready-scene" id="rs-shumshu">
+        <div class="rs-tag">🎬 ГОТОВАЯ СЦЕНА · из заметок автора</div>
+        <h2 class="slug"><span class="num">★</span> ШУМШУ. ТУМАН. ДЕНЬ — катана (Самарин)</h2>
+        <div class="body" contenteditable="true">
+<p style="margin:0 0 5px">Ветер гнёт кедровый стланик.</p>
+<p style="margin:0 0 5px">Вдалеке проступают силуэты японских танков.</p>
+<p style="margin:0 0 5px">Самарин водит металлоискателем.</p>
+<p style="margin:0 0 5px">Сигнал.</p>
+<p style="margin:0 0 5px">Писк.</p>
+<p style="margin:0 0 5px">Они начинают копать.</p>
+<p style="margin:0 0 5px">Из земли постепенно появляется ржавый обломок.</p>
+<p style="margin:0 0 5px">Самарин осторожно очищает находку кисточкой.</p>
+<p style="margin:0 0 5px">Показывается гарда меча.</p>
+<p style="margin:0 0 5px">Остатки рукояти.</p>
+<p style="margin:0 0 5px">Дима включает камеру.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">ДИМА</p>
+<p style="margin:0 0 5px">Катана?</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">САМАРИН</p>
+<p style="margin:0 0 5px">Скорее всего.</p>
+<p style="margin:0 0 5px">Или то, что от неё осталось.</p>
+<p style="margin:0 0 5px">Самарин переворачивает находку.</p>
+<p style="margin:0 0 5px">Проводит пальцем по ржавчине.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">САМАРИН</p>
+<p style="margin:0 0 5px">Непростой солдат её носил.</p>
+<p style="margin:0 0 5px">Офицер.</p>
+<p style="margin:0 0 5px">Может быть, даже из штаба.</p>
+<p style="margin:0 0 5px">Дима берёт меч двумя руками.</p>
+<p style="margin:0 0 5px">Как ребёнок.</p>
+<p style="margin:0 0 5px">Пытается представить его целым.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">ДИМА</p>
+<p style="margin:0 0 5px">А этим мечом можно было…</p>
+<p style="margin:0 0 5px">Ну…</p>
+<p style="margin:0 0 5px">Сделать себе харакири?</p>
+<p style="margin:0 0 5px">Самарин усмехается.</p>
+<p style="margin:0 0 5px">Смотрит на туман.</p>
+<p style="margin:0 0 5px">На танки.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">САМАРИН</p>
+<p style="margin:0 0 5px">Если очень захотеть —</p>
+<p style="margin:0 0 5px">можно и ложкой.</p>
+<p style="margin:0 0 5px">Пауза.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">САМАРИН</p>
+<p style="margin:0 0 5px">Но вообще да.</p>
+<p style="margin:0 0 5px">Для самурая меч был больше,</p>
+<p style="margin:0 0 5px">чем оружие.</p>
+<p style="margin:0 0 5px">Иногда он был последней вещью,</p>
+<p style="margin:0 0 5px">которая оставалась человеку.</p>
+<p style="margin:0 0 5px">Ветер.</p>
+<p style="margin:0 0 5px">Шум океана где-то далеко.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">ДИМА</p>
+<p style="margin:0 0 5px">А Икеда?</p>
+<p style="margin:0 0 5px">Самарин смотрит на него.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">ДИМА</p>
+<p style="margin:0 0 5px">Командир танков.</p>
+<p style="margin:0 0 5px">Который тут воевал.</p>
+<p style="margin:0 0 5px">Он мог?</p>
+<p style="margin:0 0 5px">Самарин долго думает.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">САМАРИН</p>
+<p style="margin:0 0 5px">Не знаю.</p>
+<p style="margin:0 0 5px">Документов нет.</p>
+<p style="margin:0 0 5px">Но поражение для такого человека —</p>
+<p style="margin:0 0 5px">было хуже смерти.</p>
+<p style="margin:0 0 5px">Может быть, смог.</p>
+<p style="margin:0 0 5px">Может быть, не стал.</p>
+<p style="margin:0 0 5px">Может быть, решил жить дальше.</p>
+<p style="margin:0 0 5px">Мы обычно находим вещи.</p>
+<p style="margin:0 0 5px">А решения людей —</p>
+<p style="margin:0 0 5px">редко.</p>
+<p style="margin:0 0 5px">Самарин возвращает меч Диме.</p>
+<p style="margin:0 0 5px">Тот смотрит на ржавое лезвие.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">САМАРИН</p>
+<p style="margin:0 0 5px">Странная штука.</p>
+<p style="margin:0 0 5px">Одни готовы умереть за честь.</p>
+<p style="margin:0 0 5px">Другие готовы жить с позором.</p>
+<p style="margin:0 0 5px">И никто не знает,</p>
+<p style="margin:0 0 5px">кто из них храбрее.</p>
+<p style="margin:0 0 5px">Дима молчит.</p>
+<p style="margin:0 0 5px">Смотрит на меч.</p>
+<p style="margin:0 0 5px">На туман.</p>
+<p style="margin:0 0 5px">На ржавые танки.</p>
+        </div>
+      </section>
       <section class="scene" id="s64">
         <h2 class="slug"><span class="num">63</span> ИНТ. ДОМ АЙМАНТ. УТРО</h2>
         <div class="body" contenteditable="true">
@@ -3119,6 +3626,275 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
 <p><b>ДИМА.</b> <i>Е-б-ж. Е-б-ж. Знаете что это? Это значит «если буду жив»!</i></p>
 <p>Дима пинает землю ногой, роет пяткой. Заходит по колено в океан.</p>
 <p>ЗКД?????</p>
+        </div>
+      </section>
+      <section class="scene ready-scene" id="rs-mozambik">
+        <div class="rs-tag">🎬 ГОТОВАЯ СЦЕНА · из заметок автора</div>
+        <h2 class="slug"><span class="num">★</span> НОЧЬ. МОЗАМБИКСКИЙ ПРОЛИВ — ледокол (Дима/Рубль)</h2>
+        <div class="body" contenteditable="true">
+<p style="margin:0 0 5px">Костёр почти догорел.</p>
+<p style="margin:0 0 5px">Волны шуршат в темноте.</p>
+<p style="margin:0 0 5px">Рубль сидит на песке.</p>
+<p style="margin:0 0 5px">Дима смотрит на угли.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">РУБЛЬ</p>
+<p style="margin:0 0 5px">Ты всё думаешь про своего прадеда?</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">ДИМА</p>
+<p style="margin:0 0 5px">Иногда.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">РУБЛЬ</p>
+<p style="margin:0 0 5px">Если он правда сбежал...</p>
+<p style="margin:0 0 5px">Это позор?</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">ДИМА</p>
+<p style="margin:0 0 5px">Не знаю.</p>
+<p style="margin:0 0 5px">Для моей семьи — наверное.</p>
+<p style="margin:0 0 5px">Для него самого...</p>
+<p style="margin:0 0 5px">Не знаю.</p>
+<p style="margin:0 0 5px">Пауза.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">ДИМА</p>
+<p style="margin:0 0 5px">Японцы тогда часто убивали себя.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">РУБЛЬ</p>
+<p style="margin:0 0 5px">Почему?</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">ДИМА</p>
+<p style="margin:0 0 5px">Они считали,</p>
+<p style="margin:0 0 5px">что потерять честь хуже смерти.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">РУБЛЬ</p>
+<p style="margin:0 0 5px">Странно.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">ДИМА</p>
+<p style="margin:0 0 5px">Для них это было достойно.</p>
+<p style="margin:0 0 5px">Для нас сейчас это называется самоубийством.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">РУБЛЬ</p>
+<p style="margin:0 0 5px">Я никогда этого не понимал.</p>
+<p style="margin:0 0 5px">Мне кажется, после этой жизни будет другая.</p>
+<p style="margin:0 0 5px">И то, как мы проживём эту,</p>
+<p style="margin:0 0 5px">решит, какую нам дадут потом.</p>
+<p style="margin:0 0 5px">Поэтому это не очень хороший способ решить проблему.</p>
+<p style="margin:0 0 5px">Пауза.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">РУБЛЬ</p>
+<p style="margin:0 0 5px">А ты?</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">ДИМА</p>
+<p style="margin:0 0 5px">Что?</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">РУБЛЬ</p>
+<p style="margin:0 0 5px">Ты когда-нибудь думал умереть?</p>
+<p style="margin:0 0 5px">Дима долго смотрит на море.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">ДИМА</p>
+<p style="margin:0 0 5px">Да.</p>
+<p style="margin:0 0 5px">РУБЛЬ молчит.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">ДИМА</p>
+<p style="margin:0 0 5px">На ледоколе.</p>
+<p style="margin:0 0 5px">Когда зимовал в Антарктиде.</p>
+<p style="margin:0 0 5px">Все думают —</p>
+<p style="margin:0 0 5px">экспедиция, приключение.</p>
+<p style="margin:0 0 5px">Работа мечты.</p>
+<p style="margin:0 0 5px">Но многие люди, которые живут в городах,</p>
+<p style="margin:0 0 5px">даже не представляют,</p>
+<p style="margin:0 0 5px">что значит оказаться один на один с собой.</p>
+<p style="margin:0 0 5px">Не на вечер.</p>
+<p style="margin:0 0 5px">Не на выходные.</p>
+<p style="margin:0 0 5px">На месяцы.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">РУБЛЬ</p>
+<p style="margin:0 0 5px">Но вас же там много было.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">ДИМА</p>
+<p style="margin:0 0 5px">Много.</p>
+<p style="margin:0 0 5px">Есть кают-компания.</p>
+<p style="margin:0 0 5px">Разговоры.</p>
+<p style="margin:0 0 5px">Фильмы.</p>
+<p style="margin:0 0 5px">Праздники.</p>
+<p style="margin:0 0 5px">Первые недели.</p>
+<p style="margin:0 0 5px">А потом...</p>
+<p style="margin:0 0 5px">Потом всё равно остаёшься один.</p>
+<p style="margin:0 0 5px">Особенно в шторм.</p>
+<p style="margin:0 0 5px">Лежишь в каюте.</p>
+<p style="margin:0 0 5px">Железо скрипит.</p>
+<p style="margin:0 0 5px">За стенкой океан.</p>
+<p style="margin:0 0 5px">И ты понимаешь,</p>
+<p style="margin:0 0 5px">что тебе некуда уйти.</p>
+<p style="margin:0 0 5px">В городе можно выйти на улицу.</p>
+<p style="margin:0 0 5px">Позвонить кому-то.</p>
+<p style="margin:0 0 5px">Открыть интернет.</p>
+<p style="margin:0 0 5px">Спрятаться в работе.</p>
+<p style="margin:0 0 5px">Найти шум.</p>
+<p style="margin:0 0 5px">А там ничего нет.</p>
+<p style="margin:0 0 5px">Только ты.</p>
+<p style="margin:0 0 5px">И все мысли,</p>
+<p style="margin:0 0 5px">которые ты откладывал годами.</p>
+<p style="margin:0 0 5px">Все разговоры,</p>
+<p style="margin:0 0 5px">которые не договорил.</p>
+<p style="margin:0 0 5px">Все страхи,</p>
+<p style="margin:0 0 5px">которые не хотел замечать.</p>
+<p style="margin:0 0 5px">Они начинают выходить наружу.</p>
+<p style="margin:0 0 5px">Будто кто-то открывает старый чемодан.</p>
+<p style="margin:0 0 5px">И вываливает всё содержимое тебе на кровать.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">РУБЛЬ</p>
+<p style="margin:0 0 5px">И что ты делал?</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">ДИМА</p>
+<p style="margin:0 0 5px">Сначала спорил с ними.</p>
+<p style="margin:0 0 5px">Потом слушал.</p>
+<p style="margin:0 0 5px">Потом понял,</p>
+<p style="margin:0 0 5px">что спорить бесполезно.</p>
+<p style="margin:0 0 5px">Потому что это я сам.</p>
+<p style="margin:0 0 5px">Пауза.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">ДИМА</p>
+<p style="margin:0 0 5px">Иногда мне казалось,</p>
+<p style="margin:0 0 5px">что корабль превратился в одиночную камеру.</p>
+<p style="margin:0 0 5px">Только размером с мир.</p>
+<p style="margin:0 0 5px">РУБЛЬ смотрит на него.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">ДИМА</p>
+<p style="margin:0 0 5px">И однажды я стоял на палубе.</p>
+<p style="margin:0 0 5px">Смотрел вниз.</p>
+<p style="margin:0 0 5px">На воду.</p>
+<p style="margin:0 0 5px">На лёд.</p>
+<p style="margin:0 0 5px">И подумал...</p>
+<p style="margin:0 0 5px">А что будет,</p>
+<p style="margin:0 0 5px">если просто шагнуть?</p>
+<p style="margin:0 0 5px">Не потому что хотел умереть.</p>
+<p style="margin:0 0 5px">Потому что хотел исчезнуть.</p>
+<p style="margin:0 0 5px">Ненадолго.</p>
+<p style="margin:0 0 5px">Отдохнуть от себя.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">ФЛЭШБЭК.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">АНТАРКТИДА.</p>
+<p style="margin:0 0 5px">Красный ледокол режет серое море.</p>
+<p style="margin:0 0 5px">Дима стоит на носу.</p>
+<p style="margin:0 0 5px">Ветер рвёт одежду.</p>
+<p style="margin:0 0 5px">ДИМА (V.O.)</p>
+<p style="margin:0 0 5px">Я думал...</p>
+<p style="margin:0 0 5px">Корабль вообще заметит,</p>
+<p style="margin:0 0 5px">что меня больше нет?</p>
+<p style="margin:0 0 5px">Или будет идти дальше?</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">РЕЗКАЯ СКЛЕЙКА.</p>
+<p style="margin:0 0 5px">Из руки вылетает GoPro.</p>
+<p style="margin:0 0 5px">Камера летит вперёд.</p>
+<p style="margin:0 0 5px">Над волнами.</p>
+<p style="margin:0 0 5px">Над красным носом ледокола.</p>
+<p style="margin:0 0 5px">Словно за борт прыгнул сам человек.</p>
+<p style="margin:0 0 5px">ДИМА (V.O.)</p>
+<p style="margin:0 0 5px">Я даже придумал план.</p>
+<p style="margin:0 0 5px">Глупый.</p>
+<p style="margin:0 0 5px">Что доплыву до айсберга.</p>
+<p style="margin:0 0 5px">Заберусь на него.</p>
+<p style="margin:0 0 5px">Буду сидеть и смотреть,</p>
+<p style="margin:0 0 5px">как ледокол уходит.</p>
+<p style="margin:0 0 5px">Пока не станет маленькой красной точкой.</p>
+<p style="margin:0 0 5px">Пока не исчезнет совсем.</p>
+<p style="margin:0 0 5px">Подводный кадр.</p>
+<p style="margin:0 0 5px">Красный корпус удаляется.</p>
+<p style="margin:0 0 5px">Растворяется в белой дымке.</p>
+<p style="margin:0 0 5px">ДИМА (V.O.)</p>
+<p style="margin:0 0 5px">Потом начал читать про айсберги.</p>
+<p style="margin:0 0 5px">Сколько они живут.</p>
+<p style="margin:0 0 5px">Куда дрейфуют.</p>
+<p style="margin:0 0 5px">И понял,</p>
+<p style="margin:0 0 5px">что они тоже умирают.</p>
+<p style="margin:0 0 5px">Тают.</p>
+<p style="margin:0 0 5px">Даже лёд не вечен.</p>
+<p style="margin:0 0 5px">Даже такая гора льда,</p>
+<p style="margin:0 0 5px">которая кажется бессмертной.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">РУБЛЬ</p>
+<p style="margin:0 0 5px">И что тебя остановило?</p>
+<p style="margin:0 0 5px">Возвращение к костру.</p>
+<p style="margin:0 0 5px">Долгое молчание.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">ДИМА</p>
+<p style="margin:0 0 5px">Странная мысль.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">РУБЛЬ</p>
+<p style="margin:0 0 5px">Какая?</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">ДИМА</p>
+<p style="margin:0 0 5px">Я вдруг понял,</p>
+<p style="margin:0 0 5px">что хочу увидеть,</p>
+<p style="margin:0 0 5px">чем всё закончится.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">РУБЛЬ</p>
+<p style="margin:0 0 5px">Что именно?</p>
+<p style="margin:0 0 5px">Дима смотрит на море.</p>
+<p style="margin:0 0 5px">На звёзды.</p>
+<p style="margin:0 0 5px">На костёр.</p>
+<p style="margin:0 0 5px">На Рубля.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">ДИМА</p>
+<p style="margin:0 0 5px">Не знаю.</p>
+<p style="margin:0 0 5px">История.</p>
+<p style="margin:0 0 5px">Моя.</p>
+<p style="margin:0 0 5px">Твоя.</p>
+<p style="margin:0 0 5px">История этого корабля.</p>
+<p style="margin:0 0 5px">История прадеда.</p>
+<p style="margin:0 0 5px">Всё вместе.</p>
+<p style="margin:0 0 5px">Понимаешь...</p>
+<p style="margin:0 0 5px">Я не хотел умереть.</p>
+<p style="margin:0 0 5px">Я просто очень устал быть один.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">РУБЛЬ</p>
+<p style="margin:0 0 5px">А сейчас?</p>
+<p style="margin:0 0 5px">Дима улыбается.</p>
+<p style="margin:0 0 5px">Смотрит на него.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">ДИМА</p>
+<p style="margin:0 0 5px">Сейчас уже не один.</p>
+        </div>
+      </section>
+      <section class="scene ready-scene" id="rs-women">
+        <div class="rs-tag">🎬 ГОТОВАЯ СЦЕНА · из заметок автора</div>
+        <h2 class="slug"><span class="num">★</span> СЦЕНЫ О ЖЕНЩИНАХ / «ХОЗЯЙКА» (часть Дима↔Жальбер — вынести раньше, на Носи-Бе)</h2>
+        <div class="body" contenteditable="true">
+<p style="margin:0 0 5px">Важно: сцены должны быть не про романтику как таковую, а про дружбу между мужчинами. Референс по интонации — «Патруль» (End of Watch): живые разговоры в дороге, подколы, откровенность, когда герои постепенно начинают доверять друг другу. Через разговоры о женщинах раскрываются сами мужчины.</p>
+<p style="margin:0 0 5px">1. ДИМА И ЖАЛЬБЕР</p>
+<p style="margin:0 0 5px">Дима осторожно интересуется у Жальбера про Амант. Не напрямую. Скорее проводит разведку.</p>
+<p style="margin:0 0 5px">Параллельно возникает тема СССР.</p>
+<p style="margin:0 0 5px">Дима спрашивает:</p>
+<p style="margin:0 0 5px">— А у тебя в Союзе девушка была?</p>
+<p style="margin:0 0 5px">Жальбер сначала отшучивается, потом достаёт старую фотографию.</p>
+<p style="margin:0 0 5px">Важно сделать визуальный материал: молодой Жальбер и русская женщина где-нибудь в Ленинграде или Владивостоке времён СССР.</p>
+<p style="margin:0 0 5px">Жальбер рассказывает не столько о любви, сколько о времени, которое ушло.</p>
+<p style="margin:0 0 5px">Смысл сцены: зритель понимает, что Жальбер тоже когда-то был молодым, тоже любил и тоже потерял что-то важное.</p>
+<p style="margin:0 0 5px">Это создаёт мост между ним и Димой.</p>
+<p style="margin:0 0 5px">2. ДИМА И РУБЛЬ</p>
+<p style="margin:0 0 5px">Когда Дима и Рубль становятся близкими, почти как старший брат и младший брат, появляются разговоры про девушек.</p>
+<p style="margin:0 0 5px">Рубль может почти ничего не понимать про отношения Димы с Амант, но всё равно начинает давать советы.</p>
+<p style="margin:0 0 5px">Причём советы часто смешные, нелепые и очень уверенные.</p>
+<p style="margin:0 0 5px">Интонация как в «Патруле»:</p>
+<p style="margin:0 0 5px">— Ты ей сказал?</p>
+<p style="margin:0 0 5px">— Что сказал?</p>
+<p style="margin:0 0 5px">— Что она красивая.</p>
+<p style="margin:0 0 5px">— Нет.</p>
+<p style="margin:0 0 5px">— Тогда чего ты ждёшь?</p>
+<p style="margin:0 0 5px">— Всё сложнее.</p>
+<p style="margin:0 0 5px">— Нет. Это ты сложнее.</p>
+<p style="margin:0 0 5px">Через такие разговоры постепенно раскрывается характер Рубля.</p>
+<p style="margin:0 0 5px">3. РАЗГОВОР ПРО АНТАРКТИДУ И «ХОЗЯЙКУ»</p>
+<p style="margin:0 0 5px">Это один из самых важных мужских разговоров фильма.</p>
+<p style="margin:0 0 5px">Ночёвка.</p>
+<p style="margin:0 0 5px">Костёр.</p>
+<p style="margin:0 0 5px">Лодка.</p>
+<p style="margin:0 0 5px">Темнота.</p>
+<p style="margin:0 0 5px">Дима рассказывает про Антарктиду.</p>
+<p style="margin:0 0 5px">Рубль спрашивает:</p>
+<p style="margin:0 0 5px">— А женщины там есть?</p>
+<p style="margin:0 0 5px">Дима смеётся.</p>
+<p style="margin:0 0 5px">И начинает рассказывать про «хозяйку».</p>
+<p style="margin:0 0 5px">Важно сохранить эту деталь.</p>
+<p style="margin:0 0 5px">Он объясняет, что раньше у старых полярников в каютах часто висели фотографии красивых женщин.</p>
+<p style="margin:0 0 5px">Иногда очень старые чёрно-белые фотографии.</p>
+<p style="margin:0 0 5px">Иногда современные плакаты.</p>
+<p style="margin:0 0 5px">Иногда открытки.</p>
+<p style="margin:0 0 5px">У каждого была своя «хозяйка».</p>
+<p style="margin:0 0 5px">Дима рассказывает:</p>
+<p style="margin:0 0 5px">«Сначала я вообще не понимал, зачем нужна эта голая женщина на стене.</p>
+<p style="margin:0 0 5px">Потом проходит полгода.</p>
+<p style="margin:0 0 5px">Снег.</p>
+<p style="margin:0 0 5px">Лёд.</p>
+<p style="margin:0 0 5px">Полярная ночь.</p>
+<p style="margin:0 0 5px">И ты вдруг понимаешь, что хозяйка — это уже не женщина.</p>
+<p style="margin:0 0 5px">Это понятие.</p>
+<p style="margin:0 0 5px">Это как дом.</p>
+<p style="margin:0 0 5px">Как тепло.</p>
+<p style="margin:0 0 5px">Как нормальная жизнь.</p>
+<p style="margin:0 0 5px">Как напоминание о том, что где-то существует другой мир».</p>
+<p style="margin:0 0 5px">Потом Дима рассказывает, что слово становится нарицательным.</p>
+<p style="margin:0 0 5px">Полярники начинают шутить.</p>
+<p style="margin:0 0 5px">Любая хорошая девушка уже называется хозяйкой.</p>
+<p style="margin:0 0 5px">Кто-то приготовил ужин — хозяйка.</p>
+<p style="margin:0 0 5px">Кто-то о ком-то рассказывает — хозяйка.</p>
+<p style="margin:0 0 5px">Кто-то влюбился — хозяйка.</p>
+<p style="margin:0 0 5px">Дима вспоминает, что один полярник из Африки подарил ему свою «хозяйку» — фотографию африканской красавицы.</p>
+<p style="margin:0 0 5px">Рубль долго смеётся.</p>
+<p style="margin:0 0 5px">Потом говорит:</p>
+<p style="margin:0 0 5px">— Получается, у каждого мужчины должна быть хозяйка?</p>
+<p style="margin:0 0 5px">Дима отвечает:</p>
+<p style="margin:0 0 5px">— Не обязательно. Но без надежды долго не проживёшь.</p>
+<p style="margin:0 0 5px">Смысл сцены не в эротике.</p>
+<p style="margin:0 0 5px">Смысл сцены в одиночестве, доме и человеческой потребности любить кого-то или хотя бы помнить о том, что любовь существует.</p>
         </div>
       </section>
       <section class="scene" id="s103">
@@ -3898,6 +4674,12 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
         <div class="body" contenteditable="true">
 <p>Дима, Рубль и Жальебер устанавливают памятник Русской эскадре. Те камни с названиями кораблей, которые они нашли здесь в прошлый раз, дополняются информационной табличкой. Сцена буквально цитирует фильм «А зори здесь тихие…». Мимо идущая девушка с букетом в руках, подходит - читает (табличка и на малагасийском языке тоже). Девушка оставляет цветы у мемориала. Дима делает кадр на Polaroid. Просит Жальбера отправить его в Санкт-Петербург.</p>
 <p>Дима сразу садится в свою желтую резиновую лодку и отплывает в сторону Носи-Бараха. С ним карта с маршрутом, провиант. Жальбер и Рубль провожают его. Жальбер машет своей желтой кепкой.</p>
+        </div>
+      </section>
+      <section class="scene insert-note" id="ins-video-173">
+        <div class="rs-tag" style="background:#1a9e6a">🎥 ВИДЕО к сцене 173 (мемориал)</div>
+        <div class="body" contenteditable="true">
+<p>Привязать сюда: <b>IMG_7028</b> — клип «А зори здесь тихие» (рамка финала) + <b>IMG_0239</b> — «Романс о влюблённых» (настроение/колористика «красное = живая память»). Файлы локальные, залить при деплое.</p>
         </div>
       </section>
       <section class="scene" id="s177">
@@ -5216,6 +5998,1114 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
       </div>
 
     </div>
+  <div id="alt-pane">
+<section class="scene scene-section"><h2 class="slug" style="border:none"><span class="num">📑</span> АЛЬТЕРНАТИВНЫЙ ПОЭПИЗОДНИК <span style="font-size:13px;opacity:.6">(версия со слов автора — НЕ основной, для сверки)</span></h2></section>
+<section class="scene alt-ep" id="alt-1">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 1. МАДАГАСКАР. СЦЕНА-ЗАТРАВКА</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Мадагаскар.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Фильм открывается сценой действия на Мадагаскаре. Зритель сразу оказывается внутри загадки и приключения.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Саспенс. Захватить внимание зрителя и сразу заявить основную мадагаскарскую сюжетную линию.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Ключевые мотивы:</p>
+<p style="margin:0 0 5px">— Тайна.</p>
+<p style="margin:0 0 5px">— Предчувствие путешествия.</p>
+<p style="margin:0 0 5px">— Неизвестность.</p>
+<p style="margin:0 0 5px">— Начало поисков.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-2">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 2. VHS-ВОСПОМИНАНИЕ. ДЕТСТВО ДИМЫ</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Ленинградская область / детское воспоминание.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Переход в эстетику VHS-кассеты.</p>
+<p style="margin:0 0 5px">Маленький Дима вместе с отцом.</p>
+<p style="margin:0 0 5px">Рыбалка.</p>
+<p style="margin:0 0 5px">Проход через кладбище.</p>
+<p style="margin:0 0 5px">Находка ржавой винтовки в воде.</p>
+<p style="margin:0 0 5px">Водолазная нашивка на рюкзаке отца.</p>
+<p style="margin:0 0 5px">Отдельно заявляется тема камеры.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Важная ремарка:</p>
+<p style="margin:0 0 5px">По принципу фильма «Патруль» — как герой Джилленхола снимает себя на ручную камеру в начале фильма.</p>
+<p style="margin:0 0 5px">Необходимо показать, что камера сопровождает Диму с детства и является наследием отца.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Заявление главной эмоциональной линии фильма:</p>
+<p style="margin:0 0 5px">Дима — отец — память — война.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-3">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 3. ЛЕНФИЛЬМ ПОСЛЕ АНТАРКТИДЫ</h3>
+<div class="body">
+<p style="margin:0 0 5px">Дима крутит педали в жклтой каске( нацденой на Шумшу- ее заявляем позже там) мимо стрелки останавливается, видим магнитчика с бклой бородой)</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Ленфильм.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Первые дни после возвращения Димы из Антарктиды.</p>
+<p style="margin:0 0 5px">Он получает новое задание.</p>
+<p style="margin:0 0 5px">Через пространство студии показывается присутствие темы войны:</p>
+<p style="margin:0 0 5px">— декорации;</p>
+<p style="margin:0 0 5px">— костюмы солдат;</p>
+<p style="margin:0 0 5px">— реквизит;</p>
+<p style="margin:0 0 5px">— следы исторического кино.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Связать профессию героя с темой памяти и войны.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-4">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 4. ДОМ НА ФОНТАНКЕ</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Квартира на Фонтанке.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Представление дома героя.</p>
+<p style="margin:0 0 5px">Знакомство с дедом (возможна дальнейшая корректировка персонажа).</p>
+<p style="margin:0 0 5px">Показывается семейный фотоархив.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Главный акцент:</p>
+<p style="margin:0 0 5px">семья потомственных военных моряков.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Ввести семейную историю и корни героя.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-5">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 5. ЧЕРДАК</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Чердак дома на Фонтанке.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Дима поднимается в своё личное пространство.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Показываются:</p>
+<p style="margin:0 0 5px">— одиночество героя;</p>
+<p style="margin:0 0 5px">— его отстранённость;</p>
+<p style="margin:0 0 5px">— следы прошлых экспедиций;</p>
+<p style="margin:0 0 5px">— ощущение человека, который только вернулся из одной экспедиции и уже готовится к следующей.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Заявить внутреннее состояние героя.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-6">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 6. ДНЕВНИКИ И ПИСЬМА</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Чердак / квартира.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Появляются ключевые артефакты фильма:</p>
+<p style="margin:0 0 5px">— дневники бабушки;</p>
+<p style="margin:0 0 5px">— печатная машинка «Колибри»;</p>
+<p style="margin:0 0 5px">— радиограммы Димы из Антарктиды;</p>
+<p style="margin:0 0 5px">— радиограммы прапрадеда.</p>
+<p style="margin:0 0 5px">Все эти документы начинают существовать как единая система параллелей.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Важная ремарка:</p>
+<p style="margin:0 0 5px">Радиограммы Димы и радиограммы прапрадеда должны быть поставлены на параллельные драматургические рельсы.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Создать эпистолярную структуру фильма и связь поколений.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-7">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 7. ПРИЛЁТ НА МАДАГАСКАР</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Антананариву.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Прилёт героя.</p>
+<p style="margin:0 0 5px">Паспортный контроль.</p>
+<p style="margin:0 0 5px">Первое знакомство со страной.</p>
+<p style="margin:0 0 5px">Знакомство с консулом.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Возможная постановочная версия:</p>
+<p style="margin:0 0 5px">Диму встречает в аэропорту русскоговорящий местный житель по имени Мами.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Ремарка:</p>
+<p style="margin:0 0 5px">На Мадагаскаре имеется реальный актёр (чернокожий, говорит по-русски) по имени Мами, которого можно использовать в этой роли.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Начать африканскую часть путешествия и провести героя через первый порог нового мира.</p>
+<p style="margin:0 0 5px">КОЛИБРИ — ЧЕРНОВОЙ ПОЭПИЗОДНИК (версия со слов автора)</p>
+</div></section>
+<section class="scene alt-ep" id="alt-8">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 8. ОТЕЛЬ-ОАЗИС</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Антананариву. Отель.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Дима добирается до гостиницы и оставляет рюкзак.</p>
+<p style="margin:0 0 5px">Отель воспринимается как безопасный островок среди враждебного города.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Контраст:</p>
+<p style="margin:0 0 5px">внутри — спокойствие, порядок, туристическая среда;</p>
+<p style="margin:0 0 5px">снаружи — хаос, опасность, неизвестность.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Создать ощущение, что герой оказался в чужом и потенциально опасном мире.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-9">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 9. ГОРОД ГРЕХА</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Антананариву.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Дима начинает исследовать город.</p>
+<p style="margin:0 0 5px">Передвижение на такси.</p>
+<p style="margin:0 0 5px">Наблюдение за жизнью столицы.</p>
+<p style="margin:0 0 5px">Город воспринимается глазами героя как опасное пространство:</p>
+<p style="margin:0 0 5px">— криминал;</p>
+<p style="margin:0 0 5px">— нищета;</p>
+<p style="margin:0 0 5px">— проституция;</p>
+<p style="margin:0 0 5px">— наркотики;</p>
+<p style="margin:0 0 5px">— ощущение постоянной угрозы.</p>
+<p style="margin:0 0 5px">Возможны короткие посещения достопримечательностей.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Показать культурный и эмоциональный шок героя.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-10">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 10. МУЗЕЙЧИК В ОТЕЛЕ</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Отель.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">На территории гостиницы находится небольшой музей или экспозиция для туристов.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Внутри:</p>
+<p style="margin:0 0 5px">— старые предметы;</p>
+<p style="margin:0 0 5px">— археологические находки;</p>
+<p style="margin:0 0 5px">— морские артефакты;</p>
+<p style="margin:0 0 5px">— колониальные вещи.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Важная ремарка:</p>
+<p style="margin:0 0 5px">Это первое появление языка фильма «Колибри» через предметы.</p>
+<p style="margin:0 0 5px">Детали начинают работать как драматургические улики и подсказки.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Запустить тему исторических находок и артефактов.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-11">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 11. КРАЖА</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Антананариву.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">У Димы крадут документы и камеру.</p>
+<p style="margin:0 0 5px">Следует динамичная сцена преследования.</p>
+<p style="margin:0 0 5px">Возможна драка или потасовка.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Важная ремарка:</p>
+<p style="margin:0 0 5px">Во время событий герой записывает видеодневник.</p>
+<p style="margin:0 0 5px">Используется приём из фильма «Патруль».</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Часть материала снимается:</p>
+<p style="margin:0 0 5px">— на ручную камеру;</p>
+<p style="margin:0 0 5px">— на видеоочки.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Лишить героя чувства контроля и безопасности.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-12">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 12. ПОСЛЕДСТВИЯ. ТЮРЬМА ИЛИ ПОСОЛЬСТВО</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Вариант А:</p>
+<p style="margin:0 0 5px">Короткий эпизод в местной тюрьме, снятый через видеоочки.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Вариант Б:</p>
+<p style="margin:0 0 5px">Сразу переход в российское посольство.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Основной вариант на данный момент:</p>
+<p style="margin:0 0 5px">Посольство России.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Знакомство с послом.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Образ:</p>
+<p style="margin:0 0 5px">лысый,</p>
+<p style="margin:0 0 5px">харизматичный,</p>
+<p style="margin:0 0 5px">жёсткий,</p>
+<p style="margin:0 0 5px">с опытом спецслужб.</p>
+<p style="margin:0 0 5px">На заднем плане может присутствовать тревожная государственная символика и портрет президента.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Посол предупреждает Диму:</p>
+<p style="margin:0 0 5px">— одному здесь опасно;</p>
+<p style="margin:0 0 5px">— его могут снова ограбить;</p>
+<p style="margin:0 0 5px">— его могут убить;</p>
+<p style="margin:0 0 5px">— поиски необходимо вести осторожно.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Повысить ставки и показать реальную опасность путешествия.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-13">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 13. ТАЙМЕР И РЫНОК</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Посольство → рынок Антананариву.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Дима получает контакт Жальбера.</p>
+<p style="margin:0 0 5px">Ему советуют поискать документы и камеру на местных рынках.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Запускается драматургический таймер:</p>
+<p style="margin:0 0 5px">без документов герой может находиться в стране ограниченное время</p>
+<p style="margin:0 0 5px">(ориентировочно 10–30 дней, уточнить в дальнейшей разработке).</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">На рынке:</p>
+<p style="margin:0 0 5px">— Дима находит свою камеру;</p>
+<p style="margin:0 0 5px">— ремонтирует её;</p>
+<p style="margin:0 0 5px">— покупает или находит колониальную шляпу;</p>
+<p style="margin:0 0 5px">— изучает развалы с артефактами.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Появляются предметы:</p>
+<p style="margin:0 0 5px">— металлоискатель;</p>
+<p style="margin:0 0 5px">— вещи, поднятые со дна;</p>
+<p style="margin:0 0 5px">— предметы из раскопок;</p>
+<p style="margin:0 0 5px">— возможно, вещи из разграбленных захоронений.</p>
+<p style="margin:0 0 5px">Через предметы продолжается визуальный язык фильма.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Важная ремарка:</p>
+<p style="margin:0 0 5px">В толпе впервые появляется персонаж, который позднее возникнет в джунглях.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Приметы персонажа:</p>
+<p style="margin:0 0 5px">— дреды;</p>
+<p style="margin:0 0 5px">— один глаз;</p>
+<p style="margin:0 0 5px">— яркий, запоминающийся силуэт.</p>
+<p style="margin:0 0 5px">Его необходимо придумать так, чтобы зритель запомнил его с первого появления, но не понял его значения.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Первое скрытое знакомство с будущим проводником или антагонистом джунглей.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-14">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 14. ПОСЛЕДНИЙ ВЕЧЕР В ОТЕЛЕ</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Антананариву. Отель.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Дима возвращается после рынка.</p>
+<p style="margin:0 0 5px">В номере он разделывает ананас, пьёт кофе, разбирает вещи.</p>
+<p style="margin:0 0 5px">Постепенно приходит понимание реальности происходящего.</p>
+<p style="margin:0 0 5px">Он ожидал понятной командировки и съёмочного задания, но оказывается один на один с неизвестностью.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Появляется новая информация:</p>
+<p style="margin:0 0 5px">— бутылка с запиской уже отправлена в Петербург;</p>
+<p style="margin:0 0 5px">— искать её здесь больше невозможно;</p>
+<p style="margin:0 0 5px">— на Носи-Бе есть русские могилы;</p>
+<p style="margin:0 0 5px">— Россия помогает ухаживать за ними.</p>
+<p style="margin:0 0 5px">Параллельно герой сталкивается с бытовой стороной страны:</p>
+<p style="margin:0 0 5px">— перебои электричества;</p>
+<p style="margin:0 0 5px">— перебои воды;</p>
+<p style="margin:0 0 5px">— постоянная непредсказуемость.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Саспенс строится на ощущении:</p>
+<p style="margin:0 0 5px">«Ты приехал в Африку. Теперь разбирайся сам».</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Точка невозврата. Герой принимает решение двигаться дальше.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-15">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 15. ПЕРЕДАЧА ПРОВОДНИКА</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Антананариву.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Мами помогает Диме организовать дальнейшую дорогу.</p>
+<p style="margin:0 0 5px">Важная драматургическая функция персонажа:</p>
+<p style="margin:0 0 5px">Мами становится первым проводником.</p>
+<p style="margin:0 0 5px">Он как будто передаёт героя из рук в руки следующему проводнику — Жальберу.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Оба персонажа связаны с русским миром:</p>
+<p style="margin:0 0 5px">— знают русский язык;</p>
+<p style="margin:0 0 5px">— помогают герою;</p>
+<p style="margin:0 0 5px">— становятся мостом между культурами.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Важная ремарка:</p>
+<p style="margin:0 0 5px">Максимально долго сохранять русскоязычные диалоги в начале фильма через Мами и Жальбера.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Сделать переход в Африку мягче и сохранить эмоциональную связь зрителя с героем.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-16">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 16. РОУД-МУВИ ЧЕРЕЗ МАДАГАСКАР</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Дорога на север.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Дима отправляется через остров.</p>
+<p style="margin:0 0 5px">Серия наблюдательных сцен.</p>
+<p style="margin:0 0 5px">Постепенно исчезает тревожная атмосфера столицы.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Появляется настоящий Мадагаскар:</p>
+<p style="margin:0 0 5px">— дороги;</p>
+<p style="margin:0 0 5px">— деревни;</p>
+<p style="margin:0 0 5px">— рынки;</p>
+<p style="margin:0 0 5px">— дети;</p>
+<p style="margin:0 0 5px">— пыль;</p>
+<p style="margin:0 0 5px">— сельская жизнь.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Переход от опасности к исследованию.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-17">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 17. БАОБАБЫ</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Север Мадагаскара.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Дима оказывается среди баобабов.</p>
+<p style="margin:0 0 5px">Знакомится с местными крестьянами.</p>
+<p style="margin:0 0 5px">Общается с простыми людьми.</p>
+<p style="margin:0 0 5px">Появляется ощущение настоящей жизни.</p>
+<p style="margin:0 0 5px">Фильм впервые делает вдох после напряжённой завязки.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Ключевые мотивы:</p>
+<p style="margin:0 0 5px">— земля;</p>
+<p style="margin:0 0 5px">— солнце;</p>
+<p style="margin:0 0 5px">— ручной труд;</p>
+<p style="margin:0 0 5px">— человеческая простота;</p>
+<p style="margin:0 0 5px">— красота повседневности.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Знакомство героя с живым Мадагаскаром.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-18">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 18. БАБКА-КОЛДУНЬЯ</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Деревня.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">На закате Диму приводят к местной колдунье.</p>
+<p style="margin:0 0 5px">Она внимательно рассматривает его.</p>
+<p style="margin:0 0 5px">Проводит короткий ритуал.</p>
+<p style="margin:0 0 5px">Отрезает прядь рыжей бороды.</p>
+<p style="margin:0 0 5px">Что-то говорит или нашёптывает.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Важно сохранить двусмысленность:</p>
+<p style="margin:0 0 5px">непонятно, мистический это момент или просто местная традиция.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Символический переход героя через ещё один порог путешествия.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-19">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 19. ПЕРЕПРАВА</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Побережье.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Утром Дима едет на телеге, запряжённой зебу.</p>
+<p style="margin:0 0 5px">Дорога приводит его к берегу.</p>
+<p style="margin:0 0 5px">Следует переправа на Носи-Бе.</p>
+<p style="margin:0 0 5px">Монтаж становится быстрее.</p>
+<p style="margin:0 0 5px">Появляется ощущение, что герой всё дальше удаляется от прежней жизни.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Физическое пересечение границы между старым и новым миром.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-20">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 20. ВСТРЕЧА С ЖАЛЬБЕРОМ</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Носи-Бе.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Диму встречает Жальбер.</p>
+<p style="margin:0 0 5px">Первое знакомство.</p>
+<p style="margin:0 0 5px">Жальбер становится главным проводником мадагаскарской части истории.</p>
+<p style="margin:0 0 5px">Он отвозит героя к месту проживания.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Появление ключевого персонажа фильма.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-21">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 21. ГАЗБАЛЛОН</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Колониальная бетонная постройка («Газбаллон»).</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Жальбер размещает Диму в семье.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Знакомство с жителями дома:</p>
+<p style="margin:0 0 5px">— Тахо;</p>
+<p style="margin:0 0 5px">— его сёстры;</p>
+<p style="margin:0 0 5px">— мать;</p>
+<p style="margin:0 0 5px">— другие члены семьи.</p>
+<p style="margin:0 0 5px">Появляется ощущение нового дома.</p>
+<p style="margin:0 0 5px">Начинается повседневная жизнь героя среди местных.</p>
+<p style="margin:0 0 5px">Дима уже не турист и не командировочный.</p>
+<p style="margin:0 0 5px">Он становится частью среды.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Окончание первой большой главы фильма.</p>
+<p style="margin:0 0 5px">Настоящее путешествие начинается именно здесь.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-22">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 22. УТРЕННИЙ ПРИЕЗД ЖАЛЬБЕРА</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Газбаллон. Носи-Бе.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Утро.</p>
+<p style="margin:0 0 5px">Диму будит сигнал автомобиля.</p>
+<p style="margin:0 0 5px">Впервые Жальбер появляется не в сумерках и не как загадочный проводник, а при ярком утреннем свете.</p>
+<p style="margin:0 0 5px">Он приезжает вместе с другом Тото.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Важная ремарка:</p>
+<p style="margin:0 0 5px">Необходимо найти кинематографичный автомобиль.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Референс по ощущению:</p>
+<p style="margin:0 0 5px">машина из приключенческого фильма в духе «Ромового дневника».</p>
+<p style="margin:0 0 5px">Автомобиль становится отдельным персонажем и источником движения.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Начало настоящего знакомства с Жальбером и Тото.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-23">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 23. РОУД-МУВИ ПО НОСИ-БЕ</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Остров Носи-Бе.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Жальбер и Тото показывают Диме остров.</p>
+<p style="margin:0 0 5px">Быстрый монтаж.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Дима знакомится с жизнью острова:</p>
+<p style="margin:0 0 5px">— дорогами;</p>
+<p style="margin:0 0 5px">— деревнями;</p>
+<p style="margin:0 0 5px">— рынками;</p>
+<p style="margin:0 0 5px">— бухтами;</p>
+<p style="margin:0 0 5px">— людьми.</p>
+<p style="margin:0 0 5px">Жальбер выступает не просто гидом, а рассказчиком истории острова.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Влюбить зрителя в Носи-Бе.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-24">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 24. ТАХО</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Газбаллон.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Жальбер ненадолго оставляет Диму наедине с Тахо.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Тахо:</p>
+<p style="margin:0 0 5px">— хромой;</p>
+<p style="margin:0 0 5px">— замкнутый;</p>
+<p style="margin:0 0 5px">— редко выходит из дома.</p>
+<p style="margin:0 0 5px">Его физическое ограничение становится причиной внутренней изоляции.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Важная параллель:</p>
+<p style="margin:0 0 5px">Тахо не выходит из дома так же, как когда-то Дима почти не выходил из каюты ледокола во время антарктической экспедиции.</p>
+<p style="margin:0 0 5px">Возникает взаимное узнавание.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Начало дружбы Димы и Тахо.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-25">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 25. ПИНГВИНЫ</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Семейный стол в Газбаллоне.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Семья расспрашивает Диму.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Главный вопрос:</p>
+<p style="margin:0 0 5px">«Что такое Антарктида?»</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Дима рассказывает:</p>
+<p style="margin:0 0 5px">— про ледокол;</p>
+<p style="margin:0 0 5px">— про лёд;</p>
+<p style="margin:0 0 5px">— про станцию Мирный;</p>
+<p style="margin:0 0 5px">— про жизнь среди пингвинов.</p>
+<p style="margin:0 0 5px">Все особенно интересуются пингвинами.</p>
+<p style="margin:0 0 5px">Тахо становится главным слушателем.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Связать линию Антарктиды с мадагаскарской историей.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-26">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 26. КИНОСЕАНС В ДЕРЕВНЕ</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Деревня возле Газбаллона.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Из рассказов про Антарктиду рождается идея кинопоказа.</p>
+<p style="margin:0 0 5px">Дима сооружает самодельный проектор.</p>
+<p style="margin:0 0 5px">На стене демонстрируется фильм, снятый и смонтированный им в Антарктиде.</p>
+<p style="margin:0 0 5px">На показ собирается вся деревня.</p>
+<p style="margin:0 0 5px">Появляются самодельные билеты.</p>
+<p style="margin:0 0 5px">Кино превращается в праздник.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Показать силу кино как универсального языка.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-27">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 27. РЕМОНТ ДОМА</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Газбаллон.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Повседневная жизнь.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Дима помогает семье:</p>
+<p style="margin:0 0 5px">— ремонтирует крышу;</p>
+<p style="margin:0 0 5px">— цементирует;</p>
+<p style="margin:0 0 5px">— участвует в бытовых работах.</p>
+<p style="margin:0 0 5px">Он постепенно перестаёт быть гостем.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Важная функция:</p>
+<p style="margin:0 0 5px">Дима занимает место отсутствующего мужчины-помощника в доме.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Формирование семьи вокруг героя.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-28">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 28. ЗНАКОМСТВО С АМАНД</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Газбаллон.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Приходит Аманд.</p>
+<p style="margin:0 0 5px">Она работает учительницей.</p>
+<p style="margin:0 0 5px">Проверяет задания у Тахо.</p>
+<p style="margin:0 0 5px">Происходит первое знакомство с Димой.</p>
+<p style="margin:0 0 5px">Без романтических деклараций.</p>
+<p style="margin:0 0 5px">Только взаимный интерес.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Начало линии Аманд.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-29">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 29. УРОКИ ЯЗЫКА</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Носи-Бе.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Жальбер начинает учить Диму местному языку.</p>
+<p style="margin:0 0 5px">Постоянно.</p>
+<p style="margin:0 0 5px">В дороге.</p>
+<p style="margin:0 0 5px">На рынке.</p>
+<p style="margin:0 0 5px">Дома.</p>
+<p style="margin:0 0 5px">Во время прогулок.</p>
+<p style="margin:0 0 5px">Дима всё записывает в блокнот.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Важная ремарка:</p>
+<p style="margin:0 0 5px">Это необходимо для постепенного перехода фильма на прямую речь без постоянных субтитров.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Референс:</p>
+<p style="margin:0 0 5px">принцип освоения языка героем в «Последнем самурае».</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Показать интеграцию героя в местную среду.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-30">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 30. ДОМ ЖАЛЬБЕРА</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Дом Жальбера.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Жальбер приглашает Диму к себе.</p>
+<p style="margin:0 0 5px">Впервые раскрывается его настоящая роль.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Он оказывается:</p>
+<p style="margin:0 0 5px">— краеведом;</p>
+<p style="margin:0 0 5px">— историком;</p>
+<p style="margin:0 0 5px">— собирателем архивов;</p>
+<p style="margin:0 0 5px">— хранителем памяти острова.</p>
+<p style="margin:0 0 5px">Он знает историю Носи-Бе лучше большинства приезжих исследователей.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">В доме:</p>
+<p style="margin:0 0 5px">— книги;</p>
+<p style="margin:0 0 5px">— карты;</p>
+<p style="margin:0 0 5px">— записи;</p>
+<p style="margin:0 0 5px">— архивы.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Раскрытие Жальбера как ключевого проводника фильма.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-31">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 31. ДНЕВНИК КОЛОНИАЛЬНОГО ВРЕМЕНИ</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Дом Жальбера.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Жальбер показывает старые документы.</p>
+<p style="margin:0 0 5px">Среди записей обнаруживается фамилия, связанная с родом Димы.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Рабочий вариант:</p>
+<p style="margin:0 0 5px">Тихон Арктика.</p>
+<p style="margin:0 0 5px">Это становится первой серьёзной исторической зацепкой.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Поиск прадеда впервые получает материальное подтверждение.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-32">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 32. РАЗГРАБЛЕННАЯ ИСТОРИЯ</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Дом Жальбера.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Жальбер рассказывает свою историю.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Когда-то у него были:</p>
+<p style="margin:0 0 5px">— старые карты;</p>
+<p style="margin:0 0 5px">— документы;</p>
+<p style="margin:0 0 5px">— исторические находки;</p>
+<p style="margin:0 0 5px">— предметы колониального периода.</p>
+<p style="margin:0 0 5px">Многое было украдено или продано.</p>
+<p style="margin:0 0 5px">Дима вспоминает рынок в столице.</p>
+<p style="margin:0 0 5px">Жальбер подтверждает, что многие вещи действительно оказываются там.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Соединить линию рынка и линию поисков.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-33">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 33. РУССКОЕ КЛАДБИЩЕ</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Русское кладбище моряков на Носи-Бе.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Жальбер приводит Диму к русским могилам.</p>
+<p style="margin:0 0 5px">Настоящее место памяти.</p>
+<p style="margin:0 0 5px">Тропическая растительность.</p>
+<p style="margin:0 0 5px">Пальмы.</p>
+<p style="margin:0 0 5px">Русские имена и кресты.</p>
+<p style="margin:0 0 5px">Происходит первое настоящее соприкосновение героя с прошлым своей семьи.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Одна из ключевых эмоциональных сцен первой половины фильма.</p>
+<p style="margin:0 0 5px">Фактически первая встреча Димы с призраками собственной истории.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-34">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 34. РУБАШКА</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Газбаллон.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Однажды Дима обнаруживает исчезновение своей любимой рубашки.</p>
+<p style="margin:0 0 5px">На её месте висит кусок картона с надписью:</p>
+<p style="margin:0 0 5px">«Merci, señor».</p>
+<p style="margin:0 0 5px">Сцена подаётся с юмором.</p>
+<p style="margin:0 0 5px">Однако символически это важный момент.</p>
+<p style="margin:0 0 5px">Старая оболочка героя исчезает.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Начало внутреннего переодевания героя.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-35">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 35. НОВАЯ ОДЕЖДА</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Рынок.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Жальбер ведёт Диму к местным портным.</p>
+<p style="margin:0 0 5px">Дима выбирает старые мешки и ткани.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Среди них:</p>
+<p style="margin:0 0 5px">— экспортные мешки СССР;</p>
+<p style="margin:0 0 5px">— мешки из-под муки White Flour;</p>
+<p style="margin:0 0 5px">— старые кофейные мешки.</p>
+<p style="margin:0 0 5px">Из них создаётся новая одежда.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Рождение нового визуального образа героя.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-36">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 36. АМАНД</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Носи-Бе.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Аманд показывает Диме места своего детства.</p>
+<p style="margin:0 0 5px">Они гуляют.</p>
+<p style="margin:0 0 5px">Рассказывают друг другу свои истории.</p>
+<p style="margin:0 0 5px">Дима говорит о Петербурге, Антарктиде и работе оператора.</p>
+<p style="margin:0 0 5px">Аманд рассказывает о своей жизни на острове.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Углубление эмоциональной связи.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-37">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 37. КОМНАТА АМАНД</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Дом Аманд.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Дима впервые попадает в её комнату.</p>
+<p style="margin:0 0 5px">Важный визуальный эпизод.</p>
+<p style="margin:0 0 5px">Бедность соседствует с красотой.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">В комнате:</p>
+<p style="margin:0 0 5px">— книги;</p>
+<p style="margin:0 0 5px">— тетради;</p>
+<p style="margin:0 0 5px">— самодельные украшения;</p>
+<p style="margin:0 0 5px">— кусочки зеркал;</p>
+<p style="margin:0 0 5px">— ракушки;</p>
+<p style="margin:0 0 5px">— платье, собранное вручную из найденных материалов.</p>
+<p style="margin:0 0 5px">Атмосфера напоминает по ощущению мир фильма «Мертвец».</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Показать внутренний мир Аманд.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-38">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 38. МАГНИТ</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Носи-Бе.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Дима начинает фотографировать Аманд.</p>
+<p style="margin:0 0 5px">Она становится его музой.</p>
+<p style="margin:0 0 5px">Камера фиксирует её среди улиц, деревьев, солнца, людей.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Важная идея персонажа:</p>
+<p style="margin:0 0 5px">Аманд словно оправдывает своё имя.</p>
+<p style="margin:0 0 5px">Она действует как магнит.</p>
+<p style="margin:0 0 5px">Между героями возникает притяжение.</p>
+<p style="margin:0 0 5px">Они почти не касаются друг друга.</p>
+<p style="margin:0 0 5px">Но зритель постоянно чувствует это напряжение.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Развитие романтической линии.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-39">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 39. ЖУРНАЛ БЕРЕГОВОГО ПОСТА</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Дом Жальбера.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Продолжается работа с архивами.</p>
+<p style="margin:0 0 5px">Жальбер показывает новые документы.</p>
+<p style="margin:0 0 5px">В одном из журналов появляется запись, позволяющая предположить, что прадед Димы действительно сходил на берег.</p>
+<p style="margin:0 0 5px">Для Димы это становится первой серьёзной надеждой.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Усиление поисковой линии.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-40">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 40. ПАРАЛЛЕЛЬНАЯ АНТАРКТИДА</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Антарктида / Мадагаскар.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Начинается постоянный монтажный диалог между двумя историями.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Зачитываются:</p>
+<p style="margin:0 0 5px">— радиограммы прадеда;</p>
+<p style="margin:0 0 5px">— радиограммы Димы.</p>
+<p style="margin:0 0 5px">На их фоне возникают флешбеки Антарктиды.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Появляются персонажи:</p>
+<p style="margin:0 0 5px">— Ким;</p>
+<p style="margin:0 0 5px">— Дэн;</p>
+<p style="margin:0 0 5px">— Света («полярная амазонка»).</p>
+<p style="margin:0 0 5px">По структуре это напоминает «Английского пациента».</p>
+<p style="margin:0 0 5px">Прошлое и настоящее начинают существовать одновременно.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Связать все временные линии фильма.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-41">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 41. СТАНЦИЯ МИРНЫЙ</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Газбаллон.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Дима строит для Тахо макет станции Мирный.</p>
+<p style="margin:0 0 5px">Из подручных материалов.</p>
+<p style="margin:0 0 5px">Рассказывает про жизнь полярников.</p>
+<p style="margin:0 0 5px">Тахо внимательно слушает.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Укрепление дружбы Димы и Тахо.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-42">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 42. САХАРНЫЙ ЗАВОД</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Заброшенный колониальный завод.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Жальбер приводит Диму на место, где работал в молодости.</p>
+<p style="margin:0 0 5px">Огромные цеха.</p>
+<p style="margin:0 0 5px">Шестерни.</p>
+<p style="margin:0 0 5px">Пустые помещения.</p>
+<p style="margin:0 0 5px">Следы ушедшей эпохи.</p>
+<p style="margin:0 0 5px">Визуально сцена напоминает «Сталкера».</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Во время прогулки они говорят:</p>
+<p style="margin:0 0 5px">— о независимости Мадагаскара;</p>
+<p style="margin:0 0 5px">— о свободе;</p>
+<p style="margin:0 0 5px">— о прошлом острова.</p>
+<p style="margin:0 0 5px">Жальбер показывает старые фотографии.</p>
+<p style="margin:0 0 5px">Вспоминает СССР.</p>
+<p style="margin:0 0 5px">Начинает напевать советскую песню.</p>
+<p style="margin:0 0 5px">Возникает своеобразный музыкальный клип-воспоминание.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Глубокое раскрытие Жальбера.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-43">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 43. ТОТО</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Бар / улицы Носи-Бе.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Отдельная серия сцен с Тото.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Возможны:</p>
+<p style="margin:0 0 5px">— бар;</p>
+<p style="margin:0 0 5px">— рыбацкая пристань;</p>
+<p style="margin:0 0 5px">— вечерние разговоры;</p>
+<p style="margin:0 0 5px">— местные истории и байки.</p>
+<p style="margin:0 0 5px">Тото раскрывается как самостоятельный персонаж.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Добавить юмор, энергию и приключенческий тон.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-44">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 44. ШКОЛА</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Школа.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Дима приходит вместе с Аманд.</p>
+<p style="margin:0 0 5px">Знакомится с детьми.</p>
+<p style="margin:0 0 5px">Наблюдает её работу.</p>
+<p style="margin:0 0 5px">Возможна отдельная сцена прощания после уроков.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Показать Аманд в её естественной среде.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-45">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 45. СБОРЫ В ЭКСПЕДИЦИЮ</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Рынок / Газбаллон.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Начинаются приготовления к походу.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Закупаются или собираются:</p>
+<p style="margin:0 0 5px">— спасательные жилеты;</p>
+<p style="margin:0 0 5px">— маски;</p>
+<p style="margin:0 0 5px">— ласты;</p>
+<p style="margin:0 0 5px">— детали мини-акваланга;</p>
+<p style="margin:0 0 5px">— верёвки;</p>
+<p style="margin:0 0 5px">— снаряжение;</p>
+<p style="margin:0 0 5px">— металлоискатель.</p>
+<p style="margin:0 0 5px">Подготовка подаётся как настоящее приключение.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Подготовить зрителя к следующей большой главе фильма.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-46">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 46. ПРОЩАНИЕ</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Берег Носи-Бе.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Раннее утро.</p>
+<p style="margin:0 0 5px">Лодка готова к отплытию.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">На берегу остаются:</p>
+<p style="margin:0 0 5px">— Аманд;</p>
+<p style="margin:0 0 5px">— Тахо;</p>
+<p style="margin:0 0 5px">— семья Газбаллона.</p>
+<p style="margin:0 0 5px">Дима поднимает дрон уже с лодки.</p>
+<p style="margin:0 0 5px">Камера взлетает.</p>
+<p style="margin:0 0 5px">Подлетает к людям на берегу.</p>
+<p style="margin:0 0 5px">Герои машут вслед.</p>
+<p style="margin:0 0 5px">Носи-Бе постепенно остаётся позади.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Завершение главы «Дом».</p>
+<p style="margin:0 0 5px">Начало настоящей экспедиции к следам прадеда.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-38А">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 38А. ВЕЛОСИПЕД</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Носи-Бе.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Дима покупает старый велосипед.</p>
+<p style="margin:0 0 5px">Впервые начинает исследовать остров самостоятельно, без Жальбера.</p>
+<p style="margin:0 0 5px">Возникает ощущение свободы.</p>
+<p style="margin:0 0 5px">Он едет по грунтовым дорогам, через деревни, рынки, пляжи и плантации.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Возможная сцена:</p>
+<p style="margin:0 0 5px">Дима катает Аманд на раме велосипеда.</p>
+<p style="margin:0 0 5px">Либо они вместе едут вдоль океана.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Герой начинает чувствовать Носи-Бе своим местом.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-38Б">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 38Б. ОСТРОВ ГЛАЗАМИ ДИМЫ</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Разные точки Носи-Бе.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Серия одиночных наблюдений.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Дима снимает:</p>
+<p style="margin:0 0 5px">— рыбаков;</p>
+<p style="margin:0 0 5px">— детей;</p>
+<p style="margin:0 0 5px">— рынки;</p>
+<p style="margin:0 0 5px">— старые колониальные здания;</p>
+<p style="margin:0 0 5px">— заросшие дороги;</p>
+<p style="margin:0 0 5px">— океан.</p>
+<p style="margin:0 0 5px">Возникает ощущение документального фильма внутри фильма.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Показать остров через взгляд кинооператора.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-38В">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 38В. ФРАНЦУЗ АЛАН</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Старая колониальная усадьба или дом на окраине острова.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Во время одной из поездок Дима знакомится с Аланом.</p>
+<p style="margin:0 0 5px">Алан —</p>
+<p style="margin:0 0 5px">пожилой француз,</p>
+<p style="margin:0 0 5px">бывший военный или бывший колониальный служащий.</p>
+<p style="margin:0 0 5px">Он живёт почти отшельником.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Вокруг него:</p>
+<p style="margin:0 0 5px">— старые фотографии;</p>
+<p style="margin:0 0 5px">— флаг Франции;</p>
+<p style="margin:0 0 5px">— потёртый военный китель;</p>
+<p style="margin:0 0 5px">— книги;</p>
+<p style="margin:0 0 5px">— инструменты;</p>
+<p style="margin:0 0 5px">— следы ушедшей эпохи.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Важно:</p>
+<p style="margin:0 0 5px">Алан не злодей и не карикатурный колонизатор.</p>
+<p style="margin:0 0 5px">Он человек, переживший исчезновение своего мира.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Ввести французский исторический пласт Мадагаскара через живого персонажа.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-38Г">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 38Г. ПИАНИНО</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Дом Алана.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Начинается дождь.</p>
+<p style="margin:0 0 5px">Алан показывает старое пианино или фисгармонию.</p>
+<p style="margin:0 0 5px">Медленно играет простую мелодию.</p>
+<p style="margin:0 0 5px">Рядом висят фотографии молодости.</p>
+<p style="margin:0 0 5px">Возможно, старые снимки острова.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Через рассказ Алана раскрываются:</p>
+<p style="margin:0 0 5px">— французское прошлое Мадагаскара;</p>
+<p style="margin:0 0 5px">— независимость;</p>
+<p style="margin:0 0 5px">— исчезнувшие поселения;</p>
+<p style="margin:0 0 5px">— забытые люди.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Важная интонация:</p>
+<p style="margin:0 0 5px">Он рассказывает не историю государства.</p>
+<p style="margin:0 0 5px">Он рассказывает историю собственной жизни.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Добавить ещё один взгляд на память и потерянную родину.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-38Д">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 38Д. РАЗГОВОР ДВУХ ИМПЕРИЙ</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Дом Алана.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Дима показывает фотографии Петербурга, ледокола, Антарктиды.</p>
+<p style="margin:0 0 5px">Алан показывает свои фотографии.</p>
+<p style="margin:0 0 5px">Они понимают, что принадлежат к разным культурам, но похожим судьбам.</p>
+<p style="margin:0 0 5px">Один вырос среди памяти Российской империи и советской истории.</p>
+<p style="margin:0 0 5px">Другой — среди памяти Французской колониальной эпохи.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Важная тема разговора:</p>
+<p style="margin:0 0 5px">Что остаётся после государств и войн?</p>
+<p style="margin:0 0 5px">Ответом становятся люди, фотографии и письма.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Усилить главную тему фильма — память человека важнее памяти империй.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-47">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 47. РУССКАЯ БУХТА</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Русская бухта.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Лодка прибывает к месту старой стоянки русской эскадры.</p>
+<p style="margin:0 0 5px">Высадка на берег.</p>
+<p style="margin:0 0 5px">Разгрузка инвентаря.</p>
+<p style="margin:0 0 5px">Установка лагеря или заселение в простую хижину.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Участники:</p>
+<p style="margin:0 0 5px">— Дима;</p>
+<p style="margin:0 0 5px">— Жальбер;</p>
+<p style="margin:0 0 5px">— Тото.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Начало главной поисковой экспедиции.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-48">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 48. РАССКАЗ СТАРИКА</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Русская бухта.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">На закате Жальбер приводит местного старожила.</p>
+<p style="margin:0 0 5px">Старик рассказывает историю места.</p>
+<p style="margin:0 0 5px">На малагасийском языке.</p>
+<p style="margin:0 0 5px">Жальбер переводит.</p>
+<p style="margin:0 0 5px">Старик вспоминает, что после сильных дождей в джунглях снова появились камни с надписями.</p>
+<p style="margin:0 0 5px">Он утверждает, что буквы не французские.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Запуск первого серьёзного следа.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-49">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 49. НОЧНЫЕ ПОИСКИ</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Джунгли возле бухты.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Дима не хочет ждать утра.</p>
+<p style="margin:0 0 5px">С фонарями и факелами группа отправляется в джунгли.</p>
+<p style="margin:0 0 5px">Начинаются раскопки.</p>
+<p style="margin:0 0 5px">Из земли постепенно появляются камни с надписями.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Вероятно:</p>
+<p style="margin:0 0 5px">— названия кораблей;</p>
+<p style="margin:0 0 5px">— фамилии;</p>
+<p style="margin:0 0 5px">— даты.</p>
+<p style="margin:0 0 5px">Возникает предположение, что это самодельный памятник, оставленный русскими моряками.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Первая настоящая археология фильма.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-50">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 50. РАСКОПКИ</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Русская бухта.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Несколько дней поисков.</p>
+<p style="margin:0 0 5px">Жара.</p>
+<p style="margin:0 0 5px">Комары.</p>
+<p style="margin:0 0 5px">Усталость.</p>
+<p style="margin:0 0 5px">Шутки про малярию.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Важная ремарка:</p>
+<p style="margin:0 0 5px">Эти разговоры становятся предвестником будущей болезни Димы.</p>
+<p style="margin:0 0 5px">Находки идут одна за другой.</p>
+<p style="margin:0 0 5px">Но они оказываются скромнее ожиданий.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Создать разрыв между мечтой и реальностью.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-51">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 51. СЛЕДЫ КОЛОНИИ</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Русская бухта.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Основная масса находок относится не к русским морякам, а к французскому периоду.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Находятся:</p>
+<p style="margin:0 0 5px">— стекло;</p>
+<p style="margin:0 0 5px">— бутылки;</p>
+<p style="margin:0 0 5px">— пуговицы;</p>
+<p style="margin:0 0 5px">— монеты;</p>
+<p style="margin:0 0 5px">— бытовые предметы.</p>
+<p style="margin:0 0 5px">Возникает ощущение, что колониальная история буквально перекрыла более ранние следы.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Усилить чувство утраты и исчезновения прошлого.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-52">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 52. КОНФЛИКТ</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Лагерь.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Дима разочарован результатами.</p>
+<p style="margin:0 0 5px">Он ожидал большего.</p>
+<p style="margin:0 0 5px">Между ним и Жальбером возникает спор.</p>
+<p style="margin:0 0 5px">Дима всё сильнее воспринимает поиски как личное дело.</p>
+<p style="margin:0 0 5px">Жальбер пытается объяснить, что история редко оставляет идеальные доказательства.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Первый серьёзный конфликт между героями.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-53">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 53. ДЕНЬ РОЖДЕНИЯ ЖАЛЬБЕРА</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Лагерь.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">У Жальбера день рождения.</p>
+<p style="margin:0 0 5px">Пятьдесят лет.</p>
+<p style="margin:0 0 5px">Дима вспоминает традицию пересечения экватора в Антарктиде.</p>
+<p style="margin:0 0 5px">Рассказывает про Нептуна и Посейдона.</p>
+<p style="margin:0 0 5px">Из подручных вещей друзья создают для Жальбера костюм Посейдона.</p>
+<p style="margin:0 0 5px">Возникает весёлый и человеческий праздник.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Важная тема:</p>
+<p style="margin:0 0 5px">Экватор жизни.</p>
+<p style="margin:0 0 5px">Половина пути уже пройдена.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Последняя светлая сцена перед распадом команды.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-54">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 54. ОТЪЕЗД ЖАЛЬБЕРА</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Русская бухта.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Жальбер принимает решение возвращаться.</p>
+<p style="margin:0 0 5px">По его мнению, всё главное уже найдено.</p>
+<p style="margin:0 0 5px">Дима не согласен.</p>
+<p style="margin:0 0 5px">Он хочет продолжать.</p>
+<p style="margin:0 0 5px">Жальбер уезжает вместе с Тото.</p>
+<p style="margin:0 0 5px">Дима остаётся один.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Переход к одиночному путешествию героя.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-55">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 55. ОДИНОЧЕСТВО</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Русская бухта.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Ночь.</p>
+<p style="margin:0 0 5px">Дима остаётся один.</p>
+<p style="margin:0 0 5px">Пьёт.</p>
+<p style="margin:0 0 5px">Размышляет.</p>
+<p style="margin:0 0 5px">Чувствует поражение.</p>
+<p style="margin:0 0 5px">Вокруг только океан, джунгли и следы исчезнувшей истории.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Самая низкая точка первой половины фильма.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-56">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 56. ВОЗВРАЩЕНИЕ ОПЕРАТОРА</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Русская бухта.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Утром Дима просыпается.</p>
+<p style="margin:0 0 5px">Берёт камеру.</p>
+<p style="margin:0 0 5px">Перестаёт искать сенсацию.</p>
+<p style="margin:0 0 5px">Начинает делать то, что умеет лучше всего.</p>
+<p style="margin:0 0 5px">Работать оператором.</p>
+<p style="margin:0 0 5px">Снимать людей.</p>
+<p style="margin:0 0 5px">Фотографировать повседневную жизнь.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Рабочая мысль героя:</p>
+<p style="margin:0 0 5px">«Ну что, Дима. Давай вспомним, зачем ты сюда приехал».</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Важно напомнить зрителю:</p>
+<p style="margin:0 0 5px">Дима прежде всего кинооператор.</p>
+<p style="margin:0 0 5px">Он приехал делать фильм.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Возвращение героя к своей настоящей профессии.</p>
+</div></section>
+<section class="scene alt-ep" id="alt-57">
+<h3 class="slug"><span class="num">🎬</span> ЭПИЗОД 57. РУБЛЬ</h3>
+<div class="body">
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Место:</p>
+<p style="margin:0 0 5px">Русская бухта.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Что происходит:</p>
+<p style="margin:0 0 5px">Дима просматривает отснятые фотографии.</p>
+<p style="margin:0 0 5px">Обычный репортажный материал.</p>
+<p style="margin:0 0 5px">Люди.</p>
+<p style="margin:0 0 5px">Рыбаки.</p>
+<p style="margin:0 0 5px">Дети.</p>
+<p style="margin:0 0 5px">Случайные портреты.</p>
+<p style="margin:0 0 5px">Вдруг на одном из кадров он замечает молодого парня.</p>
+<p style="margin:0 0 5px">Увеличивает изображение.</p>
+<p style="margin:0 0 5px">На груди висит монета.</p>
+<p style="margin:0 0 5px">Дима приближает ещё сильнее.</p>
+<p style="margin:0 0 5px">Русский рубль.</p>
+<p style="margin:0 0 5px">Неожиданная находка полностью меняет направление истории.</p>
+<p style="margin:8px 0 2px;font-weight:700;opacity:.75">Драматическая функция:</p>
+<p style="margin:0 0 5px">Появление Рубля.</p>
+<p style="margin:0 0 5px">Настоящий поиск только начинается.</p>
+</div></section>
+</div>
   </main>
   <aside class="refs" id="refsbar">
     <div class="refs-head"><span>📚 Референсы</span><button id="refs-toggle" title="Свернуть">&#10217;</button></div>
@@ -5225,14 +7115,22 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
         <div class="ref-card">
           <div class="ref-title">🎬 YouTube-референсы режиссёра</div>
           <div class="ref-body ce" contenteditable="true" data-eid="e20" style="margin-bottom:12px">Видеоряд, собранный режиссёром — контекст, настроение, образы.</div>
-          <div class="media-embed" data-src="https://youtu.be/ZI0dbx2qiHg" data-label="Референс 1"></div>
-          <div class="media-embed" data-src="https://youtu.be/V1TlHklBWIE" data-label="Референс 2"></div>
-          <div class="media-embed" data-src="https://youtu.be/_U8s33d73mo" data-label="Референс 3"></div>
-          <div class="media-embed" data-src="https://youtu.be/DewRt0TJW-8" data-label="Референс 4"></div>
-          <div class="media-embed" data-src="https://youtu.be/iP9jqcnihTs" data-label="Референс 5"></div>
-          <div class="media-embed" data-src="https://www.youtube.com/watch?v=LkGY1-IvSmU" data-label="Референс 6"></div>
+          <div class="media-embed" data-src="https://youtu.be/ZI0dbx2qiHg" data-label="«Everything Is Illuminated» (2005)"></div>
+          <div class="media-embed" data-src="https://youtu.be/V1TlHklBWIE" data-label="«Ромовый дневник» (The Rum Diary, 2011)"></div>
+          <div class="media-embed" data-src="https://youtu.be/_U8s33d73mo" data-label="«Кон-Тики» (Kon-Tiki, 2012)"></div>
+          <div class="media-embed" data-src="https://youtu.be/DewRt0TJW-8" data-label="«Затерянный город Z» (2016, Дж. Грэй)"></div>
+          <div class="media-embed" data-src="https://youtu.be/iP9jqcnihTs" data-label="«Мы из будущего» (2008)"></div>
+          <div class="media-embed" data-src="https://www.youtube.com/watch?v=LkGY1-IvSmU" data-label="«Little Odessa» (1994, Дж. Грэй)"></div>
         </div>
 
+        <div class="ref-card">
+          <div class="ref-title">🎥 Видео-референсы режиссёра (локальные — привязать при деплое)</div>
+          <div class="ref-body" style="margin-bottom:8px;opacity:.85">Скачаны режиссёром, лежат локально. Залить на Drive/GitHub при деплое.</div>
+          <div class="ref-body" style="margin:0 0 4px">🎬 <b>Шукшин — «Я где-то принадлежал поколению»</b> (ч/б интервью) — тон: русский код, аутентичность, поколение войны.</div>
+          <div class="ref-body" style="margin:0 0 4px">🎬 <b>«Ван Гог. На пороге вечности»</b> (Дефо) — художник против смерти, непризнанность.</div>
+          <div class="ref-body" style="margin:0 0 4px">🎬 <b>IMG_7028</b> — клип «А зори здесь тихие» (→ сц.173).</div>
+          <div class="ref-body" style="margin:0">🎬 <b>IMG_0239</b> — «Романс о влюблённых» (→ сц.173, колористика).</div>
+        </div>
         <div class="ref-card" id="pool-videos">
           <div class="ref-title">🎥 Видеоматериалы режиссёра (съёмки) — разбираем по сценам</div>
           <div class="ref-body ce" contenteditable="true" data-eid="e21" style="margin-bottom:12px">Съёмочный материал с Google Drive, играет прямо тут (и у режиссёра по ссылке). 18 файлов IMG ещё не привязаны к конкретным сценам — растащим вместе. Три именованных (Кладбище / Столица / Шитьё) уже стоят в своих блоках раздела «Концепция».</div>
@@ -5317,7 +7215,9 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
   const navList = document.getElementById('nav-list');
   const navOutline = document.getElementById('nav-list-outline');
   document.querySelectorAll('.scene').forEach((s,i) => {
-    const slug = s.querySelector('.slug').textContent.trim();
+    if(s.closest('#alt-pane')) return;
+    const slugEl = s.querySelector('.slug'); if(!slugEl) return;
+    const slug = slugEl.textContent.trim();
     const a = document.createElement('a');
     a.href = '#'+s.id;
     a.innerHTML = slug.replace(/^(\d+)\s/, '<span class="num">$1</span>');
@@ -5327,9 +7227,14 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
   });
   window.setMode=function(mode){
     document.body.classList.toggle('mode-outline', mode==='outline');
+    document.body.classList.toggle('mode-alt', mode==='alt');
     document.querySelectorAll('.mode-toggle .mt').forEach(function(b){b.classList.toggle('active', b.dataset.mode===mode);});
+    document.querySelectorAll('.scene.search-hidden').forEach(function(s){s.classList.remove('search-hidden');});
+    var _sb=document.querySelector('.search'); if(_sb) _sb.value='';
+    try{localStorage.setItem('view-mode', mode);}catch(e){}
     window.scrollTo(0,0);
   };
+  try{var _vm=localStorage.getItem('view-mode'); if(_vm && _vm!=='detail') window.setMode(_vm);}catch(e){}
 
   // ===== Autosave (localStorage per-scene) =====
   const status = document.getElementById('status');
@@ -5391,9 +7296,9 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
   function searchScenes(q){
     q = q.trim().toLowerCase();
     document.querySelectorAll('.scene').forEach(s => {
-      if(!q){ s.style.display=''; return; }
+      if(!q){ s.classList.remove('search-hidden'); return; }
       const t = s.textContent.toLowerCase();
-      s.style.display = t.includes(q) ? '' : 'none';
+      s.classList.toggle('search-hidden', !t.includes(q));
     });
   }
 
@@ -5429,10 +7334,11 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
   function noteHTML(type, text, when='', author=''){
     const t = NOTE_TYPES.find(x => x.k === type) || NOTE_TYPES[1];
     const safeText = window.kSanitize ? window.kSanitize(text) : text;
-    return `<div class="note-card" data-t="${t.k}"${author?` data-a="${author}"`:''}>
+    const safeAuthor = author ? String(author).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;') : '';
+    return `<div class="note-card" data-t="${t.k}"${safeAuthor?` data-a="${safeAuthor}"`:''}>
       <span class="ico">${t.ico}</span>
       <div class="body-note">
-        <div class="who" contenteditable="false">${t.label}${when?`<span class="when">${when}</span>`:''}</div>
+        <div class="who" contenteditable="false">${t.label}${when?`<span class="when">${escapeHtml(String(when))}</span>`:''}</div>
         <div class="text" contenteditable="true">${safeText}</div>
       </div>
       <button class="del" onclick="this.parentElement.remove();persistNotes(this.closest('.scene'))" title="удалить">✕</button>
@@ -5786,6 +7692,6 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
   window.kolibriApplyKey=function(key,skip){if(key.indexOf('kolibri-edit2-')===0)applyEid(key.slice(14),skip);else if(key.indexOf('kolibri-edit-')===0)applyEdit(key.slice(13),skip);else if(key.indexOf('kolibri-notes-')===0)applyNotes(key.slice(14),skip);else if(key==='kolibri-scene-refs-v1')applyRefs();};
 })();
 </script>
-<script src="sync.js"></script>
+<script src="sync.js?v=2"></script>
 </body>
 </html>
