@@ -357,6 +357,7 @@ body.mode-alt #nav-list,body.mode-alt #nav-list-outline{display:none}
 .note-extra{border-left:3px solid #6b5cff;background:rgba(107,92,255,.05);padding-left:12px;border-radius:0 6px 6px 0}
 .note-extra .ne-tag{font-family:monospace;font-size:9px;font-weight:700;color:#6b5cff;border:1px solid #6b5cff;padding:1px 6px;border-radius:4px;margin-left:6px;vertical-align:middle}
 .insert-note{border-left:3px dashed #888;padding-left:12px}
+.search-hidden{display:none!important}
 #nav-list-outline{display:none}
 body.mode-outline #nav-list{display:none}
 body.mode-outline #nav-list-outline{display:block}
@@ -7197,7 +7198,9 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
   const navList = document.getElementById('nav-list');
   const navOutline = document.getElementById('nav-list-outline');
   document.querySelectorAll('.scene').forEach((s,i) => {
-    const slug = s.querySelector('.slug').textContent.trim();
+    if(s.closest('#alt-pane')) return;
+    const slugEl = s.querySelector('.slug'); if(!slugEl) return;
+    const slug = slugEl.textContent.trim();
     const a = document.createElement('a');
     a.href = '#'+s.id;
     a.innerHTML = slug.replace(/^(\d+)\s/, '<span class="num">$1</span>');
@@ -7209,8 +7212,12 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
     document.body.classList.toggle('mode-outline', mode==='outline');
     document.body.classList.toggle('mode-alt', mode==='alt');
     document.querySelectorAll('.mode-toggle .mt').forEach(function(b){b.classList.toggle('active', b.dataset.mode===mode);});
+    document.querySelectorAll('.scene.search-hidden').forEach(function(s){s.classList.remove('search-hidden');});
+    var _sb=document.querySelector('.search'); if(_sb) _sb.value='';
+    try{localStorage.setItem('view-mode', mode);}catch(e){}
     window.scrollTo(0,0);
   };
+  try{var _vm=localStorage.getItem('view-mode'); if(_vm && _vm!=='detail') window.setMode(_vm);}catch(e){}
 
   // ===== Autosave (localStorage per-scene) =====
   const status = document.getElementById('status');
@@ -7272,9 +7279,9 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
   function searchScenes(q){
     q = q.trim().toLowerCase();
     document.querySelectorAll('.scene').forEach(s => {
-      if(!q){ s.style.display=''; return; }
+      if(!q){ s.classList.remove('search-hidden'); return; }
       const t = s.textContent.toLowerCase();
-      s.style.display = t.includes(q) ? '' : 'none';
+      s.classList.toggle('search-hidden', !t.includes(q));
     });
   }
 
@@ -7310,10 +7317,11 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
   function noteHTML(type, text, when='', author=''){
     const t = NOTE_TYPES.find(x => x.k === type) || NOTE_TYPES[1];
     const safeText = window.kSanitize ? window.kSanitize(text) : text;
-    return `<div class="note-card" data-t="${t.k}"${author?` data-a="${author}"`:''}>
+    const safeAuthor = author ? String(author).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;') : '';
+    return `<div class="note-card" data-t="${t.k}"${safeAuthor?` data-a="${safeAuthor}"`:''}>
       <span class="ico">${t.ico}</span>
       <div class="body-note">
-        <div class="who" contenteditable="false">${t.label}${when?`<span class="when">${when}</span>`:''}</div>
+        <div class="who" contenteditable="false">${t.label}${when?`<span class="when">${escapeHtml(String(when))}</span>`:''}</div>
         <div class="text" contenteditable="true">${safeText}</div>
       </div>
       <button class="del" onclick="this.parentElement.remove();persistNotes(this.closest('.scene'))" title="удалить">✕</button>
