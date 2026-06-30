@@ -33,7 +33,11 @@
 
     // --- ПУШ локальных правок в облако (debounce) ---
     var pending = {}, timer = null;
-    var ownLast = {}; // что мы сами записали — чтобы не применять своё эхо из realtime
+    // что мы сами записали (набор последних значений на ключ) — чтобы подавлять своё эхо из realtime
+    // даже при гонке/неупорядоченных событиях, и НЕ перезаписывать localStorage устаревшим эхом.
+    var ownRecent = {};
+    function noteOwn(k, v){ (ownRecent[k] = ownRecent[k] || []).push(v); if (ownRecent[k].length > 12) ownRecent[k].shift(); }
+    function isOwn(k, v){ var a = ownRecent[k]; if (!a) return false; var i = a.indexOf(v); if (i < 0) return false; a.splice(i, 1); return true; }
     function queue(k, v) { pending[k] = v; clearTimeout(timer); timer = setTimeout(flush, 400); }
     async function flush() {
       var keys = Object.keys(pending); if (!keys.length) return;
@@ -41,8 +45,8 @@
       var ups = keys.filter(function (k) { return pending[k] !== null; })
         .map(function (k) { return { key: k, value: pending[k], updated_at: new Date().toISOString() }; });
       keys.forEach(function (k) { delete pending[k]; });
-      ups.forEach(function (u) { ownLast[u.key] = u.value; });
-      dels.forEach(function (k) { ownLast[k] = null; });
+      ups.forEach(function (u) { noteOwn(u.key, u.value); });
+      dels.forEach(function (k) { noteOwn(k, null); });
       try {
         if (ups.length) { var r1 = await sb.from(TABLE).upsert(ups); if (r1.error) console.error('[sync] upsert', r1.error); }
         if (dels.length) { var r2 = await sb.from(TABLE).delete().in('key', dels); if (r2.error) console.error('[sync] delete', r2.error); }
@@ -77,12 +81,10 @@
       .on('postgres_changes', { event: '*', schema: 'public', table: TABLE }, function (p) {
         var row = p.new || p.old; if (!row || !row.key) return;
         var val = p.eventType === 'DELETE' ? null : row.value;
-        // своё эхо — обновим localStorage, но НЕ перерисовываем DOM (иначе сбиваем своё же редактирование)
-        if (ownLast.hasOwnProperty(row.key) && ownLast[row.key] === val) {
-          delete ownLast[row.key];
-          if (val === null) origRemove(row.key); else origSet(row.key, val);
-          return;
-        }
+        // своё эхо — localStorage уже актуален (мы сами писали). НЕ трогаем localStorage и НЕ перерисовываем DOM
+        // (иначе устаревшее эхо могло бы затереть свежее локальное значение / сбить набор заметки).
+        if (isOwn(row.key, val)) return;
+        // чужое изменение — применяем
         if (val === null) origRemove(row.key); else origSet(row.key, val);
         if (window.kolibriApplyKey) window.kolibriApplyKey(row.key, true);
       })

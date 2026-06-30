@@ -1,4 +1,13 @@
-kolibri.html.bak.*
-*.bak
 .DS_Store
 /tmp/
+# собранный выход (генерится из kolibri.html билд-скриптом)
+index.html
+# бэкапы и промежуточные снимки
+*.bak
+*.bak.*
+*.bak2.*
+*.bak3.*
+backups/
+cloud_backups/
+*.tar.gz
+supabase_state_*.json
