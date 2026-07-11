@@ -377,6 +377,11 @@ body.mode-alt #nav-list,body.mode-alt #nav-list-outline{display:none}
 .note-extra .ne-tag{font-family:monospace;font-size:9px;font-weight:700;color:#6b5cff;border:1px solid #6b5cff;padding:1px 6px;border-radius:4px;margin-left:6px;vertical-align:middle}
 .insert-note{border-left:3px dashed #888;padding-left:12px}
 .search-hidden{display:none!important}
+.up-media{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.up-item{position:relative;line-height:0}
+.up-item img{max-width:150px;max-height:110px;object-fit:cover;border-radius:6px;border:1px solid #A89A78;cursor:zoom-in;display:block}
+.up-del{position:absolute;top:3px;right:3px;width:18px;height:18px;border:none;border-radius:50%;background:rgba(178,58,46,.92);color:#fff;font-size:11px;line-height:18px;cursor:pointer;padding:0}
+.file-drop-hover{outline:3px dashed #1a9d5c!important;outline-offset:-3px;background:rgba(26,157,92,.09)!important}
 #nav-list-outline{display:none}
 body.mode-outline #nav-list{display:none}
 body.mode-outline #nav-list-outline{display:block}
@@ -7753,6 +7758,63 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
   var _st=window.kolibriApplyState; window.kolibriApplyState=function(){ if(_st)_st(); window.applyNoteAttach(); };
   var _ky=window.kolibriApplyKey; window.kolibriApplyKey=function(k,skip){ if(_ky)_ky(k,skip); if(k===KEY) window.applyNoteAttach(); };
   window.applyNoteAttach();
+})();
+</script>
+<script>
+/* Загрузка фото с компа: drag-drop файла на ЛЮБУЮ сцену или заметку. Ужимает, base64, синкает, удаляет. */
+(function(){
+  var UP_MAP='kolibri-uploads-map-v1';
+  function readMap(){ try{return JSON.parse(localStorage.getItem(UP_MAP)||'{}');}catch(e){return {};} }
+  function writeMap(m){ localStorage.setItem(UP_MAP, JSON.stringify(m)); }
+  function zone(t){ var z=t.querySelector(':scope > .up-media'); if(!z){ z=document.createElement('div'); z.className='up-media'; t.appendChild(z);} return z; }
+  function renderImg(t, upId, data){
+    var z=zone(t); if(z.querySelector('[data-upid="'+upId+'"]')) return;
+    var it=document.createElement('div'); it.className='up-item'; it.setAttribute('data-upid',upId);
+    var img=document.createElement('img'); img.src=data; img.loading='lazy'; img.onclick=function(){ window.__zoomUp&&window.__zoomUp(data); };
+    var del=document.createElement('button'); del.className='up-del'; del.textContent='✕'; del.title='удалить';
+    del.onclick=function(e){ e.stopPropagation(); removeUpload(t.id, upId); it.remove(); };
+    it.appendChild(img); it.appendChild(del); z.appendChild(it);
+  }
+  function addUpload(t, data){
+    var upId='up_'+String(Date.now())+'_'+Math.random().toString(36).slice(2,7);
+    try{ localStorage.setItem('kolibri-upload-'+upId, data); }catch(e){ alert('Фото слишком большое для хранилища'); return; }
+    var m=readMap(); (m[t.id]=m[t.id]||[]).push(upId); writeMap(m);
+    renderImg(t, upId, data);
+  }
+  function removeUpload(tid, upId){
+    var m=readMap(); if(m[tid]){ m[tid]=m[tid].filter(function(x){return x!==upId;}); if(!m[tid].length) delete m[tid]; writeMap(m); }
+    localStorage.removeItem('kolibri-upload-'+upId);
+  }
+  window.applyUploads=function(){
+    var m=readMap();
+    Object.keys(m).forEach(function(tid){ var t=document.getElementById(tid); if(!t)return; m[tid].forEach(function(upId){ var d=localStorage.getItem('kolibri-upload-'+upId); if(d) renderImg(t, upId, d); }); });
+  };
+  function processFile(file, t){
+    var fr=new FileReader();
+    fr.onload=function(ev){
+      var im=new Image();
+      im.onload=function(){
+        var max=1400, w=im.width, h=im.height;
+        if(w>max||h>max){ if(w>=h){ h=Math.round(h*max/w); w=max; } else { w=Math.round(w*max/h); h=max; } }
+        var c=document.createElement('canvas'); c.width=w; c.height=h; c.getContext('2d').drawImage(im,0,0,w,h);
+        var d; try{ d=c.toDataURL('image/jpeg',0.82); }catch(e){ d=ev.target.result; }
+        addUpload(t, d);
+      };
+      im.onerror=function(){ addUpload(t, ev.target.result); };
+      im.src=ev.target.result;
+    };
+    fr.readAsDataURL(file);
+  }
+  function pick(e){ var t=e.target.closest && e.target.closest('.scene'); if(!t||t.classList.contains('scene-section')||!t.id) return null; return t; }
+  function hasFiles(e){ return e.dataTransfer && Array.prototype.indexOf.call(e.dataTransfer.types||[],'Files')>=0; }
+  function clearHover(){ document.querySelectorAll('.file-drop-hover').forEach(function(x){x.classList.remove('file-drop-hover');}); }
+  window.addEventListener('dragover', function(e){ if(!hasFiles(e))return; e.preventDefault(); var t=pick(e); clearHover(); if(t)t.classList.add('file-drop-hover'); }, true);
+  window.addEventListener('dragleave', function(e){ if(!e.relatedTarget) clearHover(); }, true);
+  window.addEventListener('drop', function(e){ if(!hasFiles(e))return; e.preventDefault(); e.stopPropagation(); clearHover(); var t=pick(e); if(!t)return; var files=[].slice.call(e.dataTransfer.files||[]).filter(function(f){return /^image\//.test(f.type);}); files.forEach(function(f){ processFile(f, t); }); }, true);
+  window.__zoomUp=function(src){ var lb=document.getElementById('lightbox'), im=document.getElementById('lightbox-img'); if(lb&&im){ im.src=src; lb.classList.add('show'); } else { window.open(src,'_blank'); } };
+  var _st=window.kolibriApplyState; window.kolibriApplyState=function(){ if(_st)_st(); window.applyUploads(); };
+  var _ky=window.kolibriApplyKey; window.kolibriApplyKey=function(k,skip){ if(_ky)_ky(k,skip); if(k===UP_MAP || (k&&k.indexOf('kolibri-upload-')===0)) window.applyUploads(); };
+  window.applyUploads();
 })();
 </script>
 <script src="sync.js?v=2"></script>
