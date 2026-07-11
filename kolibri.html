@@ -114,7 +114,7 @@
   body.v5 .note .who{font-family:'Courier Prime',monospace;font-style:normal;color:#5C5F3A;font-size:10px;letter-spacing:.14em;font-weight:700;margin-bottom:6px;text-transform:uppercase}
 
   /* ========== PRINT / EXPORT ========== */
-  @media print{header.topbar,aside.nav{display:none}.app{display:block;height:auto}main.reader{overflow:visible}}
+  @media print{header.topbar,aside.nav,aside.refs,aside.notes-panel,#refs-show{display:none!important}.app{display:block;height:auto}main.reader{overflow:visible}.scenes{max-width:none;padding:0}#cover,.cover-hero,img,video,iframe,.media-embed,.up-media,.scene-refs,.note-grip,.note-detach,.up-del,.add-note-bar,.scene-drop-zone,.rs-tag,.filter-chips{display:none!important}.scene{break-inside:avoid;page-break-inside:avoid}.ready-scene,.insert-note,.note-extra{border:none!important;background:none!important;padding-left:0!important}body{background:#fff!important;color:#000!important}.slug,.num{color:#000!important}}
 
   /* ========== NOTES SYSTEM ========== */
   .scene-notes{margin:14px 0 0;display:flex;flex-direction:column;gap:8px}
@@ -472,6 +472,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
     <div class="spacer"></div>
     <button id="notes-toggle" class="active" title="Панель заметок">📝 Заметки</button>
     <button onclick="exportHTML()">📥 Экспорт</button>
+    <button onclick="window.print()" title="Печать (без фото/видео)">🖨 Печать</button>
     <button class="primary" onclick="saveSnapshot()">💾 Сохранить версию</button>
     <div class="filter-chips" id="filter-chips" style="width:100%;margin-top:6px"></div>
   </header>
