@@ -2586,6 +2586,20 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
 <p style="margin:0 0 5px">Тогда зритель поверит</p>
         </div>
       </section>
+      <section class="scene note-extra" id="note-samarin-stickers">
+        <h3 class="slug"><span class="num">👤</span> Самарин — стикеры (рукописный брейншторм) <span class="ne-tag">Самарин</span></h3>
+        <div class="body" contenteditable="true">
+<p style="opacity:.7;font-style:italic;margin:0 0 8px">Расшифровка рукописных стикеров (часть слов нечитаема — помечено «?»).</p>
+<p style="font-weight:700;color:#d97a1e;margin:8px 0 3px">ТИПАЖ / ВНЕШНОСТЬ</p>
+<p style="margin:0 0 4px">Борода, лысый, сухой. Крутые очки. Блокнот, записи — писатель / писательство. Дневник-воспоминания «Камчатка». Археолог, верхом(?). Летает на дроне.</p>
+<p style="font-weight:700;color:#d97a1e;margin:10px 0 3px">ФАКТУРА / ДЕЙСТВИЯ</p>
+<p style="margin:0 0 4px">Танки, костёр. Побережье. Туманы. ГТС (тягач). Археологическая палатка-музей. Металлоискатель. Патроны — пассатижи, блеск. Череп. Камешки. Травы — натурализм. Вулканическая земля. Бритва. Кофе. Искупаться. Рюкзак (поправляет). Жёлтая каска — заявить. Дрон. Идти вместе.</p>
+<p style="font-weight:700;color:#d97a1e;margin:10px 0 3px">ДИАЛОГИ / ТЕМЫ (о чём говорит)</p>
+<p style="margin:0 0 4px">Погибшие — утонувшие. Список / названия кораблей. «Тонкая красная линия». Гомер — Троя. Побольше японских названий. Танк — дерево — силуэт. Японцы + коренные народы. Накопать: смерть. Отцовство / отсутствие отца.</p>
+<p style="font-weight:700;color:#d97a1e;margin:10px 0 3px">ШУМШУ / СВЯЗКИ</p>
+<p style="margin:0 0 4px">Камешки, Ленфильм, футболка. «Скрепят свои планы». Молча стоять, с крупного плана. Связка исторических путей: 1904 — 1945. Вертолёт.</p>
+        </div>
+      </section>
       <section class="scene scene-section" id="part-detail">
         <h2 class="slug" style="border:none"><span class="num">★</span> ДЕТАЛЬНЫЙ ПОЭПИЗОДНИК</h2>
         <p class="tease">Расширенная версия. Источник: «колибри поэпизодник.docx».</p>
@@ -7867,7 +7881,9 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
   function upd(){ if(nt)nt.classList.toggle('active', !app.classList.contains('nc')&&!app.classList.contains('sam')); if(st)st.classList.toggle('active', app.classList.contains('sam')); }
   function label(sec){ var p=sec.closest('#notes-list')?'📝 Заметка':sec.closest('#outline-pane')?'📋 Краткий':sec.closest('#alt-pane')?'📑 Альт':'📄 Сцена'; var s=(sec.querySelector('.slug')||{}).textContent||''; return p+' · '+s.trim(); }
   function build(){ if(!list)return; list.innerHTML=''; var seen={};
-    [].slice.call(document.querySelectorAll('#scenes section.scene, #outline-pane section.scene, #notes-list section, #alt-pane section.scene')).forEach(function(sec){
+    var all=[]; var stick=document.getElementById('note-samarin-stickers'); if(stick) all.push(stick);
+    [].slice.call(document.querySelectorAll('#scenes section.scene, #outline-pane section.scene, #notes-list section, #alt-pane section.scene')).forEach(function(s){ if(s!==stick) all.push(s); });
+    all.forEach(function(sec){
       if(!/Самарин/.test(sec.textContent||''))return; if(!sec.id||seen[sec.id])return; seen[sec.id]=1;
       var it=document.createElement('div'); it.className='sam-item';
       var src=document.createElement('div'); src.className='sam-src'; src.textContent=label(sec);
