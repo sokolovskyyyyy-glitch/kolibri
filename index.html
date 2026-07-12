@@ -499,7 +499,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
       <button class="mt" data-mode="outline" onclick="setMode('outline')">📋 Краткий</button>
       <button class="mt" data-mode="alt" onclick="setMode('alt')">📑 Альтернативный</button>
     </div>
-    <input class="search" type="search" placeholder="поиск по тексту…" oninput="searchScenes(this.value)">
+    <input class="search" type="search" placeholder="поиск по тексту…" oninput="searchScenes(this.value)"><span id="search-count" style="display:none;font:11px monospace;color:#fff;background:#B23A2E;padding:2px 7px;border-radius:4px;margin-left:8px"></span>
     <div class="spacer"></div>
     <button id="notes-toggle" class="active" title="Панель заметок">📝 Заметки</button>
     <button id="samarin-toggle" title="Всё про Самарина">👤 Самарин</button>
@@ -7307,8 +7307,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
     document.body.classList.toggle('mode-outline', mode==='outline');
     document.body.classList.toggle('mode-alt', mode==='alt');
     document.querySelectorAll('.mode-toggle .mt').forEach(function(b){b.classList.toggle('active', b.dataset.mode===mode);});
-    document.querySelectorAll('.scene.search-hidden').forEach(function(s){s.classList.remove('search-hidden');});
-    var _sb=document.querySelector('.search'); if(_sb) _sb.value='';
+    var _sb=document.querySelector('.search'); if(_sb) _sb.value=''; if(window.searchScenes) window.searchScenes('');
     try{localStorage.setItem('view-mode', mode);}catch(e){}
     window.scrollTo(0,0);
   };
@@ -7373,11 +7372,20 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
   // ===== Search =====
   function searchScenes(q){
     q = q.trim().toLowerCase();
-    document.querySelectorAll('#scenes .scene, #outline-pane .scene, #alt-pane .scene').forEach(s => {
+    var n=0;
+    document.querySelectorAll('#scenes .scene, #outline-pane .scene, #alt-pane .scene').forEach(function(s){
       if(!q){ s.classList.remove('search-hidden'); return; }
-      const t = s.textContent.toLowerCase();
-      s.classList.toggle('search-hidden', !t.includes(q));
+      var hit = s.textContent.toLowerCase().indexOf(q)>=0;
+      s.classList.toggle('search-hidden', !hit);
+      if(hit) n++;
     });
+    document.querySelectorAll('#nav-list a, #nav-list-outline a').forEach(function(a){
+      if(!q){ a.style.display=''; return; }
+      var id=(a.getAttribute('href')||'').slice(1), sec=id&&document.getElementById(id);
+      a.style.display=(sec && sec.textContent.toLowerCase().indexOf(q)>=0)?'':'none';
+    });
+    var ind=document.getElementById('search-count');
+    if(ind){ ind.style.display=q?'inline-block':'none'; ind.textContent=q?(n+' сцен'):''; }
   }
 
   // ===== Lightbox =====
