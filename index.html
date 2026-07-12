@@ -339,6 +339,20 @@ section[id^="note-"].dragging{opacity:.45}
 .note-detach{display:inline-block;margin:0 0 6px;background:#B23A2E;color:#fff;border:none;border-radius:4px;padding:2px 8px;font-size:10px;cursor:pointer;font-family:monospace}
 #scenes section[id^="note-"]{border-left:3px solid #B23A2E;background:rgba(178,58,46,.04);padding:8px 10px;border-radius:0 6px 6px 0;margin:8px 0}
 #notes-toggle.active{background:#B23A2E;color:#fff}
+#samarin-toggle.active{background:#d97a1e;color:#fff}
+a.nav-sam{color:#d97a1e!important;font-weight:700}
+a.nav-sam::before{content:"● ";font-size:8px;vertical-align:middle}
+aside.samarin-panel{display:none;background:#DDCFB0;border-left:1px solid #A89A78;color:#3A4658;overflow-y:auto;padding:0}
+.app>aside.samarin-panel{grid-column:3}
+.app.sam aside.notes-panel{display:none}
+.app.sam aside.samarin-panel{display:block}
+.app.sam{grid-template-columns:var(--navw,210px) 1fr var(--samw,480px) var(--refsw,380px)}
+.app.sam.rc{grid-template-columns:var(--navw,210px) 1fr var(--samw,480px) 0}
+#samarin-list{padding:14px}
+#samarin-list .sam-item{margin:0 0 20px;border-bottom:1px solid #A89A78;padding-bottom:14px}
+#samarin-list .sam-src{font-family:monospace;font-size:10px;font-weight:700;color:#d97a1e;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+#samarin-list .sam-item [contenteditable]{border:none!important}
+#samarin-list .sam-item .rs-tag,#samarin-list .sam-item .note-grip{display:none}
 #refs-show{display:none;position:fixed;right:0;top:74px;z-index:30;writing-mode:vertical-rl;background:#B23A2E;color:#fff;border:none;padding:14px 7px;cursor:pointer;font-family:'Courier Prime',monospace;letter-spacing:.12em;border-radius:6px 0 0 6px;font-size:12px}
 .app.rc #refs-show{display:block}
 @media(max-width:1100px){.app{grid-template-columns:var(--navw,210px) 1fr!important}aside.refs,aside.notes-panel,#refs-show{display:none!important}}
@@ -488,6 +502,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
     <input class="search" type="search" placeholder="поиск по тексту…" oninput="searchScenes(this.value)">
     <div class="spacer"></div>
     <button id="notes-toggle" class="active" title="Панель заметок">📝 Заметки</button>
+    <button id="samarin-toggle" title="Всё про Самарина">👤 Самарин</button>
     <button onclick="exportHTML()">📥 Экспорт</button>
     <button onclick="window.print()" title="Печать (без фото/видео)">🖨 Печать</button>
     <button class="primary" onclick="saveSnapshot()">💾 Сохранить версию</button>
@@ -3287,6 +3302,27 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
 <p style="margin:0 0 5px">Смотрит на меч.</p>
 <p style="margin:0 0 5px">На туман.</p>
 <p style="margin:0 0 5px">На ржавые танки.</p>
+        </div>
+      </section>
+      <section class="scene ready-scene" id="rs-samarin-camera">
+        <div class="rs-tag">🎬 ГОТОВАЯ СЦЕНА · из заметок автора</div>
+        <h2 class="slug"><span class="num">★</span> ШУМШУ — камера как персонаж (Дима/Самарин)</h2>
+        <div class="body" contenteditable="true">
+<p style="font-weight:700;margin:8px 0 1px">ДИМА</p>
+<p style="opacity:.7;margin:0 0 3px">(ставит камеру на штатив, проверяет кадр)</p>
+<p style="margin:0 0 5px">— Всё… теперь она сама снимает.</p>
+<p style="opacity:.7;margin:0 0 3px">(отходит на несколько шагов)</p>
+<p style="margin:0 0 5px">— Хотя, если честно, я никогда не знаю, снимает ли она до сих пор.</p>
+<p style="font-weight:700;margin:8px 0 1px">САМАРИН</p>
+<p style="margin:0 0 5px">— В смысле?</p>
+<p style="font-weight:700;margin:8px 0 1px">ДИМА</p>
+<p style="margin:0 0 5px">— Может, аккумулятор уже сел. Может, карта памяти закончилась. Может, запись остановилась минуту назад… А может, наоборот, сейчас снимается самый важный кадр.</p>
+<p style="opacity:.7;margin:0 0 3px">(улыбается)</p>
+<p style="margin:0 0 5px">— И в этом, наверное, всё кино.</p>
+<p style="opacity:.7;margin:6px 0 3px">Пауза.</p>
+<p style="margin:0 0 5px">— Ты никогда не знаешь, что останется записанным.</p>
+<p style="opacity:.7;margin:6px 0 3px">Ещё одна пауза.</p>
+<p style="margin:0 0 5px">— Да и жизнь, если подумать, устроена примерно так же.</p>
         </div>
       </section>
       <section class="scene" id="s64">
@@ -7138,6 +7174,10 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
     <div class="notes-head"><span>📝 Заметки <span style="opacity:.55;font-weight:400">· тяни на сцену</span></span><button id="notes-collapse" title="Свернуть">✕</button></div>
     <div id="notes-list"></div>
   </aside>
+  <aside class="samarin-panel" id="samarinbar">
+    <div class="notes-head"><span>👤 Самарин <span style="opacity:.55;font-weight:400">· всё в одном месте</span></span><button id="samarin-collapse" title="Закрыть">✕</button></div>
+    <div id="samarin-list"></div>
+  </aside>
   <aside class="refs" id="refsbar">
     <div class="refs-head"><span>📚 Референсы</span><button id="refs-toggle" title="Свернуть">&#10217;</button></div>
       <div class="ref-section" id="refs-moved">
@@ -7833,6 +7873,37 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
   var _st=window.kolibriApplyState; window.kolibriApplyState=function(){ if(_st)_st(); window.applyUploads(); };
   var _ky=window.kolibriApplyKey; window.kolibriApplyKey=function(k,skip){ if(_ky)_ky(k,skip); if(k===UP_MAP || (k&&k.indexOf('kolibri-upload-')===0)) window.applyUploads(); };
   window.applyUploads();
+})();
+</script>
+<script>
+(function(){
+  var app=document.querySelector('.app');
+  var nt=document.getElementById('notes-toggle'), st=document.getElementById('samarin-toggle');
+  var nx=document.getElementById('notes-collapse'), sx=document.getElementById('samarin-collapse');
+  var list=document.getElementById('samarin-list');
+  function upd(){ if(nt)nt.classList.toggle('active', !app.classList.contains('nc')&&!app.classList.contains('sam')); if(st)st.classList.toggle('active', app.classList.contains('sam')); }
+  function label(sec){ var p=sec.closest('#notes-list')?'📝 Заметка':sec.closest('#outline-pane')?'📋 Краткий':sec.closest('#alt-pane')?'📑 Альт':'📄 Сцена'; var s=(sec.querySelector('.slug')||{}).textContent||''; return p+' · '+s.trim(); }
+  function build(){ if(!list)return; list.innerHTML=''; var seen={};
+    [].slice.call(document.querySelectorAll('#scenes section.scene, #outline-pane section.scene, #notes-list section, #alt-pane section.scene')).forEach(function(sec){
+      if(!/Самарин/.test(sec.textContent||''))return; if(!sec.id||seen[sec.id])return; seen[sec.id]=1;
+      var it=document.createElement('div'); it.className='sam-item';
+      var src=document.createElement('div'); src.className='sam-src'; src.textContent=label(sec);
+      var cl=sec.cloneNode(true); cl.removeAttribute('id');
+      cl.querySelectorAll('[contenteditable]').forEach(function(e){e.setAttribute('contenteditable','false');});
+      cl.querySelectorAll('.note-grip,.note-detach,.up-del,.add-note-bar,.scene-drop-zone').forEach(function(e){e.remove();});
+      it.appendChild(src); it.appendChild(cl); list.appendChild(it);
+    });
+    if(!list.children.length) list.innerHTML='<p style="opacity:.6;padding:10px">Самарин не найден.</p>';
+  }
+  if(st) st.onclick=function(){ if(app.classList.contains('sam')){ app.classList.remove('sam'); } else { app.classList.remove('nc'); app.classList.add('sam'); build(); } upd(); };
+  if(nt) nt.onclick=function(){ app.classList.remove('sam'); app.classList.toggle('nc'); upd(); };
+  if(sx) sx.onclick=function(){ app.classList.remove('sam'); upd(); };
+  if(nx) nx.onclick=function(){ app.classList.add('nc'); app.classList.remove('sam'); upd(); };
+  // подсветка сцен с Самариным в оглавлении (детальный + краткий)
+  [].slice.call(document.querySelectorAll('#nav-list a, #nav-list-outline a')).forEach(function(a){
+    var id=(a.getAttribute('href')||'').slice(1); if(!id)return; var sec=document.getElementById(id);
+    if(sec && /Самарин/.test(sec.textContent||'')) a.classList.add('nav-sam');
+  });
 })();
 </script>
 <script src="sync.js?v=2"></script>
