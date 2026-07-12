@@ -2603,6 +2603,18 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
 <p style="margin:0 0 5px">Тогда зритель поверит</p>
         </div>
       </section>
+      <section class="scene note-extra" id="note-samarin-history">
+        <h3 class="slug"><span class="num">👤</span> Мост Шумшу ↔ прапрадед: 1905 → 1945 <span class="ne-tag">Самарин</span></h3>
+        <div class="body" contenteditable="true">
+<p style="font-weight:700;color:#d97a1e;margin:0 0 4px">ОДНА ВОЙНА, ДВА КОНЦА</p>
+<p style="margin:0 0 5px"><b>Мадагаскар (1905)</b> — эскадра прапрадеда встала здесь и пошла на Цусиму, где Япония её уничтожила (позор, поражение). → <b>Шумшу (август 1945)</b> — последний бой Второй мировой, СССР забирает Курилы у Японии (реванш, 40 лет спустя). → <b>Дима (сегодня)</b> — закрывает дугу тем, что находит и хоронит. Проиграл → отомстили → упокоил.</p>
+<p style="margin:5px 0">Самарин, копая японское железо 45-го, докапывается до того же врага и той же смерти, что забрала прапрадеда в 05-м.</p>
+<p style="font-weight:700;color:#d97a1e;margin:10px 0 4px">ЦИТАТА СТАЛИНА (обращение к народу, 2 сентября 1945)</p>
+<p style="margin:0 0 5px;padding-left:12px;border-left:2px solid #A89A78;font-style:italic">«Но поражение русских войск в 1904 году в период русско-японской войны оставило в сознании народа тяжёлые воспоминания. Оно легло на нашу страну чёрным пятном. Наш народ верил и ждал, что наступит день, когда Япония будет разбита и пятно будет ликвидировано. Сорок лет ждали мы, люди старого поколения, этого дня.»</p>
+<p style="font-weight:700;color:#d97a1e;margin:10px 0 4px">КАТАНА</p>
+<p style="margin:0 0 5px">Оружие офицера перед выбором сэппуку/плен (честь/выжить с позором) = дословно вопрос прапрадеда с другой стороны. Ржавый клинок, созданный только для достойной смерти, — теперь просто ржавчина: честь самурая и «позор» прадеда истлели в одно, ни разрубить, ни осудить.</p>
+        </div>
+      </section>
       <section class="scene note-extra" id="note-samarin-stickers">
         <h3 class="slug"><span class="num">👤</span> Самарин — стикеры (рукописный брейншторм) <span class="ne-tag">Самарин</span></h3>
         <div class="body" contenteditable="true">
@@ -7899,8 +7911,8 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
   function upd(){ if(nt)nt.classList.toggle('active', !app.classList.contains('nc')&&!app.classList.contains('sam')); if(st)st.classList.toggle('active', app.classList.contains('sam')); }
   function label(sec){ var p=sec.closest('#notes-list')?'📝 Заметка':sec.closest('#outline-pane')?'📋 Краткий':sec.closest('#alt-pane')?'📑 Альт':'📄 Сцена'; var s=(sec.querySelector('.slug')||{}).textContent||''; return p+' · '+s.trim(); }
   function build(){ if(!list)return; list.innerHTML=''; var seen={};
-    var all=[]; var stick=document.getElementById('note-samarin-stickers'); if(stick) all.push(stick);
-    [].slice.call(document.querySelectorAll('#scenes section.scene, #outline-pane section.scene, #notes-list section, #alt-pane section.scene')).forEach(function(s){ if(s!==stick) all.push(s); });
+    var all=[]; var pri=['note-samarin-history','note-samarin-stickers']; pri.forEach(function(pid){var e=document.getElementById(pid); if(e) all.push(e);});
+    [].slice.call(document.querySelectorAll('#scenes section.scene, #outline-pane section.scene, #notes-list section, #alt-pane section.scene')).forEach(function(s){ if(pri.indexOf(s.id)<0) all.push(s); });
     all.forEach(function(sec){
       if(!/Самарин/.test(sec.textContent||''))return; if(!sec.id||seen[sec.id])return; seen[sec.id]=1;
       var it=document.createElement('div'); it.className='sam-item';
