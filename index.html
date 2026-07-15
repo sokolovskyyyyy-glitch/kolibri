@@ -114,7 +114,7 @@
   body.v5 .note .who{font-family:'Courier Prime',monospace;font-style:normal;color:#5C5F3A;font-size:10px;letter-spacing:.14em;font-weight:700;margin-bottom:6px;text-transform:uppercase}
 
   /* ========== PRINT / EXPORT ========== */
-  @media print{header.topbar,aside.nav,aside.refs,aside.notes-panel,#refs-show{display:none!important}.app{display:block;height:auto}main.reader{overflow:visible}.scenes{max-width:none;padding:0}#cover,.cover-hero,img,video,iframe,.media-embed,.up-media,.scene-refs,.note-grip,.note-detach,.up-del,.add-note-bar,.scene-drop-zone,.rs-tag,.filter-chips{display:none!important}.scene{break-inside:avoid;page-break-inside:avoid}.ready-scene,.insert-note,.note-extra{border:none!important;background:none!important;padding-left:0!important}body{background:#fff!important;color:#000!important}.slug,.num{color:#000!important}}
+  @media print{header.topbar,aside.nav,aside.refs,aside.notes-panel,aside.samarin-panel,#refs-show{display:none!important}.app{display:block;height:auto}main.reader{overflow:visible}.scenes{max-width:none;padding:0}#cover,.cover-hero,img,video,iframe,.media-embed,.up-media,.scene-refs,.note-grip,.note-detach,.up-del,.add-note-bar,.scene-drop-zone,.rs-tag,.filter-chips{display:none!important}.scene{break-inside:avoid;page-break-inside:avoid}.ready-scene,.insert-note,.note-extra{border:none!important;background:none!important;padding-left:0!important}body{background:#fff!important;color:#000!important}.slug,.num{color:#000!important}}
 
   /* ========== NOTES SYSTEM ========== */
   .scene-notes{margin:14px 0 0;display:flex;flex-direction:column;gap:8px}
@@ -7389,7 +7389,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
       if(!q){ s.classList.remove('search-hidden'); return; }
       var hit = s.textContent.toLowerCase().indexOf(q)>=0;
       s.classList.toggle('search-hidden', !hit);
-      if(hit) n++;
+      if(hit && s.offsetParent!==null) n++;
     });
     document.querySelectorAll('#nav-list a, #nav-list-outline a').forEach(function(a){
       if(!q){ a.style.display=''; return; }
@@ -7851,7 +7851,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
   var UP_MAP='kolibri-uploads-map-v1';
   function readMap(){ try{return JSON.parse(localStorage.getItem(UP_MAP)||'{}');}catch(e){return {};} }
   function writeMap(m){ localStorage.setItem(UP_MAP, JSON.stringify(m)); }
-  function zone(t){ var z=t.querySelector(':scope > .up-media'); if(!z){ z=document.createElement('div'); z.className='up-media'; t.appendChild(z);} return z; }
+  function zone(t){ var z=t.querySelector(':scope > .up-media'); if(!z){ z=document.createElement('div'); z.className='up-media'; var bar=t.querySelector(':scope > .add-note-bar'); if(bar) t.insertBefore(z,bar); else t.appendChild(z);} return z; }
   function renderImg(t, upId, data){
     var z=zone(t); if(z.querySelector('[data-upid="'+upId+'"]')) return;
     var it=document.createElement('div'); it.className='up-item'; it.setAttribute('data-upid',upId);
