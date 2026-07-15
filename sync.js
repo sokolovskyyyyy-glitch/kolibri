@@ -4,7 +4,8 @@
    Документ должен предоставить:
      window.kolibriApplyState()         — переприменить ВСЁ состояние из localStorage к DOM (первая загрузка)
      window.kolibriApplyKey(key, skip)  — переприменить ОДИН ключ (realtime); skip=true => не трогать активно редактируемый блок
-   Ключи синхронизации: kolibri-edit-*, kolibri-edit2-*, kolibri-notes-*, kolibri-scene-refs-v1
+   Ключи синхронизации (всё с префиксом kolibri-): kolibri-edit-*, kolibri-edit2-*, kolibri-notes-*,
+   kolibri-scene-refs-v1, kolibri-note-attach-v1, kolibri-uploads-map-v1, kolibri-upload-* (base64-фото).
 */
 (function () {
   var URL = 'https://dywxhzqnpprzserdlffu.supabase.co';
@@ -48,7 +49,13 @@
       ups.forEach(function (u) { noteOwn(u.key, u.value); });
       dels.forEach(function (k) { noteOwn(k, null); });
       try {
-        if (ups.length) { var r1 = await sb.from(TABLE).upsert(ups); if (r1.error) console.error('[sync] upsert', r1.error); }
+        if (ups.length) {
+          // крупные значения (base64-фото) шлём по одному, чтобы не упереться в лимит тела запроса
+          var small = ups.filter(function (u) { return (u.value || '').length <= 60000; });
+          var big = ups.filter(function (u) { return (u.value || '').length > 60000; });
+          if (small.length) { var r1 = await sb.from(TABLE).upsert(small); if (r1.error) console.error('[sync] upsert', r1.error); }
+          for (var bi = 0; bi < big.length; bi++) { var rb = await sb.from(TABLE).upsert([big[bi]]); if (rb.error) console.error('[sync] upsert-big', rb.error); }
+        }
         if (dels.length) { var r2 = await sb.from(TABLE).delete().in('key', dels); if (r2.error) console.error('[sync] delete', r2.error); }
       } catch (e) { console.error('[sync] flush', e); }
     }
