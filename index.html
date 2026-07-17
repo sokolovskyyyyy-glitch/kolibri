@@ -7953,6 +7953,36 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
   var nt=document.getElementById('notes-toggle'), st=document.getElementById('samarin-toggle');
   var nx=document.getElementById('notes-collapse'), sx=document.getElementById('samarin-collapse');
   var list=document.getElementById('samarin-list');
+  // ── ЖИВОЕ ЗЕРКАЛО: клон главки во вкладке правится в те же ключи, что и оригинал ──
+  function wireMirror(cl, sid){
+    // текст сцены (.body) ↔ kolibri-edit-<sid>
+    var body=cl.querySelector(':scope > .body');
+    if(body){ body.setAttribute('contenteditable','true'); body.setAttribute('data-mirror','edit:'+sid);
+      body.addEventListener('input', function(){
+        localStorage.setItem('kolibri-edit-'+sid, body.innerHTML);           // сохранить + синк в облако
+        var o=document.getElementById(sid); o=o&&o.querySelector(':scope > .body');
+        if(o && o!==body && o.innerHTML!==body.innerHTML) o.innerHTML=body.innerHTML; // обновить основную линию
+      });
+    }
+    // редактируемые блоки заметок (.ce[data-eid]) ↔ kolibri-edit2-<eid>
+    cl.querySelectorAll('[data-eid]').forEach(function(el){ var eid=el.getAttribute('data-eid');
+      el.setAttribute('contenteditable','true'); el.setAttribute('data-mirror','eid:'+eid);
+      el.addEventListener('input', function(){
+        localStorage.setItem('kolibri-edit2-'+eid, el.innerHTML);
+        var o=document.querySelector('[data-eid="'+eid+'"]:not([data-mirror])');
+        if(o && o!==el && o.innerHTML!==el.innerHTML) o.innerHTML=el.innerHTML;
+      });
+    });
+  }
+  // основную линию правят → живо обновить открытый клон во вкладке
+  if(!window.__samMirrorBound){ window.__samMirrorBound=1;
+    document.addEventListener('input', function(e){ var el=e.target; if(!list||!el||(el.closest&&el.closest('#samarin-list'))) return;
+      if(el.classList&&el.classList.contains('body')){ var sc=el.closest('.scene');
+        if(sc&&sc.id) list.querySelectorAll('[data-mirror="edit:'+sc.id+'"]').forEach(function(c){ if(c!==el&&c.innerHTML!==el.innerHTML) c.innerHTML=el.innerHTML; }); }
+      var ee=el.getAttribute&&el.getAttribute('data-eid');
+      if(ee) list.querySelectorAll('[data-mirror="eid:'+ee+'"]').forEach(function(c){ if(c!==el&&c.innerHTML!==el.innerHTML) c.innerHTML=el.innerHTML; });
+    }, true);
+  }
   function upd(){ if(nt)nt.classList.toggle('active', !app.classList.contains('nc')&&!app.classList.contains('sam')); if(st)st.classList.toggle('active', app.classList.contains('sam')); }
   function label(sec){ var p=sec.closest('#notes-list')?'📝 Заметка':sec.closest('#outline-pane')?'📋 Краткий':sec.closest('#alt-pane')?'📑 Альт':'📄 Сцена'; var s=(sec.querySelector('.slug')||{}).textContent||''; return p+' · '+s.trim(); }
   function build(){ if(!list)return; list.innerHTML=''; var seen={};
@@ -7964,8 +7994,9 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
       var it=document.createElement('div'); it.className='sam-item';
       var src=document.createElement('div'); src.className='sam-src'; src.textContent=label(sec);
       var cl=sec.cloneNode(true); cl.removeAttribute('id');
-      cl.querySelectorAll('[contenteditable]').forEach(function(e){e.setAttribute('contenteditable','false');});
+      cl.querySelectorAll('[contenteditable]').forEach(function(e){e.setAttribute('contenteditable','false');}); // сперва всё гасим
       cl.querySelectorAll('.note-grip,.note-detach,.up-del,.add-note-bar,.scene-drop-zone').forEach(function(e){e.remove();});
+      wireMirror(cl, sec.id); // затем оживляем текст сцены и .ce-заметки как двустороннее зеркало
       it.appendChild(src); it.appendChild(cl); list.appendChild(it);
     });
     if(!list.children.length) list.innerHTML='<p style="opacity:.6;padding:10px">Самарин не найден.</p>';
@@ -7974,6 +8005,15 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
   if(nt) nt.onclick=function(){ app.classList.remove('sam'); app.classList.toggle('nc'); upd(); };
   if(sx) sx.onclick=function(){ app.classList.remove('sam'); upd(); };
   if(nx) nx.onclick=function(){ app.classList.add('nc'); app.classList.remove('sam'); upd(); };
+  // облачные/чужие правки (applyKey) → применить и в открытый клон вкладки
+  var _samKey=window.kolibriApplyKey;
+  window.kolibriApplyKey=function(k,skip){ if(_samKey)_samKey(k,skip); if(!list||!k)return;
+    var san=function(v){return window.kSanitize?window.kSanitize(v):v;};
+    if(k.indexOf('kolibri-edit-')===0){ var sid=k.slice(13), v=localStorage.getItem(k); if(v==null)return; v=san(v);
+      list.querySelectorAll('[data-mirror="edit:'+sid+'"]').forEach(function(el){ if(document.activeElement!==el && el.innerHTML!==v) el.innerHTML=v; }); }
+    else if(k.indexOf('kolibri-edit2-')===0){ var eid=k.slice(14), v2=localStorage.getItem(k); if(v2==null)return; v2=san(v2);
+      list.querySelectorAll('[data-mirror="eid:'+eid+'"]').forEach(function(el){ if(document.activeElement!==el && el.innerHTML!==v2) el.innerHTML=v2; }); }
+  };
   // подсветка сцен с Самариным в оглавлении (детальный + краткий)
   [].slice.call(document.querySelectorAll('#nav-list a, #nav-list-outline a')).forEach(function(a){
     var id=(a.getAttribute('href')||'').slice(1); if(!id)return; var sec=document.getElementById(id);
