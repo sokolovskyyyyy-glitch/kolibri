@@ -520,7 +520,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
 })();
 </script>
 
-<div class="app">
+<div class="app nc">
 
   <header class="topbar">
     <div class="brand">КОЛИБРИ<span class="accent">.</span></div>
@@ -3432,6 +3432,41 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
 <p style="margin:0 0 5px">— Ты никогда не знаешь, что останется записанным.</p>
 <p style="opacity:.7;margin:6px 0 3px">Ещё одна пауза.</p>
 <p style="margin:0 0 5px">— Да и жизнь, если подумать, устроена примерно так же.</p>
+        </div>
+      </section>
+      <section class="scene ready-scene" id="rs-shumshu-shadows">
+        <div class="rs-tag">🎬 ГОТОВАЯ СЦЕНА · из заметок автора</div>
+        <h2 class="slug"><span class="num">★</span> ШУМШУ. ТЕНИ ИЗ ТУМАНА — звуки войны (Самарин)</h2>
+        <div class="body" contenteditable="true">
+<p style="margin:0 0 5px">В какой-то момент из тумана проступают тени.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">САМАРИН</p>
+<p style="margin:0 0 5px">Ты только прислушайся.</p>
+<p style="margin:0 0 5px">Слышишь эти звуки?</p>
+<p style="opacity:.7;margin:6px 0 3px">Дима прислушивается.</p>
+<p style="font-weight:700;margin:10px 0 1px;letter-spacing:.02em">САМАРИН</p>
+<p style="margin:0 0 5px">Это звуки Великой Отечественной войны.</p>
+<p style="opacity:.7;margin:6px 0 3px">И Дима действительно слышит: далёкие взрывы, лязг гусениц, гул моторов.</p>
+<p style="margin:0 0 5px">Война, которой уже нет, — но которая не ушла из этой земли. Звук приходит раньше изображения; остров помнит.</p>
+        </div>
+      </section>
+      <section class="scene ready-scene" id="rs-shumshu-mirror">
+        <div class="rs-tag">📝 ЗАМЕТКА АВТОРА · Самарин</div>
+        <h2 class="slug"><span class="num">★</span> ШУМШУ. САМАРИН — зеркало, проводник, катана</h2>
+        <div class="body" contenteditable="true">
+<p style="margin:0 0 5px">Самарин — будто <b>проводник в мир мёртвых</b>. Он выводит Диму к теням, к звукам, к костям — и обратно.</p>
+<p style="margin:0 0 5px">Самарин — это одновременно <b>зеркало отца</b> Димы и <b>зеркало Жальбера</b>: север и юг, две формы отцовства, которые сходятся в одном человеке.</p>
+<p style="margin:0 0 5px">Тема катаны — «<b>Честь или позор?</b>». Вопрос, который Самарин задаёт про японского офицера, Дима слышит про своего отца и прапрадеда: имеет ли человек право уйти — и право остаться жить.</p>
+<p style="margin:0 0 5px">Возможно, в финале <b>Дима подарит Самарину катану</b> — отдаст ему вопрос чести, который сам больше не может нести.</p>
+        </div>
+      </section>
+      <section class="scene ready-scene" id="rs-shumshu-tank">
+        <div class="rs-tag">🎬 ГОТОВАЯ СЦЕНА · из заметок автора</div>
+        <h2 class="slug"><span class="num">★</span> ШУМШУ. РОГАТЫЙ ТАНК — сон Димы / роза ветров</h2>
+        <div class="body" contenteditable="true">
+<p style="margin:0 0 5px">Рогатый танк выступает из тумана — <b>сон Димы</b>.</p>
+<p style="margin:0 0 5px">Этот танк — наша <b>роза ветров</b>: по нему мы постоянно ориентируемся. Он стоит физически в центре острова и в центре повествования.</p>
+<p style="margin:0 0 5px">Когда идёшь из тумана, видно, как он <b>выплывает навстречу</b> — будто японцы вот-вот выедут, будто война здесь не кончилась.</p>
+<p style="opacity:.7;margin:6px 0 3px">Повторяющийся образ-ориентир: каждый раз, возвращаясь к танку, зритель понимает, где он — во времени и в памяти. Рядом обычно Самарин.</p>
         </div>
       </section>
       <section class="scene" id="s64">
@@ -8067,10 +8102,11 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
     });
     if(!list.children.length) list.innerHTML='<p style="opacity:.6;padding:10px">Самарин не найден.</p>';
   }
-  if(st) st.onclick=function(){ if(app.classList.contains('sam')){ app.classList.remove('sam'); } else { app.classList.remove('nc'); app.classList.add('sam'); build(); } upd(); };
-  if(nt) nt.onclick=function(){ app.classList.remove('sam'); app.classList.toggle('nc'); upd(); };
-  if(sx) sx.onclick=function(){ app.classList.remove('sam'); upd(); };
-  if(nx) nx.onclick=function(){ app.classList.add('nc'); app.classList.remove('sam'); upd(); };
+  // Открыта заметка ИЛИ Самарин → рефы прячутся (rc). Дефолт: заметки/Самарин закрыты, рефы открыты.
+  if(st) st.onclick=function(){ if(app.classList.contains('sam')){ app.classList.remove('sam'); app.classList.add('nc'); app.classList.remove('rc'); } else { app.classList.remove('nc'); app.classList.add('sam'); app.classList.add('rc'); build(); } upd(); };
+  if(nt) nt.onclick=function(){ app.classList.remove('sam'); app.classList.toggle('nc'); if(app.classList.contains('nc')){ app.classList.remove('rc'); } else { app.classList.add('rc'); } upd(); };
+  if(sx) sx.onclick=function(){ app.classList.remove('sam'); app.classList.add('nc'); app.classList.remove('rc'); upd(); };
+  if(nx) nx.onclick=function(){ app.classList.add('nc'); app.classList.remove('sam'); app.classList.remove('rc'); upd(); };
   // облачные/чужие правки (applyKey) → применить и в открытый клон вкладки
   var _samKey=window.kolibriApplyKey;
   window.kolibriApplyKey=function(k,skip){ if(_samKey)_samKey(k,skip); if(!list||!k)return;
