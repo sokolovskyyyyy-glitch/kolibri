@@ -2586,6 +2586,19 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
 <p style="margin:0 0 5px">Тогда зритель поверит</p>
         </div>
       </section>
+      <section class="scene note-extra" id="note-samarin-director">
+        <h3 class="slug"><span class="num">👤</span> Самарин — слова Дмитрия (голосовые [56][59]) <span class="ne-tag">Самарин</span></h3>
+        <div class="body" contenteditable="true">
+<p style="opacity:.7;font-style:italic;margin:0 0 8px">Прямые формулировки режиссёра из голосовых — как он сам видит Самарина. Не переписано.</p>
+<p style="margin:0 0 5px"><b>«Самарин точно будет нашим Шумшу».</b> Он не персонаж рядом с островом — он <b>воплощает</b> Шумшу, этот холодный блок воспоминаний о войне.</p>
+<p style="font-weight:700;color:#d97a1e;margin:10px 0 4px">КАК СНИМАТЬ</p>
+<p style="margin:0 0 5px">По-тарковски: прибой ласкает и моет оставшееся от Японии железо с иероглифами, всё ржавое; ходить с Самариным в тумане, развивать этот стиль. Формат — <b>документальный</b> («для метро / для документалки»): думать, на какие разговоры и ракурсы его выводить.</p>
+<p style="font-weight:700;color:#d97a1e;margin:10px 0 4px">ДВА ПРОВОДНИКА = ДВА ОТЦА</p>
+<p style="margin:0 0 5px">Самарин (<b>север</b>) ↔ Жальбер (<b>юг</b>) — два условных отца Димы. Их ракурсы и реплики должны быть <b>обратимы</b>, зеркалить друг друга. Что заложено с Самариным — повторяется у Жальбера, и наоборот.</p>
+<p style="font-weight:700;color:#d97a1e;margin:10px 0 4px">ТАЙМИНГ И ОТКРЫТЫЙ ВОПРОС</p>
+<p style="margin:0 0 5px">Димитрия отправляют на остров <b>в начале августа</b> — тогда и снимать Самарина; надо заранее понимать, что с ним снимать. Нерешённое: Шумшу — <b>отдельный эпизод</b> или <b>врывающиеся военные флэшбеки</b> («тонкая красная линия made in Russia»). Дмитрий хочет больше Шумшу.</p>
+        </div>
+      </section>
       <section class="scene note-extra" id="note-samarin-history">
         <h3 class="slug"><span class="num">👤</span> Мост Шумшу ↔ прапрадед: 1905 → 1945 <span class="ne-tag">Самарин</span></h3>
         <div class="body" contenteditable="true">
@@ -7894,10 +7907,11 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
   function upd(){ if(nt)nt.classList.toggle('active', !app.classList.contains('nc')&&!app.classList.contains('sam')); if(st)st.classList.toggle('active', app.classList.contains('sam')); }
   function label(sec){ var p=sec.closest('#notes-list')?'📝 Заметка':sec.closest('#outline-pane')?'📋 Краткий':sec.closest('#alt-pane')?'📑 Альт':'📄 Сцена'; var s=(sec.querySelector('.slug')||{}).textContent||''; return p+' · '+s.trim(); }
   function build(){ if(!list)return; list.innerHTML=''; var seen={};
-    var all=[]; var pri=['note-samarin-history','note-samarin-stickers']; pri.forEach(function(pid){var e=document.getElementById(pid); if(e) all.push(e);});
+    var extra={'s62':1}; // Шумшу-сцены по делу, но без имени «Самарин» — тянем явно
+    var all=[]; var pri=['note-samarin-director','note-samarin-history','note-samarin-stickers']; pri.forEach(function(pid){var e=document.getElementById(pid); if(e) all.push(e);});
     [].slice.call(document.querySelectorAll('#scenes section.scene, #outline-pane section.scene, #notes-list section, #alt-pane section.scene')).forEach(function(s){ if(pri.indexOf(s.id)<0) all.push(s); });
     all.forEach(function(sec){
-      if(!/Самарин/.test(sec.textContent||''))return; if(!sec.id||seen[sec.id])return; seen[sec.id]=1;
+      if(!/Самарин/.test(sec.textContent||'') && !extra[sec.id])return; if(!sec.id||seen[sec.id])return; seen[sec.id]=1;
       var it=document.createElement('div'); it.className='sam-item';
       var src=document.createElement('div'); src.className='sam-src'; src.textContent=label(sec);
       var cl=sec.cloneNode(true); cl.removeAttribute('id');
@@ -7914,7 +7928,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
   // подсветка сцен с Самариным в оглавлении (детальный + краткий)
   [].slice.call(document.querySelectorAll('#nav-list a, #nav-list-outline a')).forEach(function(a){
     var id=(a.getAttribute('href')||'').slice(1); if(!id)return; var sec=document.getElementById(id);
-    if(sec && /Самарин/.test(sec.textContent||'')) a.classList.add('nav-sam');
+    if(sec && (/Самарин/.test(sec.textContent||'') || id==='s62')) a.classList.add('nav-sam');
   });
 })();
 </script>
