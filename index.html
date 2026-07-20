@@ -365,6 +365,7 @@ section[id^="note-"].dragging{opacity:.45}
 #scenes section[id^="note-"]{border-left:3px solid #B23A2E;background:rgba(178,58,46,.04);padding:8px 10px;border-radius:0 6px 6px 0;margin:8px 0}
 #notes-toggle.active{background:#B23A2E;color:#fff}
 #samarin-toggle.active{background:#d97a1e;color:#fff}
+#refs-btn.active{background:#3a6ea5;color:#fff;border-color:#3a6ea5}
 a.nav-sam{color:#d97a1e!important;font-weight:700}
 a.nav-sam::before{content:"● ";font-size:8px;vertical-align:middle}
 aside.samarin-panel{display:none;background:#DDCFB0;border-left:1px solid #A89A78;color:#3A4658;overflow-y:auto;padding:0}
@@ -379,7 +380,7 @@ aside.samarin-panel{display:none;background:#DDCFB0;border-left:1px solid #A89A7
 #samarin-list .sam-item [contenteditable]{border:none!important}
 #samarin-list .sam-item .rs-tag,#samarin-list .sam-item .note-grip{display:none}
 #refs-show{display:none;position:fixed;right:0;top:74px;z-index:30;writing-mode:vertical-rl;background:#B23A2E;color:#fff;border:none;padding:14px 7px;cursor:pointer;font-family:'Courier Prime',monospace;letter-spacing:.12em;border-radius:6px 0 0 6px;font-size:12px}
-.app.rc #refs-show{display:block}
+.app.rc #refs-show{display:none}
 @media(max-width:1100px){.app{grid-template-columns:var(--navw,210px) 1fr!important}aside.refs,aside.notes-panel,#refs-show{display:none!important}}
 </style>
 <style>
@@ -520,7 +521,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
 })();
 </script>
 
-<div class="app nc">
+<div class="app nc rc">
 
   <header class="topbar">
     <div class="brand">КОЛИБРИ<span class="accent">.</span></div>
@@ -531,8 +532,9 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
     </div>
     <input class="search" type="search" placeholder="поиск по тексту…" oninput="searchScenes(this.value)"><span id="search-count" style="display:none;font:11px monospace;color:#fff;background:#B23A2E;padding:2px 7px;border-radius:4px;margin-left:8px"></span>
     <div class="spacer"></div>
-    <button id="notes-toggle" class="active" title="Панель заметок">📝 Заметки</button>
+    <button id="notes-toggle" title="Панель заметок">📝 Заметки</button>
     <button id="samarin-toggle" title="Всё про Самарина">👤 Самарин</button>
+    <button id="refs-btn" title="Референсы (видео/фото)">📚 Референсы</button>
     <button onclick="exportHTML()">📥 Экспорт</button>
     <button onclick="window.print()" title="Печать (без фото/видео)">🖨 Печать</button>
     <button class="primary" onclick="saveSnapshot()">💾 Сохранить версию</button>
@@ -7868,8 +7870,11 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
   reader.addEventListener('dragover',function(e){var s=e.target.closest('.scene');if(!s||!dg)return;e.preventDefault();e.dataTransfer.dropEffect='move';document.querySelectorAll('.scene.drop-hover').forEach(function(x){if(x!==s)x.classList.remove('drop-hover');});s.classList.add('drop-hover');});
   reader.addEventListener('drop',function(e){var s=e.target.closest('.scene');if(!s)return;e.preventDefault();s.classList.remove('drop-hover');var n=dg;if(!n){var k=e.dataTransfer.getData('text/plain');n=document.querySelector('[data-refkey="'+(window.CSS&&CSS.escape?CSS.escape(k):k)+'"]');}if(n)toScene(n,s);});
   (function(){var m=lm();Object.keys(m).forEach(function(sid){var sc=document.getElementById(sid);if(!sc)return;m[sid].forEach(function(k){var n=document.querySelector('[data-refkey="'+(window.CSS&&CSS.escape?CSS.escape(k):k)+'"]');if(n){addX(n);zone(sc).appendChild(n);}});});})();
-  document.getElementById('refs-toggle').onclick=function(){app.classList.add('rc');};
-  document.getElementById('refs-show').onclick=function(){app.classList.remove('rc');};
+  function syncRefsBtn(){ var b=document.getElementById('refs-btn'); if(b) b.classList.toggle('active', !app.classList.contains('rc')); }
+  document.getElementById('refs-toggle').onclick=function(){app.classList.add('rc'); syncRefsBtn();};
+  document.getElementById('refs-show').onclick=function(){app.classList.remove('rc'); syncRefsBtn();};
+  var _rb=document.getElementById('refs-btn'); if(_rb) _rb.onclick=function(){ app.classList.toggle('rc'); syncRefsBtn(); };
+  syncRefsBtn();
   window.__kdnd={addX:addX,toPool:toPool,pool:pool,zone:zone};
 })();
 </script>
@@ -8102,11 +8107,11 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
     });
     if(!list.children.length) list.innerHTML='<p style="opacity:.6;padding:10px">Самарин не найден.</p>';
   }
-  // Открыта заметка ИЛИ Самарин → рефы прячутся (rc). Дефолт: заметки/Самарин закрыты, рефы открыты.
-  if(st) st.onclick=function(){ if(app.classList.contains('sam')){ app.classList.remove('sam'); app.classList.add('nc'); app.classList.remove('rc'); } else { app.classList.remove('nc'); app.classList.add('sam'); app.classList.add('rc'); build(); } upd(); };
-  if(nt) nt.onclick=function(){ app.classList.remove('sam'); app.classList.toggle('nc'); if(app.classList.contains('nc')){ app.classList.remove('rc'); } else { app.classList.add('rc'); } upd(); };
-  if(sx) sx.onclick=function(){ app.classList.remove('sam'); app.classList.add('nc'); app.classList.remove('rc'); upd(); };
-  if(nx) nx.onclick=function(){ app.classList.add('nc'); app.classList.remove('sam'); app.classList.remove('rc'); upd(); };
+  // Три независимые панели-кнопки: Заметки/Самарин (колонка 3, взаимоисключающие) и Референсы (колонка 4, отдельно).
+  if(st) st.onclick=function(){ if(app.classList.contains('sam')){ app.classList.remove('sam'); app.classList.add('nc'); } else { app.classList.remove('nc'); app.classList.add('sam'); build(); } upd(); };
+  if(nt) nt.onclick=function(){ app.classList.remove('sam'); app.classList.toggle('nc'); upd(); };
+  if(sx) sx.onclick=function(){ app.classList.remove('sam'); app.classList.add('nc'); upd(); };
+  if(nx) nx.onclick=function(){ app.classList.add('nc'); app.classList.remove('sam'); upd(); };
   // облачные/чужие правки (applyKey) → применить и в открытый клон вкладки
   var _samKey=window.kolibriApplyKey;
   window.kolibriApplyKey=function(k,skip){ if(_samKey)_samKey(k,skip); if(!list||!k)return;
