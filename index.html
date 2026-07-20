@@ -294,7 +294,12 @@
     font-family:'Courier Prime',monospace; font-size:13px; letter-spacing:.18em;
     text-transform:uppercase; color:#5C5F3A; margin-bottom:20px;
     border-bottom:1px solid #A89A78; padding-bottom:8px;
+    cursor:pointer; user-select:none;
   }
+  .concept-section > h2::before{content:"\25B8  "; color:#B23A2E;}          /* ▸ свёрнуто */
+  .concept-section.open > h2::before{content:"\25BE  "; color:#B23A2E;}      /* ▾ раскрыто */
+  .concept-section:not(.open) > *:not(h2){display:none;}                     /* по умолчанию тело скрыто */
+  .concept-section:not(.open) > h2{margin-bottom:0;}
   .concept-block{
     margin:0 0 16px 0; padding:16px 20px;
     border-left:3px solid #5C5F3A;
@@ -8127,6 +8132,12 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
     if(sec && (/Самарин/.test(sec.textContent||'') || id==='s62')) a.classList.add('nav-sam');
   });
 })();
+</script>
+<script>
+  // Сворачиваемые разделы концепций/голосовых (свёрнуты по умолчанию, клик по заголовку раскрывает)
+  document.querySelectorAll('.concept-section > h2').forEach(function(h){
+    h.addEventListener('click', function(){ h.parentNode.classList.toggle('open'); });
+  });
 </script>
 <script src="sync.js?v=2"></script>
 </body>
