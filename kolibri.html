@@ -373,6 +373,15 @@ section[id^="note-"].dragging{opacity:.45}
 #refs-btn.active{background:#3a6ea5;color:#fff;border-color:#3a6ea5}
 a.nav-sam{color:#d97a1e!important;font-weight:700}
 a.nav-sam::before{content:"● ";font-size:8px;vertical-align:middle}
+aside.vhs-panel{display:none;background:#DDCFB0;border-left:1px solid #A89A78;color:#3A4658;overflow-y:auto;padding:0}
+.app>aside.vhs-panel{grid-column:3}
+.app.vhs aside.notes-panel,.app.vhs aside.samarin-panel{display:none}
+.app.vhs aside.vhs-panel{display:block}
+.app.vhs{grid-template-columns:var(--navw,210px) 1fr var(--notesw,330px) var(--refsw,380px)}
+.app.vhs.rc{grid-template-columns:var(--navw,210px) 1fr var(--notesw,330px) 0}
+#vhs-list{padding:12px 14px}
+#vhs-list .scene{margin:0 0 12px;max-width:none;padding:0}
+#vhs-toggle.active{background:#4a7c59;color:#fff}
 aside.samarin-panel{display:none;background:#DDCFB0;border-left:1px solid #A89A78;color:#3A4658;overflow-y:auto;padding:0}
 .app>aside.samarin-panel{grid-column:3}
 .app.sam aside.notes-panel{display:none}
@@ -529,6 +538,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
     <button id="undo-btn" title="Отменить последнее изменение (правку, удаление заметки, фото)">↩ Отменить</button>
     <button id="notes-toggle" title="Панель заметок">📝 Заметки</button>
     <button id="samarin-toggle" title="Всё про Самарина">👤 Самарин</button>
+    <button id="vhs-toggle" title="VHS-заметки — тащи на нужную сцену">🎞 VHS</button>
     <button id="refs-btn" title="Референсы (видео/фото)">📚 Референсы</button>
     <button onclick="exportHTML()">📥 Экспорт</button>
     <button onclick="window.print()" title="Печать (без фото/видео)">🖨 Печать</button>
@@ -2393,7 +2403,8 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
 <p>Совсем не тропический, а летний питерский - дождь поливает улицы. ДИМА в желтой каске мчит на велосипеде по набережным и мостам. Едет по улице Мира. Педали вращаются, Димины кеды мокнут. Одет он спортивно, оброс бородой, щеки и нос сгорели на солнце, красные и облезают. В светлых Диминых глазах отражается не Нева, нет. Воды Невы темнее, мутнее Диминых глаз. В них отражаются Антарктический льды.</p>
         </div>
       
-<div class="moved-concept" data-from="concepts"><div class="concept-block ce" contenteditable="true" data-eid="e24">
+
+<section class="scene note-extra" id="note-vhs-e24"><h3 class="slug"><span class="num">🎞</span> Война в предметах / отец <span class="ne-tag">VHS</span></h3><div class="concept-block ce" contenteditable="true" data-eid="e24">
           <span class="cb-label">💭 Ключевой вопрос — Война в предметах</span>
           Это ключ. Не «война ужасна» — это слишком общее. А вот:
           <strong>как война продолжает жить в предметах, берегах, семьях, мужских жестах, молчании,
@@ -2410,9 +2421,11 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
             <li>позднее известие о гибели</li>
           </ul>
           Тогда прапрадед становится не отдельной исторической фигурой, а <strong>замещающей дорогой к отцу.</strong>
-        </div></div>
+        </div></section>
 
-<div class="moved-concept" data-from="concepts"><div class="concept-block ce" contenteditable="true" data-eid="e33">
+
+
+<section class="scene note-extra" id="note-vhs-e33"><h3 class="slug"><span class="num">🎞</span> Пролог: кладбище → рыбалка, граната <span class="ne-tag">VHS</span></h3><div class="concept-block ce" contenteditable="true" data-eid="e33">
           <span class="cb-label">🎬 12.43.42.ogg · 245 сек</span>
           <strong>Углубление линии отца: прогулка через кладбище на рыбалку.</strong>
 Ключевая сцена для пролога: реальное детство режиссёра — из дома через дворы, через кладбище в Шлиссельбурге, спуститься к Неве на рыбалку. Отец в болотниках («как в «Возвращении»), ловит рыбу на бамбуковую удочку, Дима ковыряется в песке-поле боя — пулемётные ленты, патроны, осколки.
@@ -2421,31 +2434,39 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
 <br><br>
 <strong>Зеркало в финале:</strong> Дима возвращается с Мадагаскара, идёт той же дорогой — через кладбище видит отдельные могилки (афганцы, чеченцы, современные) — у воды. Примирение с отцом.
 <em>Без этого линия войны не сработает как надо.</em>
-        </div></div>
+        </div></section>
 
-<div class="moved-concept" data-from="concepts"><div class="concept-block ce" contenteditable="true" data-eid="e34">
+
+
+<section class="scene note-extra" id="note-vhs-e34"><h3 class="slug"><span class="num">🎞</span> VHS-пролог: военная тема <span class="ne-tag">VHS</span></h3><div class="concept-block ce" contenteditable="true" data-eid="e34">
           <span class="cb-label">🎬 13.18.50.ogg · 186 сек</span>
           <strong>VHS-пролог: военная тема через детское видео.</strong>
 Начинать с кассеты VHS (à la Хитлэджер): отец ведёт Диму через кладбище на рыбалку на Неве. Кадры 90-х — мимо памятников, колючая проволока, пулемётные точки, большие сапоги, закидывает удочку на закате. Дима ковыряется в «песочнице»-поле боя, достаёт из глины гранату Ф-1, батя выбрасывает её в воду. Поверх ложится оригинальное видео: режиссёр разбирает мосинскую винтовку, пуля на шее, MTV сзади. Без этого тема войны не сработает на Мадагаскаре.
-        </div></div>
+        </div></section>
 
-<div class="moved-concept" data-from="concepts"><div class="concept-block ce" contenteditable="true" data-eid="e35">
+
+
+<section class="scene note-extra" id="note-vhs-e35"><h3 class="slug"><span class="num">🎞</span> 9 мая в маленьком городе <span class="ne-tag">VHS</span></h3><div class="concept-block ce" contenteditable="true" data-eid="e35">
           <span class="cb-label">🎬 13.28.54.ogg · 131 сек</span>
           <strong>9 мая в маленьком городе — атмосфера, которую утратили.</strong>
 Идея: показать, каким было 9 мая в начале 90-х — то, чего уже не вернуть. Маленький парад в посёлке городского типа, люди с транспарантами, тесное общение с ветеранами (у памятника, стрельба из Калаша, пацаны ловят горящие гильзы). Добрая горесть, непередаваемый вайп.
 <br><br>
 «Уверен, есть запрос в обществе на такие добрые воспоминания».
-        </div></div>
+        </div></section>
 
-<div class="moved-concept" data-from="concepts"><div class="concept-block ce" contenteditable="true" data-eid="e36">
+
+
+<section class="scene note-extra" id="note-vhs-e36"><h3 class="slug"><span class="num">🎞</span> VHS 9 мая 1994–95 <span class="ne-tag">VHS</span></h3><div class="concept-block ce" contenteditable="true" data-eid="e36">
           <span class="cb-label">🎬 13.29.18.ogg · 73 сек</span>
           <strong>VHS 9 мая 1994–95 года — 15 секунд.</strong>
 Видео домашнего 9 мая: за столом, интерьер дома Димы на Фонтанке (узнаём его потом), другие ведущие на трибуне, молодые ветераны. «MTV — переключение каналов. День Победы».
 <br><br>
 <em>«Буквально 15 секунд, а всё станет понятным и соединится».</em>
-        </div></div>
+        </div></section>
 
-<div class="moved-concept" data-from="concepts"><div class="concept-block ce" contenteditable="true" data-eid="e37">
+
+
+<section class="scene note-extra" id="note-vhs-e37"><h3 class="slug"><span class="num">🎞</span> Военный монумент крупным планом <span class="ne-tag">VHS</span></h3><div class="concept-block ce" contenteditable="true" data-eid="e37">
           <span class="cb-label">🎬 17.35.32.ogg · 91 сек (31.05)</span>
           <strong>Военный монумент крупным планом — детский вайп соцреализма.</strong>
 Образное кино через памятники. В 90-е дома стояли бабушкины сувениры из Волгограда и Брестской крепости («Золотое кольцо памяти», возили на автобусах) — открытки, маленькие фигурки победившего соцреализма в руках. По-детски задевало, был сильный восторг.
@@ -2453,7 +2474,8 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
 Недавно пересматривал «Брестскую крепость»: финальный сверхобщий план — гигантское лицо солдата-монумента, крошечные люди на фоне — прямо потрясает.
 <br><br>
 <strong>Идея на заметку:</strong> вписать в сюжет (может, на VHS) уместный кадр на фоне большого военного монумента — Волгоград, Брест. Много символа, большой план, дёшево снять, мощный эффект.
-        </div></div>
+        </div></section>
+
 </section>
       <section class="scene insert-note" id="ins-vo-lenfilm">
         <div class="rs-tag" style="background:#6b5cff">✍️ ВСТАВКА к сцене 2 · закадровый голос</div>
@@ -7274,7 +7296,11 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
     <div class="notes-head"><span>📝 Заметки <span style="opacity:.55;font-weight:400">· тяни на сцену</span></span><button id="notes-collapse" title="Свернуть">✕</button></div>
     <div id="notes-list"></div>
   </aside>
-  <aside class="samarin-panel" id="samarinbar">
+  <aside class="vhs-panel" id="vhsbar">
+  <div class="notes-head"><span>🎞 VHS-заметки · тяни на сцену</span><button id="vhs-collapse" title="Свернуть">✕</button></div>
+  <div id="vhs-list"></div>
+</aside>
+<aside class="samarin-panel" id="samarinbar">
     <div class="notes-head"><span>👤 Самарин <span style="opacity:.55;font-weight:400">· всё в одном месте</span></span><button id="samarin-collapse" title="Закрыть">✕</button></div>
     <div id="samarin-list"></div>
   </aside>
@@ -7920,7 +7946,9 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
     note.insertBefore(g, note.firstChild);
   }
   // перенос всех заметок в панель + грип
-  if(list){ document.querySelectorAll('#scenes [id^="note-"]').forEach(function(el){ if(el.tagName==='SECTION'){ grip(el); list.appendChild(el); } }); }
+  var vhsList=document.getElementById('vhs-list');
+  function homeList(n){ return (vhsList && n.id.indexOf('note-vhs-')===0) ? vhsList : list; }
+  if(list){ document.querySelectorAll('#scenes [id^="note-"]').forEach(function(el){ if(el.tagName==='SECTION'){ grip(el); homeList(el).appendChild(el); } }); }
   // тоглы панели
   var nt=document.getElementById('notes-toggle'), nx=document.getElementById('notes-collapse');
   function syncBtn(){ if(nt) nt.classList.toggle('active', !app.classList.contains('nc')); }
@@ -7943,12 +7971,12 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
   }
   function detach(note){
     var x=note.querySelector(':scope > .note-detach'); if(x)x.remove();
-    list.appendChild(note);
+    homeList(note).appendChild(note);
     var m=read(); Object.keys(m).forEach(function(sid){ m[sid]=(m[sid]||[]).filter(function(y){return y!==note.id;}); if(!m[sid].length) delete m[sid]; }); write(m);
   }
   window.applyNoteAttach=function(){
     var m=read();
-    document.querySelectorAll('#scenes section[id^="note-"]').forEach(function(n){ var x=n.querySelector(':scope > .note-detach'); if(x)x.remove(); list.appendChild(n); });
+    document.querySelectorAll('#scenes section[id^="note-"]').forEach(function(n){ var x=n.querySelector(':scope > .note-detach'); if(x)x.remove(); homeList(n).appendChild(n); });
     Object.keys(m).forEach(function(sid){ var sc=document.getElementById(sid); if(!sc)return; m[sid].forEach(function(nid){ var n=document.getElementById(nid); if(n) place(n, sc); }); });
   };
   // DND (за грип)
@@ -8059,7 +8087,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
       if(ee) list.querySelectorAll('[data-mirror="eid:'+ee+'"]').forEach(function(c){ if(c!==el&&c.innerHTML!==el.innerHTML) c.innerHTML=el.innerHTML; });
     }, false);
   }
-  function upd(){ if(nt)nt.classList.toggle('active', !app.classList.contains('nc')&&!app.classList.contains('sam')); if(st)st.classList.toggle('active', app.classList.contains('sam')); }
+  function upd(){ var v=app.classList.contains('vhs'), s=app.classList.contains('sam'); if(nt)nt.classList.toggle('active', !app.classList.contains('nc')&&!s&&!v); if(st)st.classList.toggle('active', s); var vb=document.getElementById('vhs-toggle'); if(vb)vb.classList.toggle('active', v); }
   function label(sec){ var p=sec.closest('#notes-list')?'📝 Заметка':sec.closest('#outline-pane')?'📋 Краткий':sec.closest('#alt-pane')?'📑 Альт':'📄 Сцена'; var s=(sec.querySelector('.slug')||{}).textContent||''; return p+' · '+s.trim(); }
   function build(){ if(!list)return; list.innerHTML=''; var seen={};
     var extra={'s62':1}; // Шумшу-сцены по делу, но без имени «Самарин» — тянем явно
@@ -8077,11 +8105,15 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
     });
     if(!list.children.length) list.innerHTML='<p style="opacity:.6;padding:10px">Самарин не найден.</p>';
   }
-  // Три независимые панели-кнопки: Заметки/Самарин (колонка 3, взаимоисключающие) и Референсы (колонка 4, отдельно).
-  if(st) st.onclick=function(){ if(app.classList.contains('sam')){ app.classList.remove('sam'); app.classList.add('nc'); } else { app.classList.remove('nc'); app.classList.add('sam'); build(); } upd(); };
-  if(nt) nt.onclick=function(){ app.classList.remove('sam'); app.classList.toggle('nc'); upd(); };
-  if(sx) sx.onclick=function(){ app.classList.remove('sam'); app.classList.add('nc'); upd(); };
-  if(nx) nx.onclick=function(){ app.classList.add('nc'); app.classList.remove('sam'); upd(); };
+  // Панели колонки 3 — Заметки / Самарин / VHS — взаимоисключающие. Референсы (колонка 4) отдельной кнопкой.
+  var vt=document.getElementById('vhs-toggle'), vx=document.getElementById('vhs-collapse');
+  function closeCol3(){ app.classList.remove('sam'); app.classList.remove('vhs'); }
+  if(st) st.onclick=function(){ if(app.classList.contains('sam')){ closeCol3(); app.classList.add('nc'); } else { closeCol3(); app.classList.remove('nc'); app.classList.add('sam'); build(); } upd(); };
+  if(nt) nt.onclick=function(){ var wasNotes=!app.classList.contains('nc')&&!app.classList.contains('sam')&&!app.classList.contains('vhs'); closeCol3(); app.classList.toggle('nc', wasNotes); upd(); };
+  if(vt) vt.onclick=function(){ if(app.classList.contains('vhs')){ closeCol3(); app.classList.add('nc'); } else { closeCol3(); app.classList.remove('nc'); app.classList.add('vhs'); } upd(); };
+  if(sx) sx.onclick=function(){ closeCol3(); app.classList.add('nc'); upd(); };
+  if(vx) vx.onclick=function(){ closeCol3(); app.classList.add('nc'); upd(); };
+  if(nx) nx.onclick=function(){ app.classList.add('nc'); closeCol3(); upd(); };
   // облачные/чужие правки (applyKey) → применить и в открытый клон вкладки
   var _samKey=window.kolibriApplyKey;
   window.kolibriApplyKey=function(k,skip){ if(_samKey)_samKey(k,skip); if(!list||!k)return;
