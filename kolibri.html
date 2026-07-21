@@ -398,6 +398,12 @@ aside.samarin-panel{display:none;background:#DDCFB0;border-left:1px solid #A89A7
 .note-card .by{font-weight:700;margin-left:8px;letter-spacing:.06em;font-size:10px;text-transform:uppercase}
 .by-evg{color:#1b4f9c}
 .by-dir{color:#E5163A}
+/* отступ, чтобы заметки не липли к тексту сцены */
+.scene > .dir-note, .scene > .moved-concept, .scene > .scene-notes{margin-top:30px}
+.scene > .moved-concept + .moved-concept, .scene > .dir-note + .dir-note{margin-top:16px}
+/* кнопка отмены — заметная */
+#undo-btn{background:#7a2020!important;border-color:#7a2020!important;color:#fff!important;font-weight:800!important}
+#undo-btn:hover{background:#A02C2C!important}
 /* правки в тексте, помеченные цветом автора (как заметки): синий=сценарист, красный=режиссёр */
 .ed{border-radius:2px;padding:0 1px}
 .ed.by-evg{background:rgba(27,79,156,.13)}
@@ -520,6 +526,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
     </div>
     <input class="search" type="search" placeholder="поиск по тексту…" oninput="searchScenes(this.value)"><span id="search-count" style="display:none;font:11px monospace;color:#fff;background:#B23A2E;padding:2px 7px;border-radius:4px;margin-left:8px"></span>
     <div class="spacer"></div>
+    <button id="undo-btn" title="Отменить последнее изменение (правку, удаление заметки, фото)">↩ Отменить</button>
     <button id="notes-toggle" title="Панель заметок">📝 Заметки</button>
     <button id="samarin-toggle" title="Всё про Самарина">👤 Самарин</button>
     <button id="refs-btn" title="Референсы (видео/фото)">📚 Референсы</button>
@@ -566,106 +573,17 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
 
       <!-- ═══════════════════════════════ РЕФЕРЕНСЫ ════════════════════════════ -->
       <!-- ═══════════════════════════════ КОНЦЕПЦИЯ / РЕЖЗАПИСКИ ══════════════ -->
-      <div class="concept-section" id="concepts">
-        <h2>📌 Общие концепции (на весь фильм)</h2>
-
-        
-
-        
-
-        <div class="concept-block ce" contenteditable="true" data-eid="e25">
-          <span class="cb-label">🎵 Тональность — Псалом как карта</span>
-          Этот псалом — буквально твоя тема:
-          <ul>
-            <li>Антарктида → «тихие воды»</li>
-            <li>Шумшу → «долина смертной тени»</li>
-            <li>Мадагаскар → «путь, где тебя ведут»</li>
-            <li>Рубль / Самарин → как «пастыри-проводники»</li>
-          </ul>
-        </div>
-
-        <div class="concept-block ce" contenteditable="true" data-eid="e26">
-          <span class="cb-label">📌 Драматургическая модель — три слоя</span>
-          <ul>
-            <li><strong>Layer 1 — Antarctica</strong> (полноценная линия)</li>
-            <li><strong>Layer 2 — Madagascar</strong> (полноценная линия)</li>
-            <li><strong>Layer 3 — Memory Fragments</strong> (Шумшу / Питер)</li>
-          </ul>
-          Как они взаимодействуют: Антарктида → состояние покоя; Мадагаскар → движение и жизнь;
-          Память → разрыв, травма. Фильм строится на <strong>трении этих слоёв.</strong>
-        </div>
-
-        
-
-        
-
-        
-
-      </div>
+      
 
 
       
       <!-- ═══════════════════════ ГОЛОСОВЫЕ РЕЖИССЁРА ══════════════════════ -->
-      <div class="concept-section" id="voices">
-        <h2>🎙 Голосовые — общее (конкретные разнесены по сценам)</h2>
-        <p style="font-family:'Courier Prime',monospace;font-size:12px;color:#A89A78;margin-bottom:20px">
-          30 уникальных голосовых (из 34 файлов — 4 дубликата). Расшифровка: faster-whisper.
-          Дата оригинальной отправки неизвестна (Telegram не зашивает в ogg).
-        </p>
-        <h3 style="font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#7AA8C4;margin:20px 0 8px;padding-top:16px;border-top:1px solid #A89A78">Питер / Начало</h3>
-        
-        
-        
-        
-        
-        
-        <h3 style="font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#7AA8C4;margin:20px 0 8px;padding-top:16px;border-top:1px solid #A89A78">Питер / Флэшбеки</h3>
-        
-        
-        
-        <h3 style="font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#7AA8C4;margin:20px 0 8px;padding-top:16px;border-top:1px solid #A89A78">Питер / Финал</h3>
-        
-        <h3 style="font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#7AA8C4;margin:20px 0 8px;padding-top:16px;border-top:1px solid #A89A78">Антарктида</h3>
-        <h3 style="font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#7AA8C4;margin:20px 0 8px;padding-top:16px;border-top:1px solid #A89A78">Антананариву / Рынок</h3>
-        
-        <h3 style="font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#7AA8C4;margin:20px 0 8px;padding-top:16px;border-top:1px solid #A89A78">Антананариву / Съёмки</h3>
-        
-        <h3 style="font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#7AA8C4;margin:20px 0 8px;padding-top:16px;border-top:1px solid #A89A78">Жальбер</h3>
-        
-        <h3 style="font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#7AA8C4;margin:20px 0 8px;padding-top:16px;border-top:1px solid #A89A78">Жальбер / Антарктида</h3>
-        
-        <h3 style="font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#7AA8C4;margin:20px 0 8px;padding-top:16px;border-top:1px solid #A89A78">Экспедиция / Рубль</h3>
-        
-        <h3 style="font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#7AA8C4;margin:20px 0 8px;padding-top:16px;border-top:1px solid #A89A78">Экспедиция / Тото</h3>
-        <h3 style="font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#7AA8C4;margin:20px 0 8px;padding-top:16px;border-top:1px solid #A89A78">Экспедиция / Джунгли</h3>
-        
-        <h3 style="font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#7AA8C4;margin:20px 0 8px;padding-top:16px;border-top:1px solid #A89A78">Экспедиция / Сундук</h3>
-        
-        <h3 style="font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#7AA8C4;margin:20px 0 8px;padding-top:16px;border-top:1px solid #A89A78">Тема смерти / Кладбища</h3>
-        
-        <h3 style="font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#7AA8C4;margin:20px 0 8px;padding-top:16px;border-top:1px solid #A89A78">Монтаж</h3>
-        
-        <h3 style="font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#7AA8C4;margin:20px 0 8px;padding-top:16px;border-top:1px solid #A89A78">Концепция</h3>
-        <div class="concept-block ce" contenteditable="true" data-eid="e52">
-          <span class="cb-label">🎬 12.43.17.ogg · 47 сек</span>
-          <strong>«Работа без авторства» — личное откровение.</strong>
-Ключевой референс для режиссёра. Главный герой того фильма долго смотрит в поле на шелест листьев, потом бежит: «Я всё понял». Режиссёр: «И вдруг я понял, как это должно быть в сильной Калибри» — то же ощущение внезапного понимания структуры фильма.
-        </div>
-        
-        
-        <h3 style="font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#7AA8C4;margin:20px 0 8px;padding-top:16px;border-top:1px solid #A89A78">Концепция / Референсы</h3>
-        
-        
-        
-      </div>
+      
 
 
 
       <!-- Сцены сгенерированы из docx -->
-      <section class="scene scene-section" id="part-notes">
-<h2 class="slug" style="border:none"><span class="num">★</span> ЗАМЕТКИ</h2>
-<p class="tease">Письменные заметки к сценарию (синопсисы, структура, готовые сцены и диалоги). Возможны смысловые повторы — это рабочий черновик, ничего не выброшено.</p>
-<section class="scene" id="note-father-line">
+      <section class="scene" id="note-father-line">
   <h3 class="slug"><span class="num">🎯</span> Линия отца, прапрадеда и смысл войны — ГЛАВНЫЙ внутренний пласт</h3>
   <div class="note-body ce" contenteditable="true" data-eid="e2" style="font-family:var(--font-ui);font-size:14px;line-height:1.6;border-left:3px solid #B23A2E;padding-left:14px">
   <p style="margin:0 0 8px"><em>Прошлое и воспоминания Димы — важнейший пласт фильма. Внешний поиск прапрадеда — это форма внутреннего поиска отца. Тон — дух Терренса Малика, «Тонкая красная линия» как главный референс.</em></p>
@@ -1991,7 +1909,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
   </div>
   <div class="scene-drop-zone" data-scene="note-16"></div>
 </section>
-</section>
+
 
       <section class="scene note-extra" id="note-cine">
         <h3 class="slug"><span class="num">📝</span> Киноязык: два языка съёмки (экспедиция / Петербург) <span class="ne-tag">из заметок автора</span></h3>
@@ -2461,10 +2379,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
 <p style="margin:0 0 4px">• Не объяснять окончательно, <b>кто смонтировал фильм</b> — неясность должна иметь конкретные основания для каждой версии.</p>
         </div>
       </section>
-      <section class="scene scene-section" id="part-detail">
-        <h2 class="slug" style="border:none"><span class="num">★</span> ДЕТАЛЬНЫЙ ПОЭПИЗОДНИК</h2>
-        <p class="tease">Расширенная версия. Источник: «колибри поэпизодник.docx».</p>
-      </section>
+      
       <section class="scene" id="s1">
         <h2 class="slug"><span class="num">1</span> НАТ. МАДАГАСКАР. ДЕНЬ</h2>
         <div class="body" contenteditable="true">
@@ -7366,6 +7281,15 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
   <aside class="refs" id="refsbar">
     <div class="refs-head"><span>📚 Референсы</span><button id="refs-toggle" title="Свернуть">&#10217;</button></div>
       <div class="ref-section" id="refs-moved">
+<div class="ref-card">
+  <div class="ref-title">🎬 Референс режиссёра — «Работа без авторства»</div>
+<div class="concept-block ce" contenteditable="true" data-eid="e52">
+          <span class="cb-label">🎬 12.43.17.ogg · 47 сек</span>
+          <strong>«Работа без авторства» — личное откровение.</strong>
+Ключевой референс для режиссёра. Главный герой того фильма долго смотрит в поле на шелест листьев, потом бежит: «Я всё понял». Режиссёр: «И вдруг я понял, как это должно быть в сильной Калибри» — то же ощущение внезапного понимания структуры фильма.
+        </div>
+</div>
+
         
 
         <div class="ref-card">
@@ -8179,6 +8103,36 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
   document.querySelectorAll('.concept-section > h2').forEach(function(h){
     h.addEventListener('click', function(){ h.parentNode.classList.toggle('open'); });
   });
+</script>
+<script>
+  // ===== ОТМЕНА ДЕЙСТВИЯ =====
+  // Пишем прежнее значение каждого kolibri-ключа перед изменением. Кнопка возвращает последнее.
+  (function(){
+    var PREFIX='kolibri-', MAX=60, stack=[], busy=false;
+    var oSet=localStorage.setItem.bind(localStorage), oRem=localStorage.removeItem.bind(localStorage);
+    function remember(k){
+      if(busy || !k || k.indexOf(PREFIX)!==0) return;
+      stack.push({k:k, prev:localStorage.getItem(k)});
+      if(stack.length>MAX) stack.shift();
+      var b=document.getElementById('undo-btn'); if(b) b.disabled=false;
+    }
+    localStorage.setItem=function(k,v){ remember(k); return oSet(k,v); };
+    localStorage.removeItem=function(k){ remember(k); return oRem(k); };
+    window.kolibriUndo=function(){
+      var e=stack.pop();
+      var st=document.getElementById('status');
+      function toast(msg){ if(st){ st.textContent=msg; st.classList.add('show','saved'); setTimeout(function(){st.classList.remove('show');},1600);} }
+      if(!e){ toast('нечего отменять'); return; }
+      busy=true;
+      if(e.prev===null) localStorage.removeItem(e.k); else localStorage.setItem(e.k, e.prev);
+      busy=false;
+      if(window.kolibriApplyKey) window.kolibriApplyKey(e.k,false);
+      if(window.applyUploads && e.k.indexOf('kolibri-upload')===0) window.applyUploads();
+      toast('отменено ('+stack.length+' шагов в запасе)');
+    };
+    function wire(){ var b=document.getElementById('undo-btn'); if(b){ b.onclick=window.kolibriUndo; } }
+    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',wire); else wire();
+  })();
 </script>
 <script src="sync.js?v=2"></script>
 </body>
