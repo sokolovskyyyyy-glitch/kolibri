@@ -45,7 +45,26 @@
   .scenes{max-width:780px;margin:0 auto;padding:48px 64px 200px}
 
   /* ========== SCENE BLOCK ========== */
-  .scene{margin-bottom:48px;scroll-margin-top:80px}
+  .scene{margin-bottom:48px;scroll-margin-top:80px;position:relative}
+  .scene-removed{display:none!important}
+  /* добавление новой сцены между существующими */
+  .scene-add-bar{height:14px;margin:-7px 0 -7px;display:flex;align-items:center;justify-content:center;position:relative;z-index:3}
+  .scene-add-bar .sab-line{position:absolute;left:0;right:0;top:50%;border-top:1px dashed #A89A78;opacity:0;transition:opacity .15s}
+  .scene-add-bar:hover .sab-line{opacity:1}
+  .scene-add-bar .sab-btn{position:relative;font-family:'Courier Prime',monospace;font-size:11px;font-weight:700;letter-spacing:.04em;color:#8a7a5a;background:#E8DCC0;border:1px dashed #A89A78;border-radius:12px;padding:2px 12px;cursor:pointer;opacity:0;transition:opacity .15s}
+  .scene-add-bar:hover .sab-btn{opacity:1}
+  .scene-add-bar .sab-btn:hover{background:#5C5F3A;color:#fff;border-color:#5C5F3A;opacity:1}
+  .scene-add-form{display:none;gap:8px;align-items:center;justify-content:center;padding:10px;margin:4px 0;background:#DDCFB0;border:1px dashed #A89A78;border-radius:6px;font-family:'Courier Prime',monospace;font-size:12px}
+  .scene-add-form.open{display:flex}
+  .scene-add-form input{font-family:inherit;font-size:12px;padding:5px 8px;border:1px solid #A89A78;border-radius:4px;width:90px;background:#fff}
+  .scene-add-form button{font-family:inherit;font-size:11px;font-weight:700;padding:5px 10px;border-radius:4px;border:1px solid currentColor;cursor:pointer;background:transparent}
+  .scene-add-form .sab-ok{color:#5C5F3A}.scene-add-form .sab-ok:hover{background:#5C5F3A;color:#fff}
+  .scene-add-form .sab-cancel{color:#8a7a5a}.scene-add-form .sab-cancel:hover{background:#8a7a5a;color:#fff}
+  /* удаление сцены */
+  .scene-del-btn{position:absolute;top:0;right:0;width:24px;height:24px;border-radius:50%;border:none;background:rgba(178,58,46,.85);color:#fff;font-size:12px;line-height:1;cursor:pointer;opacity:0;transition:opacity .15s;z-index:4}
+  .scene:hover .scene-del-btn{opacity:.85}
+  .scene-del-btn:hover{opacity:1!important;background:#B23A2E}
+  @media print{.scene-add-bar,.scene-del-btn{display:none!important}}
   .scene .slug{font-family:var(--font-display);letter-spacing:.06em;display:flex;align-items:baseline;gap:14px}
   .scene .slug .num{color:var(--pulp-red);font-family:var(--font-mono);font-weight:700;font-size:13px}
   .scene .tease{font-family:var(--font-tease);font-style:italic;font-weight:500;color:var(--paper-faint)}
@@ -7447,23 +7466,69 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
 <div class="lightbox" id="lightbox" onclick="this.classList.remove('show')"><img id="lightbox-img"></div>
 
 <script>
+  // ===== СТРУКТУРА СЦЕН: добавление/удаление целых сцен (не заметок) =====
+  // Выполняется ПЕРВЫМ, до Nav build/restoreEdits/buildAddNoteBars — чтобы все они увидели новые/скрытые сцены как обычные.
+  (function(){
+    var ADD_KEY='kolibri-scene-added-v1', DEL_KEY='kolibri-scene-deleted-v1';
+    function readJSON(k,d){ try{return JSON.parse(localStorage.getItem(k)||JSON.stringify(d));}catch(e){return d;} }
+    function applyScenesStructure(){
+      var added=readJSON(ADD_KEY,{});
+      Object.keys(added).forEach(function(id){
+        if(document.getElementById(id)) return; // уже создана
+        var info=added[id]; if(!info) return;
+        var after=document.getElementById(info.afterId);
+        var sec=document.createElement('section');
+        sec.className='scene'; sec.id=id;
+        sec.innerHTML='<h2 class="slug"><span class="num">'+(info.num||'?').replace(/</g,'&lt;')+'</span> НОВАЯ СЦЕНА</h2>'
+          +'<div class="body" contenteditable="true"><p>&nbsp;</p></div>';
+        var scenesRoot=document.getElementById('scenes');
+        if(after && after.parentNode){
+          var insPoint=after.nextSibling; // пропускаем bar/form самой after-сцены — новая встаёт в конец её "грозди"
+          while(insPoint && insPoint.nodeType===1 && (insPoint.classList.contains('scene-add-bar')||insPoint.classList.contains('scene-add-form'))) insPoint=insPoint.nextSibling;
+          after.parentNode.insertBefore(sec, insPoint);
+        }
+        else if(scenesRoot){ scenesRoot.appendChild(sec); }
+      });
+      // удаление ДВУНАПРАВЛЕННО: помечаем удалённые, снимаем метку с тех, кого вернули (undo)
+      var deleted=readJSON(DEL_KEY,[]);
+      document.querySelectorAll('#scenes > section.scene').forEach(function(el){
+        el.classList.toggle('scene-removed', deleted.indexOf(el.id)>=0);
+      });
+      // добавление ДВУНАПРАВЛЕННО: если запись о добавленной сцене исчезла (undo) — убираем секцию и её bar/form
+      document.querySelectorAll('#scenes > section.scene[id^="snew-"]').forEach(function(el){
+        if(!added[el.id]){
+          var bar=document.querySelector('.scene-add-bar[data-after="'+el.id+'"]');
+          if(bar){ var form=bar.nextElementSibling; if(form&&form.classList.contains('scene-add-form'))form.remove(); bar.remove(); }
+          el.remove();
+        }
+      });
+    }
+    applyScenesStructure();
+    window.kolibriApplyScenesStructure = applyScenesStructure;
+  })();
+
   // ===== Theme switch =====
   // theme locked to V5
 
-  // ===== Nav build =====
+  // ===== Nav build (переиспользуемая — вызывается заново при добавлении/удалении сцен) =====
   const navList = document.getElementById('nav-list');
   const navOutline = document.getElementById('nav-list-outline');
-  document.querySelectorAll('.scene').forEach((s,i) => {
-    if(s.closest('#alt-pane') || /^note-/.test(s.id)) return;
-    const slugEl = s.querySelector('.slug'); if(!slugEl) return;
-    const slug = slugEl.textContent.trim();
-    const a = document.createElement('a');
-    a.href = '#'+s.id;
-    a.innerHTML = slug.replace(/^(\d+)\s/, '<span class="num">$1</span>');
-    if(s.classList.contains('scene-section')) a.classList.add('nav-sec');
-    if(s.id==='part-detail'||s.id==='part-outline') a.classList.add('nav-start');
-    (s.closest('#outline-pane')?navOutline:navList).appendChild(a);
-  });
+  function rebuildNav(){
+    navList.innerHTML=''; navOutline.innerHTML='';
+    document.querySelectorAll('.scene').forEach((s,i) => {
+      if(s.closest('#alt-pane') || /^note-/.test(s.id) || s.classList.contains('scene-removed')) return;
+      const slugEl = s.querySelector('.slug'); if(!slugEl) return;
+      const slug = slugEl.textContent.trim();
+      const a = document.createElement('a');
+      a.href = '#'+s.id;
+      a.innerHTML = slug.replace(/^([0-9]+[A-Za-zА-Яа-яЁё]?)\s/, '<span class="num">$1</span>');
+      if(s.classList.contains('scene-section')) a.classList.add('nav-sec');
+      if(s.id==='part-detail'||s.id==='part-outline') a.classList.add('nav-start');
+      (s.closest('#outline-pane')?navOutline:navList).appendChild(a);
+    });
+  }
+  rebuildNav();
+  window.kolibriRebuildNav = rebuildNav;
   window.setMode=function(mode){
     document.body.classList.toggle('mode-outline', mode==='outline');
     document.body.classList.toggle('mode-alt', mode==='alt');
@@ -7698,6 +7763,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
       scene.appendChild(bar);
     });
   }
+  window.buildAddNoteBars = buildAddNoteBars;
 
   function buildFilterChips(){
     const c = document.getElementById('filter-chips');
@@ -8127,7 +8193,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
     var all=[]; var pri=['note-samarin-director','note-samarin-history','note-samarin-stickers']; pri.forEach(function(pid){var e=document.getElementById(pid); if(e) all.push(e);});
     [].slice.call(document.querySelectorAll('#scenes section.scene, #outline-pane section.scene, #notes-list section, #alt-pane section.scene')).forEach(function(s){ if(pri.indexOf(s.id)<0) all.push(s); });
     all.forEach(function(sec){
-      if(!/Самарин/.test(sec.textContent||'') && !extra[sec.id])return; if(!sec.id||seen[sec.id])return; seen[sec.id]=1;
+      if(!/Самарин/.test(sec.textContent||'') && !extra[sec.id])return; if(!sec.id||seen[sec.id])return; if(sec.classList.contains('scene-removed'))return; seen[sec.id]=1;
       var it=document.createElement('div'); it.className='sam-item';
       var src=document.createElement('div'); src.className='sam-src'; src.textContent=label(sec);
       var cl=sec.cloneNode(true); cl.removeAttribute('id');
@@ -8259,6 +8325,94 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
     // облачные/чужие перемещения блоков
     var _k=window.kolibriApplyKey;
     window.kolibriApplyKey=function(k,skip){ if(_k)_k(k,skip); if(k===MAPKEY) window.applyBlockPlace(); };
+  })();
+</script>
+<script>
+  // ===== ДОБАВЛЕНИЕ / УДАЛЕНИЕ ЦЕЛЫХ СЦЕН =====
+  // Нумерация никогда не меняется: удаление прячет сцену (оставляя дыру в номерах),
+  // добавление вставляет новую секцию с буквенным номером (84 -> 84A) между существующими.
+  (function(){
+    var ADD_KEY='kolibri-scene-added-v1', DEL_KEY='kolibri-scene-deleted-v1';
+    var scenesRoot=document.getElementById('scenes');
+    if(!scenesRoot) return;
+    function readJSON(k,d){ try{return JSON.parse(localStorage.getItem(k)||JSON.stringify(d));}catch(e){return d;} }
+    function toast(msg){ var st=document.getElementById('status'); if(!st)return; st.textContent=msg; st.classList.add('show','saved'); setTimeout(function(){st.classList.remove('show');},1500); }
+    function usedLabels(){ var s={}; document.querySelectorAll('#scenes > section.scene .num').forEach(function(n){ s[n.textContent.trim()]=1; }); return s; }
+    function suggestLabel(baseScene){
+      var numEl=baseScene.querySelector('.num'); var base=numEl?numEl.textContent.trim():'';
+      var m=base.match(/^(\d+)/); var numPart=m?m[1]:base;
+      var used=usedLabels(), letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      for(var i=0;i<letters.length;i++){ var cand=numPart+letters[i]; if(!used[cand]) return cand; }
+      return numPart+'X'+Date.now()%1000;
+    }
+    function addSceneAfter(baseScene, label){
+      var id='snew-'+Date.now()+'-'+Math.random().toString(36).slice(2,7);
+      var map=readJSON(ADD_KEY,{}); map[id]={afterId:baseScene.id, num:label}; localStorage.setItem(ADD_KEY, JSON.stringify(map));
+      window.kolibriApplyScenesStructure && window.kolibriApplyScenesStructure();
+      window.buildAddNoteBars && window.buildAddNoteBars();
+      window.kolibriRebuildNav && window.kolibriRebuildNav();
+      buildSceneUI();
+      var el=document.getElementById(id);
+      if(el){ el.scrollIntoView({block:'center'}); var b=el.querySelector('.body'); if(b) b.focus(); }
+      toast('сцена '+label+' добавлена');
+    }
+    function deleteScene(scene){
+      var label=(scene.querySelector('.num')||{}).textContent||scene.id;
+      if(!confirm('Убрать сцену «'+label+'» из вида?\nНомера остальных сцен не изменятся. Можно вернуть кнопкой «Отменить».')) return;
+      var arr=readJSON(DEL_KEY,[]); if(arr.indexOf(scene.id)<0) arr.push(scene.id); localStorage.setItem(DEL_KEY, JSON.stringify(arr));
+      window.kolibriApplyScenesStructure && window.kolibriApplyScenesStructure();
+      window.kolibriRebuildNav && window.kolibriRebuildNav();
+      toast('сцена '+label+' убрана');
+    }
+    function ensureAddBar(scene){
+      if(scenesRoot.querySelector('.scene-add-bar[data-after="'+scene.id+'"]')) return; // прямой поиск — устойчив к сдвигу соседей
+      var bar=document.createElement('div'); bar.className='scene-add-bar'; bar.dataset.after=scene.id;
+      bar.innerHTML='<div class="sab-line"></div><button type="button" class="sab-btn">+ добавить сцену здесь</button>';
+      var form=document.createElement('div'); form.className='scene-add-form';
+      form.innerHTML='<input type="text" placeholder="напр. 84A"><button type="button" class="sab-ok">Создать</button><button type="button" class="sab-cancel">Отмена</button>';
+      bar.querySelector('.sab-btn').onclick=function(){
+        var input=form.querySelector('input');
+        if(!form.classList.contains('open')){ input.value=suggestLabel(scene); form.classList.add('open'); input.focus(); input.select(); }
+        else form.classList.remove('open');
+      };
+      form.querySelector('.sab-cancel').onclick=function(){ form.classList.remove('open'); };
+      form.querySelector('.sab-ok').onclick=function(){
+        var v=form.querySelector('input').value.trim(); if(!v){ form.querySelector('input').focus(); return; }
+        form.classList.remove('open'); addSceneAfter(scene, v);
+      };
+      form.querySelector('input').addEventListener('keydown',function(e){
+        if(e.key==='Enter'){ e.preventDefault(); form.querySelector('.sab-ok').click(); }
+        if(e.key==='Escape'){ form.classList.remove('open'); }
+      });
+      scene.parentNode.insertBefore(bar, scene.nextSibling);
+      scene.parentNode.insertBefore(form, bar.nextSibling);
+    }
+    function ensureDelBtn(scene){
+      if(scene.querySelector(':scope > .scene-del-btn')) return;
+      var b=document.createElement('button'); b.className='scene-del-btn'; b.type='button'; b.title='Убрать сцену'; b.textContent='✕';
+      b.onclick=function(e){ e.stopPropagation(); deleteScene(scene); };
+      scene.insertBefore(b, scene.firstChild);
+    }
+    function buildSceneUI(){
+      document.querySelectorAll('#scenes > section.scene').forEach(function(s){
+        if(/^note-/.test(s.id)) return;              // заметки живут в панели, нестабильный якорь
+        if(s.classList.contains('scene-removed')) return;
+        ensureDelBtn(s); ensureAddBar(s);
+      });
+    }
+    buildSceneUI();
+    window.kolibriBuildSceneUI = buildSceneUI;
+    // облачные/чужие добавления и удаления сцен
+    var _sk=window.kolibriApplyKey;
+    window.kolibriApplyKey=function(k,skip){
+      if(_sk)_sk(k,skip);
+      if(k===ADD_KEY || k===DEL_KEY){
+        window.kolibriApplyScenesStructure && window.kolibriApplyScenesStructure();
+        window.buildAddNoteBars && window.buildAddNoteBars();
+        window.kolibriRebuildNav && window.kolibriRebuildNav();
+        buildSceneUI();
+      }
+    };
   })();
 </script>
 <script src="sync.js?v=2"></script>
