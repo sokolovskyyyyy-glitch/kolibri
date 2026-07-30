@@ -8534,6 +8534,8 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
     function polish(s){
       s=String(s||'').replace(/\s+/g,' ').trim();
       s=s.replace(/^[-–—]\s*/,'');
+      s=s.replace(/(^|\s)[мm][бb](?=\s)/ig,'$1возможно');
+      s=s.replace(/(^|\s)в\s+Ант\.(?=\s|$)/ig,'$1в Антананариву');
       s=s.replace(/\bмб\b/ig,'возможно');
       s=s.replace(/\bм\/у\b/ig,'между');
       s=s.replace(/([^\s])•/g,'$1 • ');
@@ -8549,12 +8551,73 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
       if(type==='question' || type==='thought') return true;
       return /[?？]/.test(s) || /(^|\s)(подумать|додумать|не знаю|вопрос|почему|как бы|мб|может|написан ли|надо придумать|хочется придумать)/i.test(s);
     }
+    function sentenceCaseMaybe(s){
+      s=String(s||'').trim();
+      var letters=s.replace(/[^A-Za-zА-Яа-яЁё]/g,'');
+      var uppers=s.replace(/[^A-ZА-ЯЁ]/g,'');
+      if(letters.length<16 || uppers.length/letters.length<0.65) return s;
+      s=s.toLowerCase();
+      s=s.replace(/(^|[.!?]\s+|[«"])([a-zа-яё])/g,function(_,a,b){return a+b.toUpperCase();});
+      [
+        ['дима','Дима'],['димы','Димы'],['диме','Диме'],['димой','Димой'],
+        ['жальбер','Жальбер'],['самарин','Самарин'],['антананариву','Антананариву'],
+        ['ленфильм','Ленфильм'],['vhs','VHS'],['cut','CUT'],['рф','РФ']
+      ].forEach(function(p){s=s.replace(new RegExp('\\b'+p[0]+'\\b','gi'),p[1]);});
+      return s;
+    }
+    function writerClean(s){
+      s=String(s||'');
+      if(s.indexOf('---')>=0) s=s.slice(s.lastIndexOf('---')+3);
+      s=s
+        .replace(/^сценарное уточнение:\s*/i,'')
+        .replace(/^из альтернативного плана\s*\([^)]*\):\s*/i,'')
+        .replace(/\bв\s+ант\.\s*/ig,'в Антананариву ')
+        .replace(/\b[мm][бb]\b/ig,'возможно')
+        .replace(/([.!?])(?=[A-ZА-ЯЁ])/g,'$1 ')
+        .replace(/\s+/g,' ')
+        .trim();
+      return sentenceCaseMaybe(s);
+    }
+    function writerRealize(s){
+      s=String(s||'').trim();
+      s=s.replace(/^[-–—]\s*/,'');
+      s=s.replace(/^тут\s+было\s+бы\s+классно\s+/i,'');
+      s=s.replace(/^было\s+бы\s+классно\s+/i,'');
+      s=s.replace(/^тут\s+можно\s+подчеркнуть,\s+что\s+/i,'В сцене подчёркивается, что ');
+      s=s.replace(/^можно\s+подчеркнуть,\s+что\s+/i,'В сцене подчёркивается, что ');
+      s=s.replace(/^пусть\s+/i,'');
+      s=s.replace(/^после\s+этой\s+сцены\s+скорее\s+всего\s+добавим\s+/i,'После этой сцены добавляется ');
+      s=s.replace(/смонтироваться\s+так,\s+что\s+мы\s+начнем\s+с\s+его\s+крупного\s+плана/i,'сцена начинается с крупного плана Димы');
+      s=s.replace(/\bмы\s+начнем\b/ig,'сцена начинается');
+      s=s.replace(/\bмы\s+можем\b/ig,'можно');
+      return s;
+    }
+    function splitSentences(s){
+      return (String(s||'').match(/[^.!?…]+[.!?…]+|[^.!?…]+$/g)||[]).map(function(x){return x.trim();}).filter(Boolean);
+    }
+    function writerNeedsDecision(s){
+      if(/^[a-z]{8,}\.?$/i.test(String(s||'').trim())) return true;
+      return /[?？]/.test(s) || /(^|\s)(убираем|подумать|додумать|не знаю|можно ли|возможно ли|вопрос|почему|выбор|написан ли|надо придумать|хочется придумать|решить бы|нужен выбор|в будущем|проработать|или пусть|либо|скорее всего|может|проверить)/i.test(s);
+    }
     function makeParagraph(type, s){
       var label=TYPE_LABELS[type]||'Заметка';
       s=polish(s);
       if(!s) return '';
       if(type==='writer') return '<p><span class="d20-new">'+esc(s)+'</span></p>';
       return '<p><span class="d20-label">'+esc(label)+'</span><span class="d20-new">'+esc(s)+'</span></p>';
+    }
+    function writerHTML(s, left){
+      var special=specialWriterHTML(s);
+      if(special) return special;
+      var parts=splitSentences(writerClean(s)), html=[];
+      if(!parts.length) parts=[writerClean(s)];
+      parts.forEach(function(part){
+        part=polish(writerRealize(part));
+        if(!part) return;
+        if(writerNeedsDecision(part)) left.push({type:'writer',text:part});
+        else html.push(makeParagraph('writer',part));
+      });
+      return html.join('');
     }
     function specialWriterHTML(s){
       if(!/сцену\s+удлиннить/i.test(s) || !/забежать\s+в\s+переулок/i.test(s)) return '';
@@ -8610,11 +8673,11 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
           var type=card.getAttribute('data-t')||'writer', text=noteText(card);
           if(!text) return;
           if(type==='prop') return;
-          var special=specialWriterHTML(text);
-          if(special) integrated.push(special);
+          if(type==='writer') integrated.push(writerHTML(text,left));
           else if(TYPE_LABELS[type] && !unresolved(type,text)) integrated.push(makeParagraph(type,text));
           else left.push({type:type,text:polish(text)});
         });
+        integrated=integrated.filter(Boolean);
         if(integrated.length){
           var box=document.createElement('div');
           box.className='d20-integrated';
