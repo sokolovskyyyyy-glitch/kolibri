@@ -8629,12 +8629,33 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
         '<p><span class="d20-label">Производственно</span><span class="d20-new">Проверить, можно ли собрать живую массовку за минимальный донат.</span></p>'
       ].join('');
     }
+    function inlineEditText(s){
+      s=String(s||'').replace(/\s+/g,' ').trim();
+      if(!s) return s;
+      if(/^cut\.?$/i.test(s)) return 'CUT.';
+      s=s.replace(/^МБ\s+/i,'Возможно, ');
+      s=s.replace(/^VHS\s*[-–—]\s*/i,'VHS: ');
+      s=s.replace(/ГДЕ\s*[-–—]\s*ТО/ig,'где-то');
+      s=s.replace(/^ФЛЕШФОРВАРД\s*[-–—]\s*МАЛЯРИЙНЫЕ\s+БРЕД\s*[-–—]\s*ФИНАЛ\s+ФИЛЬМА\s*[-–—]\s*СБОЙКА\s+ВСЕХ\s+ЛОКАЦИЙ\.?$/i,
+        'Флешфорвард: малярийный бред, финал фильма, сбойка всех локаций.');
+      s=s.replace(/ПЕРЕБИВКА\s*[-–—]\s*/i,'перебивка: ');
+      s=s.replace(/\s*[-–—]\s*/g,' — ');
+      s=sentenceCaseMaybe(s);
+      s=polish(s);
+      s=s.replace(/ПОДВОДНЫЕ ПУЗЫРЬКИ/ig,'подводные пузырьки');
+      s=s.replace(/где\s+—\s+то/ig,'где-то');
+      s=s.replace(/ПОЗЖЕ\s+где-то\s+ВСТАВИТЬ/ig,'Позже где-то вставить');
+      s=s.replace(/\bПОЗЖЕ\b/ig,'Позже');
+      s=s.replace(/\bВСТАВИТЬ\b/ig,'вставить');
+      s=s.replace(/\bРАКУШКИ\b/g,'ракушки');
+      s=s.replace(/^Возможно,\s+сначала\s+перебивка:\s+/i,'Возможно, сначала перебивка: ');
+      return s;
+    }
     function cleanBody(body){
       body.querySelectorAll('[contenteditable]').forEach(function(el){el.setAttribute('contenteditable','false');});
       body.querySelectorAll('.note-card,.scene-notes,.add-note-bar,.scene-drop-zone,.scene-del-btn,.up-del,.note-grip,.note-detach').forEach(function(el){el.remove();});
       body.querySelectorAll('.ed').forEach(function(sp){
-        var t=(sp.textContent||'').trim();
-        if(/^cut$/i.test(t)) sp.textContent='CUT.';
+        sp.textContent=inlineEditText(sp.textContent||'');
         sp.className='d20-new';
       });
       return body;
