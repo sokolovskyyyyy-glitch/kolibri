@@ -474,13 +474,14 @@ body.mode-detail2 #nav-list-detail2{display:block}
 .d20-scene .body{font-family:var(--font-body);font-size:18px;line-height:1.72;color:var(--ink-1)}
 .d20-scene .body p{margin:0 0 12px}
 .d20-scene .body[contenteditable]{outline:none}
-.d20-new{color:#176F43;background:rgba(37,132,86,.13);border-radius:2px;padding:0 1px}
+.d20-new{color:inherit;background:transparent;border-radius:0;padding:0}
 .d20-integrated{margin-top:12px}
 .d20-integrated p{margin:0 0 8px;font-family:var(--font-body);font-size:18px;line-height:1.65}
-.d20-integrated .d20-label{display:block;font-family:'Courier Prime',monospace;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#176F43;margin:12px 0 4px}
+.d20-integrated .d20-label{display:block;font-family:'Courier Prime',monospace;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(14,24,37,.72);margin:12px 0 4px}
 .d20-left{margin-top:14px;border-left:3px solid rgba(26,38,56,.38);padding-left:12px;color:rgba(14,24,37,.78)}
 .d20-left .d20-label{display:block;font-family:'Courier Prime',monospace;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin:0 0 4px}
 .d20-left p{margin:0 0 7px;font-family:var(--font-ui);font-size:14px;line-height:1.5}
+.d20-left strong{font-weight:800;color:var(--ink-1)}
 .alt-ep .slug{font-size:14px}
 #alt-pane{max-width:900px}
 .ready-scene{border-left:4px solid #E5163A;background:rgba(229,22,58,.05);padding-left:14px;border-radius:0 8px 8px 0}
@@ -8581,6 +8582,11 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
     function writerRealize(s){
       s=String(s||'').trim();
       s=s.replace(/^[-–—]\s*/,'');
+      s=s.replace(/\bН\s+задабривает\s+Д\s*[-–—]\s*зайди,\s*тебе\s+выдадут\s+очки,?\s*новые,?\s*к\s+техникам\.?/i,
+        'Начальник пытается задобрить Диму: «Зайди к техникам, тебе выдадут новые очки».');
+      s=s.replace(/\bН\s+задабривает\s+Д\b/ig,'Начальник пытается задобрить Диму');
+      s=s.replace(/\bН\b(?=\s*[—-])/g,'Начальник');
+      s=s.replace(/\bД\b(?=\s*[—-])/g,'Дима');
       s=s.replace(/^тут\s+было\s+бы\s+классно\s+/i,'');
       s=s.replace(/^было\s+бы\s+классно\s+/i,'');
       s=s.replace(/^тут\s+можно\s+подчеркнуть,\s+что\s+/i,'В сцене подчёркивается, что ');
@@ -8636,6 +8642,9 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
       s=s.replace(/^МБ\s+/i,'Возможно, ');
       s=s.replace(/^VHS\s*[-–—]\s*/i,'VHS: ');
       s=s.replace(/ГДЕ\s*[-–—]\s*ТО/ig,'где-то');
+      s=s.replace(/КТО\s*[-–—]\s*ТО/ig,'Кто-то');
+      s=s.replace(/КАК БУДТО РЕАЛЬНАЯ ВОЙНА\s*[-–—]\s*У ЗРИТЕЛЯ МЕЛЬКНЕТ НА СЕКУНДУ\.?/ig,
+        'Как будто реальная война мелькает у зрителя на секунду.');
       s=s.replace(/^ФЛЕШФОРВАРД\s*[-–—]\s*МАЛЯРИЙНЫЕ\s+БРЕД\s*[-–—]\s*ФИНАЛ\s+ФИЛЬМА\s*[-–—]\s*СБОЙКА\s+ВСЕХ\s+ЛОКАЦИЙ\.?$/i,
         'Флешфорвард: малярийный бред, финал фильма, сбойка всех локаций.');
       s=s.replace(/ПЕРЕБИВКА\s*[-–—]\s*/i,'перебивка: ');
@@ -8644,6 +8653,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
       s=polish(s);
       s=s.replace(/ПОДВОДНЫЕ ПУЗЫРЬКИ/ig,'подводные пузырьки');
       s=s.replace(/где\s+—\s+то/ig,'где-то');
+      s=s.replace(/Кто\s+—\s+то/ig,'Кто-то');
       s=s.replace(/ПОЗЖЕ\s+где-то\s+ВСТАВИТЬ/ig,'Позже где-то вставить');
       s=s.replace(/\bПОЗЖЕ\b/ig,'Позже');
       s=s.replace(/\bВСТАВИТЬ\b/ig,'вставить');
@@ -8659,6 +8669,15 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
         sp.className='d20-new';
       });
       return body;
+    }
+    function detail20Slug(srcSlug){
+      var h=srcSlug.cloneNode(true);
+      var num=h.querySelector('.num');
+      if(num){
+        var t=(num.textContent||'').trim();
+        if(t && !/[.)]$/.test(t)) num.textContent=t+'.';
+      }
+      return h;
     }
     function sourceScenes(){
       return [].slice.call(document.querySelectorAll('#scenes > section.scene')).filter(function(s){
@@ -8680,7 +8699,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
         sec.className='d20-scene'+(src.classList.contains('scene-section')?' scene-section':'');
         sec.id='d20-'+src.id;
         var slug=src.querySelector(':scope > .slug');
-        if(slug) sec.appendChild(slug.cloneNode(true));
+        if(slug) sec.appendChild(detail20Slug(slug));
         var body=src.querySelector(':scope > .body');
         if(body){
           var b=cleanBody(body.cloneNode(true));
@@ -8709,7 +8728,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
           var l=document.createElement('div');
           l.className='d20-left';
           l.innerHTML='<span class="d20-label">Оставлено как заметки: требует решения</span>'
-            +left.map(function(n){return '<p><strong>'+esc(TYPE_LABELS[n.type]||'Заметка')+':</strong> '+esc(n.text)+'</p>';}).join('');
+            +left.map(function(n){return '<p><strong>'+esc(TYPE_LABELS[n.type]||'Комментарий')+':</strong> <strong>'+esc(n.text)+'</strong></p>';}).join('');
           sec.appendChild(l);
         }
         pane.appendChild(sec);
