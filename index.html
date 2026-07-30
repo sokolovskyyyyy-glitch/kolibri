@@ -460,10 +460,27 @@ aside.samarin-panel{display:none;background:#DDCFB0;border-left:1px solid #A89A7
 #outline-pane{display:none}
 body.mode-outline #scenes > :not(#outline-pane){display:none}
 body.mode-outline #outline-pane{display:block}
+#detail2-pane{display:none;max-width:900px}
+body.mode-detail2 #scenes > :not(#detail2-pane){display:none}
+body.mode-detail2 #detail2-pane{display:block}
 #alt-pane{display:none}
 body.mode-alt #scenes > :not(#alt-pane){display:none}
 body.mode-alt #alt-pane{display:block}
-body.mode-alt #nav-list,body.mode-alt #nav-list-outline{display:none}
+body.mode-alt #nav-list,body.mode-alt #nav-list-outline,body.mode-alt #nav-list-detail2{display:none}
+body.mode-detail2 #nav-list,body.mode-detail2 #nav-list-outline{display:none}
+#nav-list-detail2{display:none}
+body.mode-detail2 #nav-list-detail2{display:block}
+.d20-scene{border-bottom:1px solid rgba(26,38,56,.14);padding:28px 0 34px;position:relative}
+.d20-scene .body{font-family:var(--font-body);font-size:18px;line-height:1.72;color:var(--ink-1)}
+.d20-scene .body p{margin:0 0 12px}
+.d20-scene .body[contenteditable]{outline:none}
+.d20-new{color:#176F43;background:rgba(37,132,86,.13);border-radius:2px;padding:0 1px}
+.d20-integrated{margin-top:12px}
+.d20-integrated p{margin:0 0 8px;font-family:var(--font-body);font-size:18px;line-height:1.65}
+.d20-integrated .d20-label{display:block;font-family:'Courier Prime',monospace;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#176F43;margin:12px 0 4px}
+.d20-left{margin-top:14px;border-left:3px solid rgba(26,38,56,.38);padding-left:12px;color:rgba(14,24,37,.78)}
+.d20-left .d20-label{display:block;font-family:'Courier Prime',monospace;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin:0 0 4px}
+.d20-left p{margin:0 0 7px;font-family:var(--font-ui);font-size:14px;line-height:1.5}
 .alt-ep .slug{font-size:14px}
 #alt-pane{max-width:900px}
 .ready-scene{border-left:4px solid #E5163A;background:rgba(229,22,58,.05);padding-left:14px;border-radius:0 8px 8px 0}
@@ -580,6 +597,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
     <div class="brand">КОЛИБРИ<span class="accent">.</span></div>
     <div class="mode-toggle">
       <button class="mt active" data-mode="detail" onclick="setMode('detail')">📖 Детальный</button>
+      <button class="mt" data-mode="detail2" onclick="setMode('detail2')">🟢 Детальный 2.0</button>
       <button class="mt" data-mode="outline" onclick="setMode('outline')">📋 Краткий</button>
       <button class="mt" data-mode="alt" onclick="setMode('alt')">📑 Альтернативный</button>
     </div>
@@ -599,6 +617,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
   <aside class="nav">
     <h4>Сцены</h4>
     <div id="nav-list"></div>
+    <div id="nav-list-detail2"></div>
     <div id="nav-list-outline"></div>
   </aside>
 
@@ -7568,10 +7587,11 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
   // ===== Nav build (переиспользуемая — вызывается заново при добавлении/удалении сцен) =====
   const navList = document.getElementById('nav-list');
   const navOutline = document.getElementById('nav-list-outline');
+  const navDetail2 = document.getElementById('nav-list-detail2');
   function rebuildNav(){
-    navList.innerHTML=''; navOutline.innerHTML='';
+    navList.innerHTML=''; navOutline.innerHTML=''; if(navDetail2) navDetail2.innerHTML='';
     document.querySelectorAll('.scene').forEach((s,i) => {
-      if(s.closest('#alt-pane') || /^note-/.test(s.id) || s.classList.contains('scene-removed')) return;
+      if(s.closest('#alt-pane') || s.closest('#detail2-pane') || /^note-/.test(s.id) || s.classList.contains('scene-removed')) return;
       const slugEl = s.querySelector('.slug'); if(!slugEl) return;
       const slug = slugEl.textContent.trim();
       const a = document.createElement('a');
@@ -7581,12 +7601,23 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
       if(s.id==='part-detail'||s.id==='part-outline') a.classList.add('nav-start');
       (s.closest('#outline-pane')?navOutline:navList).appendChild(a);
     });
+    if(navDetail2){
+      document.querySelectorAll('#detail2-pane .d20-scene').forEach(function(s){
+        const slugEl=s.querySelector('.slug'); if(!slugEl)return;
+        const a=document.createElement('a');
+        a.href='#'+s.id;
+        a.innerHTML=slugEl.textContent.trim().replace(/^([0-9]+[A-Za-zА-Яа-яЁё]?)\s/, '<span class="num">$1</span>');
+        navDetail2.appendChild(a);
+      });
+    }
   }
   rebuildNav();
   window.kolibriRebuildNav = rebuildNav;
   window.setMode=function(mode){
     document.body.classList.toggle('mode-outline', mode==='outline');
+    document.body.classList.toggle('mode-detail2', mode==='detail2');
     document.body.classList.toggle('mode-alt', mode==='alt');
+    if(mode==='detail2' && window.kolibriBuildDetail20) window.kolibriBuildDetail20();
     document.querySelectorAll('.mode-toggle .mt').forEach(function(b){b.classList.toggle('active', b.dataset.mode===mode);});
     var _sb=document.querySelector('.search'); if(_sb) _sb.value=''; if(window.searchScenes) window.searchScenes('');
     try{localStorage.setItem('view-mode', mode);}catch(e){}
@@ -7681,13 +7712,13 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
   function searchScenes(q){
     q = q.trim().toLowerCase();
     var n=0;
-    document.querySelectorAll('#scenes .scene, #outline-pane .scene, #alt-pane .scene').forEach(function(s){
+    document.querySelectorAll('#scenes .scene, #outline-pane .scene, #alt-pane .scene, #detail2-pane .d20-scene').forEach(function(s){
       if(!q){ s.classList.remove('search-hidden'); return; }
       var hit = s.textContent.toLowerCase().indexOf(q)>=0;
       s.classList.toggle('search-hidden', !hit);
       if(hit && s.offsetParent!==null) n++;
     });
-    document.querySelectorAll('#nav-list a, #nav-list-outline a').forEach(function(a){
+    document.querySelectorAll('#nav-list a, #nav-list-outline a, #nav-list-detail2 a').forEach(function(a){
       if(!q){ a.style.display=''; return; }
       var id=(a.getAttribute('href')||'').slice(1), sec=id&&document.getElementById(id);
       a.style.display=(sec && sec.textContent.toLowerCase().indexOf(q)>=0)?'':'none';
@@ -7943,7 +7974,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
         const z=document.createElement('div');
         z.className='scene-drop-zone';
         z.innerHTML='<div class="drop-hint">📎 Перетащи фото или ссылку сюда</div>';
-        const bar=scene.querySelector('.add-note-bar');
+        const bar=scene.querySelector(':scope > .add-note-bar');
         if(bar) scene.insertBefore(z,bar); else scene.appendChild(z);
       }
     });
@@ -8474,6 +8505,129 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
         buildSceneUI();
       }
     };
+  })();
+</script>
+<script>
+  // ===== ДЕТАЛЬНЫЙ 2.0 =====
+  // Отдельная ревизионная вкладка: собирает актуальный детальный текст после синка,
+  // подсвечивает уже внесённые синие правки зелёным и осторожно переносит заметки в тело 2.0.
+  (function(){
+    var TYPE_LABELS={
+      writer:'Сценарное уточнение',
+      camera:'Камера',
+      loc:'Локация',
+      prop:'Реквизит',
+      hero:'Герои',
+      tone:'Тональность',
+      past:'Пласт прошлого'
+    };
+    function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+    function txtFromHTML(html){
+      var d=document.createElement('div');
+      d.innerHTML=window.kSanitize?window.kSanitize(html||''):(html||'');
+      return (d.textContent||'').replace(/\u00a0/g,' ').replace(/\s+/g,' ').trim();
+    }
+    function noteText(card){
+      var t=card.querySelector(':scope .text');
+      return txtFromHTML(t?t.innerHTML:'');
+    }
+    function polish(s){
+      s=String(s||'').replace(/\s+/g,' ').trim();
+      s=s.replace(/^[-–—]\s*/,'');
+      s=s.replace(/\bмб\b/ig,'возможно');
+      s=s.replace(/\bм\/у\b/ig,'между');
+      s=s.replace(/([^\s])•/g,'$1 • ');
+      s=s.replace(/•\s*/g,'• ');
+      s=s.replace(/\s+([,.!?;:])/g,'$1');
+      if(!s) return s;
+      if(/^cut$/i.test(s)) return 'CUT.';
+      if(!/[.!?…»)]$/.test(s)) s+='.';
+      return s;
+    }
+    function unresolved(type, s){
+      if(!s) return true;
+      if(type==='question' || type==='thought') return true;
+      return /[?？]/.test(s) || /(^|\s)(подумать|додумать|не знаю|вопрос|почему|как бы|мб|может|написан ли|надо придумать|хочется придумать)/i.test(s);
+    }
+    function makeParagraph(type, s){
+      var label=TYPE_LABELS[type]||'Заметка';
+      s=polish(s);
+      if(!s) return '';
+      if(type==='writer') return '<p><span class="d20-new">'+esc(s)+'</span></p>';
+      return '<p><span class="d20-label">'+esc(label)+'</span><span class="d20-new">'+esc(s)+'</span></p>';
+    }
+    function cleanBody(body){
+      body.querySelectorAll('[contenteditable]').forEach(function(el){el.setAttribute('contenteditable','false');});
+      body.querySelectorAll('.note-card,.scene-notes,.add-note-bar,.scene-drop-zone,.scene-del-btn,.up-del,.note-grip,.note-detach').forEach(function(el){el.remove();});
+      body.querySelectorAll('.ed').forEach(function(sp){
+        var t=(sp.textContent||'').trim();
+        if(/^cut$/i.test(t)) sp.textContent='CUT.';
+        sp.className='d20-new';
+      });
+      return body;
+    }
+    function sourceScenes(){
+      return [].slice.call(document.querySelectorAll('#scenes > section.scene')).filter(function(s){
+        return !s.closest('#outline-pane') && !s.closest('#alt-pane') && !s.closest('#detail2-pane')
+          && !/^note-/.test(s.id||'') && !s.classList.contains('scene-removed');
+      });
+    }
+    function build(){
+      var root=document.getElementById('scenes'); if(!root)return;
+      var pane=document.getElementById('detail2-pane');
+      if(!pane){
+        pane=document.createElement('div');
+        pane.id='detail2-pane';
+        root.appendChild(pane);
+      }
+      pane.innerHTML='';
+      sourceScenes().forEach(function(src){
+        var sec=document.createElement('section');
+        sec.className='d20-scene'+(src.classList.contains('scene-section')?' scene-section':'');
+        sec.id='d20-'+src.id;
+        var slug=src.querySelector(':scope > .slug');
+        if(slug) sec.appendChild(slug.cloneNode(true));
+        var body=src.querySelector(':scope > .body');
+        if(body){
+          var b=cleanBody(body.cloneNode(true));
+          b.classList.add('body');
+          sec.appendChild(b);
+        }
+        var integrated=[], left=[];
+        src.querySelectorAll(':scope > .scene-notes .note-card').forEach(function(card){
+          var author=card.getAttribute('data-a')||'evg';
+          if(author && author!=='evg') return;
+          var type=card.getAttribute('data-t')||'writer', text=noteText(card);
+          if(!text) return;
+          if(TYPE_LABELS[type] && !unresolved(type,text)) integrated.push(makeParagraph(type,text));
+          else left.push({type:type,text:polish(text)});
+        });
+        if(integrated.length){
+          var box=document.createElement('div');
+          box.className='d20-integrated';
+          box.innerHTML=integrated.join('');
+          sec.appendChild(box);
+        }
+        if(left.length){
+          var l=document.createElement('div');
+          l.className='d20-left';
+          l.innerHTML='<span class="d20-label">Оставлено как заметки: требует решения</span>'
+            +left.map(function(n){return '<p><strong>'+esc(TYPE_LABELS[n.type]||'Заметка')+':</strong> '+esc(n.text)+'</p>';}).join('');
+          sec.appendChild(l);
+        }
+        pane.appendChild(sec);
+      });
+      if(window.kolibriRebuildNav) window.kolibriRebuildNav();
+    }
+    window.kolibriBuildDetail20=build;
+    var _d20State=window.kolibriApplyState;
+    window.kolibriApplyState=function(){ if(_d20State)_d20State(); build(); };
+    var _d20Key=window.kolibriApplyKey;
+    window.kolibriApplyKey=function(k,skip){
+      if(_d20Key)_d20Key(k,skip);
+      if(!k || k.indexOf('kolibri-edit-')===0 || k.indexOf('kolibri-notes-')===0 || k==='kolibri-scene-added-v1' || k==='kolibri-scene-deleted-v1') build();
+    };
+    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',build); else build();
   })();
 </script>
 <script src="sync.js?v=2"></script>
