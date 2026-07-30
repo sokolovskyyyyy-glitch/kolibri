@@ -8556,6 +8556,16 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
       if(type==='writer') return '<p><span class="d20-new">'+esc(s)+'</span></p>';
       return '<p><span class="d20-label">'+esc(label)+'</span><span class="d20-new">'+esc(s)+'</span></p>';
     }
+    function specialWriterHTML(s){
+      if(!/сцену\s+удлиннить/i.test(s) || !/забежать\s+в\s+переулок/i.test(s)) return '';
+      return [
+        '<p><span class="d20-new">Сцену нужно расширить в полноценный экшен-эпизод, снятый с очков Димы: через погоню показать Антананариву как живой, шумный, почти приключенческий город.</span></p>',
+        '<p><span class="d20-new">Дима выскакивает из такси и бросается за вором. Он забегает в переулок, проваливается в трущобы, несётся по узким улочкам, мимо лавок, дворов и людей, которые не столько помогают, сколько с любопытством наблюдают за очередным растерянным приезжим. На бегу он пролетает мимо проститутки: «Эй, белый мальчик, пойдём-ка с нами».</span></p>',
+        '<p><span class="d20-new">Погоня обрывается фиаско: тупик, вор ускользнул или обхитрил его, местные иронично улыбаются, будто говорят: «Ещё одного приезжего надул наш брат». Дима остаётся один посреди города, мокрый, злой и униженный.</span></p>',
+        '<p><span class="d20-new">Следующий контрастный удар — монументальная тишина «советского» посольства, где слышен только треск ламп.</span></p>',
+        '<p><span class="d20-label">Производственно</span><span class="d20-new">Проверить, можно ли собрать живую массовку за минимальный донат.</span></p>'
+      ].join('');
+    }
     function cleanBody(body){
       body.querySelectorAll('[contenteditable]').forEach(function(el){el.setAttribute('contenteditable','false');});
       body.querySelectorAll('.note-card,.scene-notes,.add-note-bar,.scene-drop-zone,.scene-del-btn,.up-del,.note-grip,.note-detach').forEach(function(el){el.remove();});
@@ -8599,7 +8609,10 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
           if(author && author!=='evg') return;
           var type=card.getAttribute('data-t')||'writer', text=noteText(card);
           if(!text) return;
-          if(TYPE_LABELS[type] && !unresolved(type,text)) integrated.push(makeParagraph(type,text));
+          if(type==='prop') return;
+          var special=specialWriterHTML(text);
+          if(special) integrated.push(special);
+          else if(TYPE_LABELS[type] && !unresolved(type,text)) integrated.push(makeParagraph(type,text));
           else left.push({type:type,text:polish(text)});
         });
         if(integrated.length){
