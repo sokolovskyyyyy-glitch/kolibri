@@ -611,6 +611,7 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
     <button id="vhs-toggle" title="VHS-заметки — тащи на нужную сцену">🎞 VHS</button>
     <button id="refs-btn" title="Референсы (видео/фото)">📚 Референсы</button>
     <button onclick="exportHTML()">📥 Экспорт</button>
+    <button id="word-export-btn" onclick="exportWord()" title="Скачать основную линию без фото, видео и заметок">📄 Скачать Word</button>
     <button onclick="window.print()" title="Печать (без фото/видео)">🖨 Печать</button>
     <button class="primary" onclick="saveSnapshot()">💾 Сохранить версию</button>
     <div class="filter-chips" id="filter-chips" style="width:100%;margin-top:6px"></div>
@@ -7708,6 +7709,131 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
     a.download = 'kolibri-edits.json';
     a.click();
     flashSaved('экспорт скачан');
+  }
+
+  // ===== Clean Word export of the main detailed storyline =====
+  let docxLoader;
+  function loadDocx(){
+    if(window.docx) return Promise.resolve(window.docx);
+    if(docxLoader) return docxLoader;
+    docxLoader = new Promise((resolve,reject) => {
+      const s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js';
+      s.onload = () => window.docx ? resolve(window.docx) : reject(new Error('DOCX library unavailable'));
+      s.onerror = () => reject(new Error('DOCX library failed to load'));
+      document.head.appendChild(s);
+    });
+    return docxLoader;
+  }
+  function wordText(s){
+    return String(s || '').replace(/\u00a0/g,' ').replace(/[ \t]+/g,' ').replace(/\s*\n\s*/g,' ').trim();
+  }
+  function wordSceneTitle(scene){
+    const slug = scene.querySelector(':scope > .slug');
+    if(!slug) return '';
+    const c = slug.cloneNode(true);
+    c.querySelectorAll('.loc,.day,.imp-tag,.rs-tag,.ne-tag,button').forEach(n => n.remove());
+    return wordText(c.textContent).replace(/^(\d+[A-Za-zА-Яа-яЁё]?)(?:[.)])?\s*/, '$1. ');
+  }
+  function wordRuns(root,D){
+    const runs = [];
+    function walk(node,style){
+      if(node.nodeType === Node.TEXT_NODE){
+        const text = node.nodeValue.replace(/\u00a0/g,' ');
+        if(text) runs.push(new D.TextRun({
+          text,
+          bold:style.bold,
+          italics:style.italics,
+          underline:style.underline ? {type:D.UnderlineType.SINGLE} : undefined
+        }));
+        return;
+      }
+      if(node.nodeType !== Node.ELEMENT_NODE) return;
+      if(/^(SCRIPT|STYLE|BUTTON|IMG|VIDEO|AUDIO|IFRAME)$/.test(node.tagName)) return;
+      if(node.tagName === 'BR'){
+        runs.push(new D.TextRun({text:'',break:1}));
+        return;
+      }
+      const next = {
+        bold:style.bold || node.tagName === 'B' || node.tagName === 'STRONG',
+        italics:style.italics || node.tagName === 'I' || node.tagName === 'EM',
+        underline:style.underline || node.tagName === 'U'
+      };
+      node.childNodes.forEach(child => walk(child,next));
+    }
+    walk(root,{bold:false,italics:false,underline:false});
+    return runs;
+  }
+  function wordBodyParagraphs(body,D){
+    const c = body.cloneNode(true);
+    c.querySelectorAll('.media,.media-embed,.media-embed-caption,.up-media,.scene-refs,.scene-notes,.note-card,.add-note-bar,.scene-drop-zone,.dir-note,.moved-concept,button,img,video,audio,iframe').forEach(n => n.remove());
+    const blocks = [];
+    c.childNodes.forEach(node => {
+      if(node.nodeType === Node.TEXT_NODE){
+        if(wordText(node.nodeValue)) blocks.push(node);
+      }else if(node.nodeType === Node.ELEMENT_NODE){
+        blocks.push(node);
+      }
+    });
+    return blocks.map(block => {
+      if(!wordText(block.textContent)) return null;
+      return new D.Paragraph({children:wordRuns(block,D),spacing:{after:140,line:330}});
+    }).filter(Boolean);
+  }
+  async function exportWord(){
+    const btn = document.getElementById('word-export-btn');
+    if(btn){btn.disabled=true;btn.textContent='Готовлю Word…';}
+    try{
+      const D = await loadDocx();
+      const children = [
+        new D.Paragraph({text:'КОЛИБРИ',heading:D.HeadingLevel.TITLE,alignment:D.AlignmentType.CENTER,spacing:{after:160}}),
+        new D.Paragraph({text:'Детальный поэпизодник',alignment:D.AlignmentType.CENTER,spacing:{after:420}})
+      ];
+      const scenes = Array.from(document.querySelectorAll('#scenes > section.scene')).filter(scene =>
+        scene.id && !scene.id.startsWith('note-') && !scene.classList.contains('scene-removed') && scene.querySelector(':scope > .body')
+      );
+      scenes.forEach(scene => {
+        const title = wordSceneTitle(scene);
+        if(title){
+          children.push(new D.Paragraph({
+            text:title,
+            heading:scene.classList.contains('scene-section') ? D.HeadingLevel.HEADING_1 : D.HeadingLevel.HEADING_2,
+            spacing:{before:260,after:120},
+            keepNext:true
+          }));
+        }
+        children.push(...wordBodyParagraphs(scene.querySelector(':scope > .body'),D));
+      });
+      const doc = new D.Document({
+        creator:'Колибри',
+        title:'Колибри Детальный поэпизодник',
+        description:'Основная линия без изображений, видео и заметок',
+        styles:{
+          default:{document:{run:{font:'Georgia',size:22,color:'000000'},paragraph:{spacing:{line:330}}}},
+          paragraphStyles:[
+            {id:'Title',name:'Title',basedOn:'Normal',next:'Normal',quickFormat:true,run:{font:'Georgia',size:36,bold:true,color:'000000'},paragraph:{spacing:{after:160}}},
+            {id:'Heading1',name:'Heading 1',basedOn:'Normal',next:'Normal',quickFormat:true,run:{font:'Arial',size:28,bold:true,color:'000000'},paragraph:{spacing:{before:320,after:140},keepNext:true}},
+            {id:'Heading2',name:'Heading 2',basedOn:'Normal',next:'Normal',quickFormat:true,run:{font:'Arial',size:23,bold:true,color:'000000'},paragraph:{spacing:{before:260,after:120},keepNext:true}}
+          ]
+        },
+        sections:[{
+          properties:{page:{margin:{top:1134,right:1134,bottom:1134,left:1134}}},
+          children
+        }]
+      });
+      const blob = await D.Packer.toBlob(doc);
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'Колибри_детальный_'+new Date().toISOString().slice(0,10)+'.docx';
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href),1000);
+      flashSaved('Word скачан');
+    }catch(err){
+      console.error('[word-export]',err);
+      alert('Не удалось создать Word-файл. Проверь интернет и попробуй ещё раз.');
+    }finally{
+      if(btn){btn.disabled=false;btn.textContent='📄 Скачать Word';}
+    }
   }
 
   // ===== Search =====
