@@ -7735,15 +7735,193 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
     c.querySelectorAll('.loc,.day,.imp-tag,.rs-tag,.ne-tag,button').forEach(n => n.remove());
     return wordText(c.textContent).replace(/^(\d+[A-Za-zА-Яа-яЁё]?)(?:[.)])?\s*/, '$1. ');
   }
+  // Дополнение к уже собранным карточкам реквизита: только предметы, прямо названные в сценах.
+  const wordPropFallback = {
+    's2A':'письма Димы из полярной экспедиции',
+    's2B':'полярные вещи; нашивка; штамп станции «Мирный»; фотографии; радиограммы; картон для фотографий',
+    'ins-vo-lenfilm':'камера; штатив; билет',
+    's3':'велосипед Димы',
+    's13':'вещи и съёмочная техника Димы; письмо прапрадеда (для закадрового чтения)',
+    's14':'паспорт Димы; штамп паспортного контроля',
+    's15':'багажная тележка; чемоданы; такси',
+    's16':'такси; камера Димы; багаж',
+    's21':'указатели на русском и малагасийском; флаги и гербы; ананас',
+    's24':'автомат охранника',
+    's26':'автобусы и машины маршрута Димы',
+    's30':'костёр и тлеющие угли',
+    's31':'костёр; горячий кофе',
+    's34':'лодка; радиограмма прапрадеда (за кадром)',
+    's35':'тук-тук; камера Димы',
+    's37':'дворовый фонарь',
+    's39':'стол и посуда для ужина',
+    's41':'кровать; посуда для завтрака',
+    's42':'уличный завтрак; велосипед; два цветка',
+    's46':'велосипед; колесо; шины и запчасти; радио; камера Димы',
+    's48':'велосипед Димы',
+    's51':'бельевая верёвка; картонка',
+    's52':'тук-тук; пищевые мешки (в том числе вместо штор)',
+    's55':'автомобиль Тото',
+    's57':'чипсы; металлоискатель; найденный во дворе мусор',
+    's58':'старые станки; битое стекло; бумага; промышленный порошок',
+    'rs-shumshu':'металлоискатель; кисточка; ржавый обломок катаны; камера Димы',
+    'rs-samarin-camera':'камера; штатив; аккумулятор и карта памяти (упоминаются в диалоге)',
+    'rs-shumshu-mirror':'катана (если материал станет отдельной сценой)',
+    'rs-shumshu-tank':'макет или объект «рогатый танк»',
+    's65':'цветастая одежда для стирки; мыло',
+    's69':'раритетный автомобиль Тото',
+    's70':'сумка Димы',
+    's71':'автомобиль Тото',
+    's72':'лимонад; барная посуда',
+    's74':'велосипед',
+    's77':'продукты и посуда для блинов; продукты для селёдки под шубой',
+    's86':'вещи для поездки; лодка',
+    's89':'вещи Димы, Жальбера и Тото',
+    'rs-mozambik':'костёр и угли',
+    's105':'доска для пола; аспирин и ингредиенты коктейля; травяной крем',
+    's107':'камера Димы; письмо (за кадром)',
+    's108':'рыболовные сети; пойманная рыба; лодки; камера Димы',
+    's111':'бумага и пишущие принадлежности Димы; письмо прапрадеда (за кадром)',
+    's113':'камера Димы; судно',
+    's114':'вещи Димы и Рубля; пойманная рыба; лодка',
+    's123':'компонент для очистки пушки',
+    's125':'найденные осколки; снаряжение для поиска',
+    's127':'камера Рубля; листья над подполом',
+    's128':'найденные французские предметы; Торопыга; длинный трос',
+    's129':'секира Рубля; цветастая футболка; Торопыга',
+    's130':'экран управления Торопыгой; клочок бумаги; пишущая принадлежность; трос',
+    's131':'Торопыга; записка Рубля',
+    's138':'остатки бумаги и вещей в хижине',
+    's139':'листья и трава для изготовления бумаги',
+    's145':'лодка',
+    's154':'долблёные лодки в работе; рыболовные сети; фрукты',
+    's155':'Colibri; бумага; деньги Димы',
+    's158':'бумага и пишущие принадлежности для письма',
+    's159':'матрас; самодельная мазь',
+    's160':'вещи Димы и Рубля',
+    's161':'жёлтая надувная лодка; телефон Димы',
+    's163':'завтрак; лодка и дерево для её изготовления (обсуждаются)',
+    's164':'деревянное волокно; уголь для разметки; инструмент для пропила; мазь для ноги',
+    's165':'ствол дерева; рёбра и борта лодки; смола; волокно; огонь',
+    's167':'полотнища паруса; старый мешок с буквами; белая ткань; швейные принадлежности',
+    's169':'лодка Димы',
+    's174':'граффити-пингвин на стене',
+    's178':'лодка Димы; карта',
+    's182':'книга; ксерокопии страниц',
+    's186':'повреждённая лодка',
+    's188':'резные маски на деревьях; прозрачная плёнка; рюкзак; аптечка'
+  };
+  function wordPropText(scene){
+    const cards = Array.from(scene.querySelectorAll(':scope > .scene-notes .note-card[data-t="prop"] .text'));
+    if(!cards.length){
+      try{
+        JSON.parse(localStorage.getItem('kolibri-notes-'+scene.id) || '[]').filter(n => n.t === 'prop' && n.html).forEach(n => {
+          const el = document.createElement('div');
+          el.innerHTML = n.html;
+          cards.push(el);
+        });
+      }catch(e){}
+    }
+    const cardTexts = cards.map(el => {
+      const c = el.cloneNode(true);
+      c.querySelectorAll('br').forEach(br => br.replaceWith('; '));
+      return wordText(c.textContent).replace(/(?:^|;\s*)[•●]\s*/g,'; ').replace(/^;\s*/, '');
+    }).filter(Boolean);
+    return cardTexts.join('; ') || wordPropFallback[scene.id] || 'Не определён по текущему описанию сцены';
+  }
+  function wordCast(scene){
+    const body = wordText(scene.querySelector(':scope > .body')?.textContent || '');
+    if(!body) return 'Не определены';
+    const fixed = {
+      's1':'Дима, отец, жители острова, массовка',
+      's2':'Дима, магнитчик',
+      's2B':'Дима, голосовая помощница (голос)',
+      's4':'Дима, коллега, сотрудник отдела, массовка',
+      's5':'Дима, начальник отдела, секретарша',
+      's6':'солдаты, бригадир, массовка',
+      's7':'Дима, дед',
+      's8':'Дима, Калипсо (голос)',
+      's10':'Дима, Калипсо (голос)',
+      's11':'Дима, дед',
+      's12':'Дима, таможенница',
+      's13':'Дима, голос прапрадеда (за кадром)',
+      's23':'Дима, сотрудник посольства',
+      's20':'Дима, таксист, вор',
+      's24':'Дима, охранник',
+      's28':'Дима, местные подростки',
+      's29':'Дима, местный проводник, целительница, жители деревни',
+      's35':'Дима, водитель тук-тука, пассажиры, массовка',
+      's36':'Дима, Жальбер',
+      's38':'Дима, хозяйка, бабушка, Тахо, девочка',
+      's41':'Дима, хозяйка, бабушка, Тахо, девочка',
+      's43':'Дима, Жальбер',
+      's54':'Дима, Жальбер, швея, внучка швеи',
+      's55':'Дима, Жальбер, Тото, Аймант, дочь Тото',
+      's61':'Дима, Эмануэль',
+      's62':'Дима, археологи, массовка',
+      's67':'Дима, Тахо',
+      's92':'Дима, Жальбер, Тото, Рано',
+      's94':'Дима, Жальбер, Тото, маг',
+      's98':'Дима, Жальбер, Тото, Воара, Рано, светлокожий друг Рано, местные, массовка',
+      's166':'Дима, мастер, женщины и девочки деревни, массовка',
+      's168':'Дима, мастер, мужчины, женщины и дети деревни, массовка',
+      's169':'Тото, Альберт',
+      's175':'Дима',
+      's165':'мастера деревни, массовка',
+      's167':'женщины деревни, массовка',
+      's191':'неизвестный темнокожий человек',
+      'rs-women':'Дима, Жальбер',
+      'rs-shumshu-mirror':'Дима, Самарин'
+    };
+    if(fixed[scene.id]) return fixed[scene.id];
+    const lead = body.slice(0,650);
+    const cast = [];
+    const add = (name,re) => {
+      const bounded = new RegExp('(?:^|[^А-Яа-яЁё])(?:'+re.source+')(?=$|[^А-Яа-яЁё])','i');
+      if(bounded.test(lead) || new RegExp('(?:^|[^А-ЯЁ])'+name.toUpperCase()+'(?=[.: —])').test(body)) cast.push(name);
+    };
+    add('Дима',/Дима|Диму|Диме|Димой|Димин/i);
+    add('Ева',/Ева|Еву|Еве|Евой/i);
+    add('Лёша',/Лёша|Лёшу|Лёше|Лёшей/i);
+    add('Жальбер',/Жальбер/i);
+    add('Тахо',/Тахо/i);
+    add('Аймант',/Аймант|Амант/i);
+    add('Тото',/Тото/i);
+    add('Рубль',/Рубль|Рубля|Рублю|Рублём/i);
+    add('Воара',/Воара|Воару|Воаре|Вар[еяю]/i);
+    add('Самарин',/Самарин/i);
+    add('Полярный Дэн',/Полярн(?:ый|ого|ому) Дэн/i);
+    add('Рано',/Рано/i);
+    const roles = [
+      ['массовка',/толп|людн|люди|народ|прохож|пассажир|таксист[ыа]|местные|работники|дети|женщины|мужчины|турист|массовк/i],
+      ['хозяйка',/хозяйк/i],['бабушка',/бабушк/i],['таксист',/таксист/i],
+      ['работница паспортного контроля',/работница паспортного контроля/i],
+      ['охранник',/охранник|человек с автоматом/i],['посол',/посол/i],
+      ['мастер',/мастер, обучающ/i],['девушка',/заходит девушка|девушка сидит|девушка, с которой/i]
+    ];
+    roles.forEach(([name,re]) => { if(re.test(lead) && !cast.includes(name) && !(name === 'девушка' && cast.includes('Ева'))) cast.push(name); });
+    if(scene.id === 'ins-vo-lenfilm') return 'Дима (голос за кадром)';
+    return cast.join(', ') || 'Не определены по текущему описанию сцены';
+  }
   function wordRuns(root,D){
     const runs = [];
+    function hasFollowingText(node){
+      for(let current=node; current && current!==root; current=current.parentNode){
+        for(let sibling=current.nextSibling; sibling; sibling=sibling.nextSibling){
+          if(wordText(sibling.textContent)) return true;
+        }
+      }
+      return false;
+    }
     function walk(node,style){
       if(node.nodeType === Node.TEXT_NODE){
         const text = node.nodeValue.replace(/\u00a0/g,' ');
+        const authorColor = style.author === 'dir' || style.author === 'evg' ? 'FF0000' : undefined;
+        const shortAuthorMark = !!authorColor && text.trim().length <= 90;
         if(text) runs.push(new D.TextRun({
           text,
-          bold:style.bold,
-          italics:style.italics,
+          bold:style.bold || (style.author === 'evg' && shortAuthorMark) || undefined,
+          italics:style.italics || (style.author === 'dir' && shortAuthorMark) || undefined,
+          color:authorColor,
           underline:style.underline ? {type:D.UnderlineType.SINGLE} : undefined
         }));
         return;
@@ -7751,34 +7929,88 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
       if(node.nodeType !== Node.ELEMENT_NODE) return;
       if(/^(SCRIPT|STYLE|BUTTON|IMG|VIDEO|AUDIO|IFRAME)$/.test(node.tagName)) return;
       if(node.tagName === 'BR'){
-        runs.push(new D.TextRun({text:'',break:1}));
+        if(hasFollowingText(node)) runs.push(new D.TextRun({text:'',break:1}));
         return;
       }
       const next = {
         bold:style.bold || node.tagName === 'B' || node.tagName === 'STRONG',
         italics:style.italics || node.tagName === 'I' || node.tagName === 'EM',
-        underline:style.underline || node.tagName === 'U'
+        underline:style.underline || node.tagName === 'U',
+        author:node.classList.contains('ed')
+          ? (node.dataset.a || (node.classList.contains('by-dir') ? 'dir' : 'evg'))
+          : style.author
       };
       node.childNodes.forEach(child => walk(child,next));
     }
-    walk(root,{bold:false,italics:false,underline:false});
+    walk(root,{bold:false,italics:false,underline:false,author:''});
     return runs;
+  }
+  function wordParagraphKind(block,previousKind){
+    const text = wordText(block.textContent);
+    if(/^Ч\s*\/\s*Б\.?$/i.test(text)) return 'note';
+    if(/^ЗКД(?=$|[^А-Яа-яЁё])/i.test(text)) return 'voice';
+    if(text.length < 90 && /^(?:CUT\.?|КОНЕЦ(?: (?:ФЛЭШБЭКА|ВОСПОМИНАНИЯ|ЗКД))?\.?|ФЛЭШБЭК\.?|ФЛЕШФОРВАРД(?=$|[^А-Яа-яЁё]).*|РЕЗКАЯ СКЛЕЙКА\.?|ВОЗВРАЩЕНИЕ В .+|ШУМШУ \d+\.?|АНТАРКТИДА\.?|ЛИХОРАДКА\.?|ВОСПОМИНАЕНИЕ\..*)$/i.test(text)) return 'cue';
+    if(/^СОН[.:]\s/i.test(text)) return 'action';
+    if(/^(?:МБ(?=$|[^А-Яа-яЁё])|Возможно(?=$|[^А-Яа-яЁё])|Запасной вариант(?=$|[^А-Яа-яЁё])|Решение\s*[—–:-]|Реф\s*[—–:-]|Комментарий\s*:|Идея\s*:|Либо(?=$|[^А-Яа-яЁё])|\(ПОЗЖЕ(?=$|[^А-Яа-яЁё]))/i.test(text) || (text.length < 90 && /\?{3,}/.test(text))) return 'note';
+    if(block.nodeType === Node.ELEMENT_NODE && block.tagName === 'P'){
+      if(/^(?:700|bold)$/i.test(block.style.fontWeight) && /^[А-ЯЁ][А-ЯЁ\s-]{1,30}$/.test(text)) return 'speaker';
+      if(/^[А-ЯЁ][А-ЯЁ\s-]{1,30}[.:]\s+/.test(text)) return 'dialogue';
+    }
+    if(previousKind === 'speaker') return 'dialogue';
+    return 'action';
+  }
+  function wordRemovePrefix(root,count){
+    const walker = document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
+    let node;
+    while(count > 0 && (node = walker.nextNode())){
+      const length = node.nodeValue.length;
+      node.nodeValue = count >= length ? '' : node.nodeValue.slice(count);
+      count -= Math.min(count,length);
+    }
+  }
+  function wordSplitDialogue(block){
+    const match = block.textContent.match(/^\s*([А-ЯЁ][А-ЯЁ\s-]{1,30})[.:]\s*/);
+    if(!match || /^(?:СОН|ВОСПОМИНАЕНИЕ)$/.test(match[1].trim())) return null;
+    const copy = block.cloneNode(true);
+    wordRemovePrefix(copy,match[0].length);
+    return {speaker:match[1].trim(),body:copy};
   }
   function wordBodyParagraphs(body,D){
     const c = body.cloneNode(true);
     c.querySelectorAll('.media,.media-embed,.media-embed-caption,.up-media,.scene-refs,.scene-notes,.note-card,.add-note-bar,.scene-drop-zone,.dir-note,.moved-concept,button,img,video,audio,iframe').forEach(n => n.remove());
     const blocks = [];
-    c.childNodes.forEach(node => {
+    function collect(node){
       if(node.nodeType === Node.TEXT_NODE){
         if(wordText(node.nodeValue)) blocks.push(node);
       }else if(node.nodeType === Node.ELEMENT_NODE){
-        blocks.push(node);
+        const hasParagraphChildren = node.tagName === 'DIV' && Array.from(node.children).some(child => /^(P|DIV)$/.test(child.tagName));
+        if(hasParagraphChildren) node.childNodes.forEach(collect);
+        else blocks.push(node);
       }
+    }
+    c.childNodes.forEach(collect);
+    const styles = {action:'KolibriAction',dialogue:'KolibriDialogue',speaker:'KolibriSpeaker',cue:'KolibriCue',note:'KolibriNote',voice:'KolibriVoice'};
+    const paragraphs = [];
+    let previousKind = '';
+    blocks.forEach(block => {
+      if(!wordText(block.textContent)) return;
+      const kind = wordParagraphKind(block,previousKind);
+      if(kind === 'speaker'){
+        paragraphs.push(new D.Paragraph({text:wordText(block.textContent).replace(/[.:]$/,'').toUpperCase(),style:'KolibriSpeaker'}));
+      }else if(kind === 'dialogue'){
+        const split = wordSplitDialogue(block);
+        if(split) paragraphs.push(new D.Paragraph({text:split.speaker.toUpperCase(),style:'KolibriSpeaker'}));
+        paragraphs.push(new D.Paragraph({children:wordRuns(split ? split.body : block,D),style:'KolibriDialogue',alignment:D.AlignmentType.JUSTIFIED}));
+      }else{
+        paragraphs.push(new D.Paragraph({
+          children:wordRuns(block,D),
+          style:styles[kind],
+          alignment:['action','cue','note','voice'].includes(kind) ? D.AlignmentType.JUSTIFIED : undefined
+        }));
+      }
+      previousKind = kind;
     });
-    return blocks.map(block => {
-      if(!wordText(block.textContent)) return null;
-      return new D.Paragraph({children:wordRuns(block,D),spacing:{after:140,line:330}});
-    }).filter(Boolean);
+    return paragraphs;
   }
   async function exportWord(){
     const btn = document.getElementById('word-export-btn');
@@ -7792,32 +8024,71 @@ window.KAUTHOR=localStorage.getItem('site-author')||'';
       const scenes = Array.from(document.querySelectorAll('#scenes > section.scene')).filter(scene =>
         scene.id && !scene.id.startsWith('note-') && !scene.classList.contains('scene-removed') && scene.querySelector(':scope > .body')
       );
+      let lastSceneNumber = '';
+      let insertLetter = 0;
       scenes.forEach(scene => {
-        const title = wordSceneTitle(scene);
+        let title = wordSceneTitle(scene);
+        const originalNumber = /^(\d+)([A-ZА-Я])?\.\s/.test(title);
+        const source = scene.querySelector(':scope > .rs-tag,:scope > .imp-tag');
+        if(source){
+          children.push(new D.Paragraph({
+            text:wordText(source.textContent).replace(/^[^A-Za-zА-Яа-яЁё0-9]+/,'')+(originalNumber ? '' : ' · НОМЕР УСЛОВНЫЙ'),
+            style:'KolibriSource'
+          }));
+        }
+        const numbered = title.match(/^(\d+)([A-ZА-Я])?\.\s/);
+        if(numbered){
+          if(numbered[1] !== lastSceneNumber) insertLetter = 0;
+          lastSceneNumber = numbered[1];
+          if(numbered[2] && /^[A-Z]$/.test(numbered[2])) insertLetter = Math.max(insertLetter,numbered[2].charCodeAt(0)-64);
+        }else if(title && lastSceneNumber){
+          insertLetter++;
+          title = lastSceneNumber+String.fromCharCode(64+insertLetter)+'. '+title.replace(/^[✍️★\s]+/,'');
+        }
         if(title){
           children.push(new D.Paragraph({
             text:title,
             heading:scene.classList.contains('scene-section') ? D.HeadingLevel.HEADING_1 : D.HeadingLevel.HEADING_2,
-            spacing:{before:260,after:120},
+            spacing:{before:420,after:120},
             keepNext:true
           }));
         }
+        children.push(new D.Paragraph({
+          style:'KolibriCast',
+          children:[new D.TextRun({text:wordCast(scene),bold:true,italics:true,color:'374151'})]
+        }));
+        children.push(new D.Paragraph({
+          style:'KolibriProps',
+          children:[
+            new D.TextRun({text:'РЕКВИЗИТ  ',bold:true,color:'000000'}),
+            new D.TextRun({text:wordPropText(scene),color:'000000'})
+          ]
+        }));
         children.push(...wordBodyParagraphs(scene.querySelector(':scope > .body'),D));
       });
       const doc = new D.Document({
         creator:'Колибри',
         title:'Колибри Детальный поэпизодник',
-        description:'Основная линия без изображений, видео и заметок',
+        description:'Основная линия: действующие лица, реквизит и текст сцен без изображений и видео',
         styles:{
           default:{document:{run:{font:'Georgia',size:22,color:'000000'},paragraph:{spacing:{line:330}}}},
           paragraphStyles:[
             {id:'Title',name:'Title',basedOn:'Normal',next:'Normal',quickFormat:true,run:{font:'Georgia',size:36,bold:true,color:'000000'},paragraph:{spacing:{after:160}}},
-            {id:'Heading1',name:'Heading 1',basedOn:'Normal',next:'Normal',quickFormat:true,run:{font:'Arial',size:28,bold:true,color:'000000'},paragraph:{spacing:{before:320,after:140},keepNext:true}},
-            {id:'Heading2',name:'Heading 2',basedOn:'Normal',next:'Normal',quickFormat:true,run:{font:'Arial',size:23,bold:true,color:'000000'},paragraph:{spacing:{before:260,after:120},keepNext:true}}
+            {id:'Heading1',name:'Heading 1',basedOn:'Normal',next:'Normal',quickFormat:true,run:{font:'Arial',size:28,bold:true,color:'000000'},paragraph:{spacing:{before:500,after:140},keepNext:true}},
+            {id:'Heading2',name:'Heading 2',basedOn:'Normal',next:'Normal',quickFormat:true,run:{font:'Arial',size:23,bold:true,color:'000000'},paragraph:{spacing:{before:420,after:120},keepNext:true}},
+            {id:'KolibriAction',name:'Kolibri Action',basedOn:'Normal',next:'Normal',run:{font:'Courier New',size:24,color:'1D232B'},paragraph:{alignment:D.AlignmentType.JUSTIFIED,spacing:{after:140,line:300}}},
+            {id:'KolibriDialogue',name:'Kolibri Dialogue',basedOn:'Normal',next:'Normal',run:{font:'Courier New',size:24,color:'1D232B'},paragraph:{indent:{left:1368,right:2088},alignment:D.AlignmentType.JUSTIFIED,spacing:{after:100,line:280}}},
+            {id:'KolibriSpeaker',name:'Kolibri Speaker',basedOn:'Normal',next:'Normal',run:{font:'Courier New',size:24,color:'1D232B'},paragraph:{indent:{left:1368,right:2088},alignment:D.AlignmentType.CENTER,spacing:{before:120,after:15},keepNext:true}},
+            {id:'KolibriCue',name:'Kolibri Cue',basedOn:'Normal',next:'Normal',run:{font:'Arial',size:18,bold:true,color:'505B68'},paragraph:{alignment:D.AlignmentType.JUSTIFIED,spacing:{before:110,after:110}}},
+            {id:'KolibriNote',name:'Kolibri Working Note',basedOn:'Normal',next:'Normal',run:{font:'Georgia',size:20,italics:true,color:'FF0000'},paragraph:{alignment:D.AlignmentType.JUSTIFIED,indent:{left:220},spacing:{before:50,after:170,line:315}}},
+            {id:'KolibriVoice',name:'Kolibri Voiceover',basedOn:'Normal',next:'Normal',run:{font:'Courier New',size:24,italics:true,color:'374151'},paragraph:{alignment:D.AlignmentType.JUSTIFIED,spacing:{after:140,line:300}}},
+            {id:'KolibriCast',name:'Kolibri Cast',basedOn:'Normal',next:'Normal',run:{font:'Arial',size:18,bold:true,italics:true,color:'374151'},paragraph:{indent:{left:220},spacing:{after:45,line:265},keepNext:true}},
+            {id:'KolibriProps',name:'Kolibri Props',basedOn:'Normal',next:'Normal',run:{font:'Arial',size:17,color:'000000'},paragraph:{indent:{left:220},spacing:{after:145,line:255},keepNext:true}},
+            {id:'KolibriSource',name:'Kolibri Source',basedOn:'Normal',next:'Normal',run:{font:'Arial',size:17,bold:true,color:'596574'},paragraph:{spacing:{before:220,after:40},keepNext:true}}
           ]
         },
         sections:[{
-          properties:{page:{margin:{top:1134,right:1134,bottom:1134,left:1134}}},
+          properties:{page:{size:{width:12240,height:15840},margin:{top:1440,right:1440,bottom:1440,left:2160}}},
           children
         }]
       });
